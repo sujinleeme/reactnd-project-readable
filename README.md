@@ -1,2 +1,2 @@
 # reactnd-project-readable
-The Second Project for Udacity's React React Nanodegree Edit
+The Second Project for Udacity's React React Nanodegree
