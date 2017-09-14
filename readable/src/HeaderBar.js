@@ -7,27 +7,26 @@ import Typography from 'material-ui/Typography'
 import Category from './Category'
 
 const styles = theme => ({
-	root: {
-		width: '100%',
-		background: '#fff',
+  root: {
+    width: '100%',
+    background: '#fff',
 	},
 })
 
 function HeaderBar(props) {
-	const classes = props.classes
+  const classes = props.classes
 	return (
-		<div className={classes.root}>
-			<AppBar position="static" color="inherit">
+	  <div className={classes.root}>
+      <AppBar position="static" color="inherit">
 				<Toolbar>
 					<Typography type="title" color="inherit">
-						ShowUP / Udacity Nanodegree Student's Projects
+            ShowUP / Udacity Nanodegree Student's Projects
 					</Typography>
 					<Category/>
-				</Toolbar>
-			</AppBar>
-
+        </Toolbar>
+      </AppBar>
 		</div>
-)
+  )
 }
 
 HeaderBar.propTypes = {

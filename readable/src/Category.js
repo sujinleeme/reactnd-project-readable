@@ -16,13 +16,13 @@ function doSomething(event) {
 }
 
 function Category(props) {
-	const classes = props.classes;
-	return (
-		<div>
-			<Button raised className={classes.button}>
+  const classes = props.classes;
+  return (
+    <div>
+      <Button raised className={classes.button}>
 				Default
-			</Button>
-		</div>
+      </Button>
+    </div>
 	);
 }
 

@@ -104,55 +104,50 @@
 //
 // export default createDefaultContext
 
-
 import React from 'react'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import lightBlue from 'material-ui/colors/lightBlue'
-import green from 'material-ui/colors/green';
+import green from 'material-ui/colors/green'
 import red from 'material-ui/colors/red'
 import Button from 'material-ui/Button'
 import AppBar from 'material-ui/AppBar'
 
 const theme = createMuiTheme({
-	palette: {
-		primary: {
-			...lightBlue,
-			A300: '#4FC3F7',
-		}, // Purple and green play nicely together.
-		secondary: {
-			...green,
-			A400: '#00e677',
-		},
-		background: {
-			default: `#fff`
-		}
-	},
+  palette: {
+    primary: {
+      ...lightBlue,
+      A300: '#4FC3F7',
+    }, // Purple and green play nicely together.
+    secondary: {
+      ...green,
+      A400: '#00e677',
+    },
+    background: {
+      default: `#fff`,
+    },
+  },
+  
+  overrides: {
+    MuiAppBar: {
+      backgroundColor: '#fff',
+    },
+    MuiTypography: {
+      title: {
+        fontFamily: '\'Space Mono\', monospace',
+      },
+    },
+    MuiButton: {
+      root: {
+        borderRadius: '15px',
+        fontFamily: '\'Space Mono\', monospace',
+      },
+      raised: {
+        background: '#fff',
+      },
+    },
+  },
+})
 
-	overrides: {
-		MuiAppBar: {
-			backgroundColor: '#fff'
-		},
-		MuiTypography: {
-			title: {
-				fontFamily: "'Space Mono', monospace"
-			}
-		},
-		MuiButton : {
-			root : {
-				borderRadius: '15px',
-				fontFamily: "'Space Mono', monospace"
-			},
-			raised : {
-				background: "#fff"
-			}
-
-
-		}
-
-
-	},
-});
-
-export default theme;
+export default theme
 
 
