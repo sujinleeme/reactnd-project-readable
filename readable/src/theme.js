@@ -104,13 +104,9 @@
 //
 // export default createDefaultContext
 
-import React from 'react'
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import lightBlue from 'material-ui/colors/lightBlue'
-import green from 'material-ui/colors/green'
-import red from 'material-ui/colors/red'
-import Button from 'material-ui/Button'
-import AppBar from 'material-ui/AppBar'
+import { createMuiTheme } from 'material-ui/styles'
+import { lightBlue, green, grey } from 'material-ui/colors'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -120,31 +116,46 @@ const theme = createMuiTheme({
     }, // Purple and green play nicely together.
     secondary: {
       ...green,
-      A400: '#00e677',
+      A400: '#4FC3F7',
     },
     background: {
-      default: `#fff`,
-    },
+      ...grey,
+      A300: '#f5f5f5'
+    }
   },
   
   overrides: {
-    MuiAppBar: {
-      backgroundColor: '#fff',
-    },
     MuiTypography: {
       title: {
-        fontFamily: '\'Space Mono\', monospace',
+        fontFamily: '\'Inconsolata\', monospace',
+        fontSize: '20px',
+        letterSpacing: '0.02rem',
+        fontWeight: 'bolder',
       },
     },
+    
     MuiButton: {
       root: {
         borderRadius: '15px',
-        fontFamily: '\'Space Mono\', monospace',
+        fontFamily: '\'Inconsolata\', monospace',
       },
       raised: {
-        background: '#fff',
-      },
+        color: '#616161'
+      }
+      
     },
+    MuiAppBar: {
+      root: {
+        color:'inherit'
+      }
+    },
+    MuiPaper: {
+      root: {
+        borderRadius: '0 !important'
+      }
+      
+      
+    }
   },
 })
 

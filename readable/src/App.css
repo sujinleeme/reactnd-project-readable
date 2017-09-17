@@ -2,7 +2,21 @@
 	text-align: center;
 }
 
-body {
+html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
+	max-width: 100%;
+	overflow-x: hidden;
+	height:100%;
+	color: #616161;
+	}
+
+.brandLogo{
+	display: inherit;
+	padding: 15px 0;
+	}
+
+.brandLogo .main {
+	margin-right: 10px;
+	}
+
