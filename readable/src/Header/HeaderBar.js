@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import Category from './CategoryBox'
+import CategoryBox from '../Component/CategoryBox'
 import Grid from 'material-ui/Grid'
 
 const styles = theme => ({
@@ -30,7 +30,7 @@ const HeaderBar = (props) => {
                 <Typography type="title" color="accent">/ Udacity Nanodegree Student's Projects
                 </Typography>
               </div>
-              <Category/>
+              <CategoryBox/>
             </Grid>
             <Grid item md={4}/>
           </Toolbar>

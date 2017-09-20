@@ -27,7 +27,7 @@ function doSomething(event) {
 	console.log(event.currentTarget.getAttribute('data-something'));
 }
 
-class Category extends React.Component {
+class CategoryBox extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -46,7 +46,12 @@ class Category extends React.Component {
       categories &&
       <div className='category_grp'>
         {categories.map((category, i) => (
-          <Link key={category.name} to={`/${category.path}`}>
+          <Link key={category.name}
+                to={{
+                  pathname: '/search',
+                  search: `${category.name}`,
+                  hash: '#'
+                }}>
             <Button raised
                     classes={{
                       root: props.classes.root,
@@ -59,7 +64,7 @@ class Category extends React.Component {
   }
 }
 
-Category.propTypes = {
+CategoryBox.propTypes = {
 	classes: PropTypes.object.isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
@@ -69,4 +74,4 @@ Category.propTypes = {
   ).isRequired
 };
 
-export default withStyles(styles)(Category)
+export default withStyles(styles)(CategoryBox)

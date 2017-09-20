@@ -1,32 +1,52 @@
 import React, { Component } from 'react'
-import { Router, Route, browserHistory } from 'react-router';
 
+import {
+  BrowserRouter as Router,
+  Route,
+  
+  Switch
+} from 'react-router-dom';
 
-
-import HeaderBar from './Header/HeaderBar'
-import MainContent from './Component/MainContent'
+import NotFound from './Component/NotFound'
 
 import theme from './theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import CopyrightBar from './Component/CopyrightBar'
+import HomePage from './Pages/HomePage'
 import './App.css'
+
+const routes = [{
+  path: '/',
+  exact: false,
+  component: HomePage,
+  
+}, {
+  path: '*',
+  exact: false,
+  component: NotFound,
+}, {
+  path: '/search',
+  exact: true,
+  component: HomePage
+}/* And so on. */];
 
 
 class App extends Component {
   render() {
-    return (
-      <div>
-      <MuiThemeProvider theme={theme}>
+    const routeComponents = routes.map(({path, exact, component}, key) =>
+      <Route exact={!!exact}
+             path={path}
+             component={component}
+             key={key} />);
   
-        <div>
-           <HeaderBar />
-           <MainContent />
-           <CopyrightBar />
-         </div>
-
-      </MuiThemeProvider>
-
-      </div>
+    return (
+      <Router>
+          <MuiThemeProvider theme={theme}>
+            <Switch>
+              {routeComponents}
+              
+            </Switch>
+          </MuiThemeProvider>
+      </Router>
 
     )
   }
