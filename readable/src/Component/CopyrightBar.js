@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
+import Typography from 'material-ui/Typography'
 
 const styles = theme => ({
   root: {
@@ -12,7 +12,7 @@ const styles = theme => ({
 });
 
 const CopyrightBar = (props) => {
-  const classes = props.classes;
+  const classes = props.classes
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -30,4 +30,4 @@ CopyrightBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CopyrightBar);
+export default withStyles(styles)(CopyrightBar)

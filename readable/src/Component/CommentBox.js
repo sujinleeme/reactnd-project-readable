@@ -1,10 +1,10 @@
 // @flow weak
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Input from 'material-ui/Input';
-import Avatar from 'material-ui/Avatar';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import Input from 'material-ui/Input'
+import Avatar from 'material-ui/Avatar'
 
 const styles = theme => ({
   container: {

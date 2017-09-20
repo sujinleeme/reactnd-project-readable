@@ -7,6 +7,7 @@ import Grid from 'material-ui/Grid'
 import PostList from './PostList'
 import PaperSheet from './PaperSheet'
 import CreatePost from './CreatePost'
+import {Link} from 'react-router-dom';
 
 function TabContainer(props) {
   return <div>{props.children}</div>;
@@ -37,18 +38,20 @@ class MainContent extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-    
+  
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item md={2}/>
           <Grid item md={6} container={true} direction="column">
         <AppBar position="static"  color="inherit">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="HOT" />
-            <Tab label="NEW" />
-            <Tab label="COMMENTS" />
+          <Link to={{ pathname: '/roster/7' }}><Tabs value={value} onChange={this.handleChange}>
+            <Tab value={0} label="home" />
+            <Tab value={1} label="about"/>
+            <Tab value={2} label="contact"/>
+            <Tab value={3} label="faq"/>
           </Tabs>
+          </Link>
         </AppBar>
         {value === 0 && <TabContainer>
           <CreatePost />
