@@ -16,8 +16,6 @@ html, body {
 	padding: 15px 0;
 	}
 
-
-
 .brandLogo .main {
 	margin-right: 10px;
 	}
@@ -28,4 +26,8 @@ html, body {
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
 	color: inherit;
+	}
+
+.active {
+	background: #4FC3F7 !important;
 	}

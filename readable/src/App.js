@@ -4,7 +4,24 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CustomTheme from './Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import './App.css'
-import { main } from './utils/urls'
+import NotFound from './Component/NotFound'
+import HomePage from './Pages/HomePage'
+
+
+
+
+const main = [{
+  path: '/',
+  exact: false,
+  component: HomePage,
+  
+}, {
+  path: '*',
+  exact: false,
+  component: NotFound,
+}
+  /* And so on. */];
+
 
 class App extends Component {
   render() {
@@ -19,7 +36,6 @@ class App extends Component {
           <MuiThemeProvider theme={CustomTheme}>
             <Switch>
               {routeComponents}
-              
             </Switch>
           </MuiThemeProvider>
       </Router>

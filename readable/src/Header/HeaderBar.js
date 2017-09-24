@@ -6,46 +6,49 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import CategoryBox from '../Component/CategoryBox'
 import Grid from 'material-ui/Grid'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
-    minHeight: '150px'
+    minHeight: '150px',
   },
 })
 
-const HeaderBar = (props) => {
-  const classes = props.classes
-	return (
-	  <div className={classes.root}>
-      <Grid container spacing={24}>
-        <AppBar position="static" color="inherit">
-				  <Toolbar classes={{
-            root: props.classes.root
-          }}>
-            <Grid item md={2}>
-            </Grid>
-            <Grid item md={6} container={true} direction="column">
-              <div className="brandLogo">
-                
-                  <Typography type="title" color="inherit" className="main"><Link to={`/`}>#MakewithUdacity</Link></Typography>
-
-                
-                <Typography type="title" color="accent">/ Udacity Nanodegree Student's Projects
-                </Typography>
-              </div>
-              <CategoryBox/>
-            </Grid>
-            <Grid item md={4}/>
-          </Toolbar>
-        </AppBar>
-      </Grid>
-		</div>
-  )
+class HeaderBar extends React.Component {
+  render () {
+    const classes = this.props.classes
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <AppBar position="static" color="inherit">
+            <Toolbar classes={{
+              root: classes.root,
+            }}>
+              <Grid item md={2}>
+              </Grid>
+              <Grid item md={6} container={true} direction="column">
+                <div className="brandLogo">
+                  <Typography type="title" color="inherit"
+                              className="main">
+                    <Link to={`/`}>#MakewithUdacity</Link>
+                  </Typography>
+                  <Typography type="title" color="accent">
+                    / Udacity Nanodegree Student's Projects
+                  </Typography>
+                </div>
+                <CategoryBox selectCategory={this.props.selectCategory} />
+              </Grid>
+              <Grid item md={4}/>
+            </Toolbar>
+          </AppBar>
+        </Grid>
+      </div>
+    )
+  }
 }
 
 HeaderBar.propTypes = {
-	classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(HeaderBar)

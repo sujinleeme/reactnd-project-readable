@@ -6,8 +6,8 @@ import Button from 'material-ui/Button'
 
 import * as categories from '../api-server/categories'
 
-import { Link } from '../utils/react-router-patch'
-import { Urls } from '../utils/urls'
+import { Link } from '../Utils/react-router-patch'
+import { Urls } from '../Utils/urls'
 
 const styles = theme => {
   return ({
@@ -21,49 +21,72 @@ const styles = theme => {
       textTransform: 'capitalize',
     },
   })
-};
+}
 
-function doSomething(event) {
-	// eslint-disable-next-line no-console
-	console.log(event.currentTarget.getAttribute('data-something'));
+function doSomething (event) {
+  // eslint-disable-next-line no-console
+  console.log(event.currentTarget.getAttribute('data-something'))
 }
 
 class CategoryBox extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
-      categories: []
+      categories: [],
     }
   }
   
-  componentWillMount() {
+  componentWillMount () {
     this.setState({categories: categories.defaultData.categories})
   }
   
-  render() {
+  componentDidMount(){
+    const { categories } = this.state;
+  }
+  
+  handleChange = (e, value) => {
+    e.stopPropagation()
+    let categoryName = e.target.innerHTML
+    if (e.target.tagName !== 'SPAN'){
+      categoryName = e.target.childNodes[0].innerHTML
+    }
+    this.changeCategory(categoryName)
+  }
+  
+  changeCategory(name) {
+    this.props.selectCategory(name)
+    this.setState({ active: name })
+  }
+  
+  render () {
+    const { value } = this.state;
+    const { categories } = this.state;
     const props = this.props
-    const categories = this.state.categories
+    console.log({value})
     return (
       categories &&
       <div className='category_grp'>
         {categories.map(({name, path}) => (
-            <Button
-              key={path}
-              component={Link}
-              path={`${Urls.category.path}`}
-              params={{ categoryName: name }}
-              classes={{
-                root: props.classes.root,
-                label: props.classes.label,
-              }}>{name}
-            </Button>
-          ))}
+          <Button
+            key={path}
+            component={Link}
+            path={`${Urls.category.path}`}
+            params={{categoryName: name}}
+            className={this.state.active === name ? 'active' : ''}
+            classes={{
+              root: props.classes.root,
+              label: props.classes.label,
+            }}
+            onClick={this.handleChange}
+          >{name}
+          </Button>
+        ))}
       </div>)
   }
 }
 
 CategoryBox.propTypes = {
-	classes: PropTypes.object.isRequired
-};
+  classes: PropTypes.object.isRequired,
+}
 
 export default withStyles(styles)(CategoryBox)
