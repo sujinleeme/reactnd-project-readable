@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
-import { Link } from 'react-router-dom'
 
 import * as categories from '../api-server/categories'
 
+import { Link } from '../utils/react-router-patch'
+import { Urls } from '../utils/urls'
 
 const styles = theme => {
   return ({
@@ -45,33 +46,24 @@ class CategoryBox extends React.Component {
     return (
       categories &&
       <div className='category_grp'>
-        {categories.map((category, i) => (
-          <Link key={category.name}
-                to={{
-                  pathname: '/search',
-                  search: `${category.name}`,
-                  hash: '#'
-                }}>
-            <Button raised
-                    classes={{
-                      root: props.classes.root,
-                      label: props.classes.label,
-                    }}>{category.name}
+        {categories.map(({name, path}) => (
+            <Button
+              key={path}
+              component={Link}
+              path={`${Urls.category.path}`}
+              params={{ categoryName: name }}
+              classes={{
+                root: props.classes.root,
+                label: props.classes.label,
+              }}>{name}
             </Button>
-          </Link>
           ))}
       </div>)
   }
 }
 
 CategoryBox.propTypes = {
-	classes: PropTypes.object.isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      path: PropTypes.bool.isRequired
-    }).isRequired
-  ).isRequired
+	classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CategoryBox)

@@ -6,6 +6,7 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import CategoryBox from '../Component/CategoryBox'
 import Grid from 'material-ui/Grid'
+import {Link} from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -26,7 +27,10 @@ const HeaderBar = (props) => {
             </Grid>
             <Grid item md={6} container={true} direction="column">
               <div className="brandLogo">
-                <Typography type="title" color="inherit" className="main">#MakewithUdacity</Typography>
+                
+                  <Typography type="title" color="inherit" className="main"><Link to={`/`}>#MakewithUdacity</Link></Typography>
+
+                
                 <Typography type="title" color="accent">/ Udacity Nanodegree Student's Projects
                 </Typography>
               </div>

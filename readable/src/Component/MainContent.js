@@ -7,13 +7,18 @@ import Grid from 'material-ui/Grid'
 import PostList from './PostList'
 import PaperSheet from './PaperSheet'
 import CreatePost from './CreatePost'
-import {Link} from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
-function TabContainer(props) {
+
+
+import { Link } from '../utils/react-router-patch'
+import { Urls } from '../utils/urls'
+
+function PostContainer(props) {
   return <div>{props.children}</div>;
 }
 
-TabContainer.propTypes = {
+PostContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
@@ -27,40 +32,68 @@ const styles = theme => ({
 });
 
 class MainContent extends React.Component {
-  state = {
-    value: 0,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: 0
+    }
+  }
   
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
+  // handleChange = (event, value) => {
+  //   this.setState({ value });
+  // };
+  handleCallToRouter = (value) => {
+    console.log(this.props.history.location.pathname)
+    this.props.history.push(value);
+  }
   
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     const { value } = this.state;
-  
+    console.log(this.props.history.location.pathname);
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item md={2}/>
           <Grid item md={6} container={true} direction="column">
         <AppBar position="static"  color="inherit">
-          <Link to={{ pathname: '/roster/7' }}><Tabs value={value} onChange={this.handleChange}>
-            <Tab value={0} label="home" />
-            <Tab value={1} label="about"/>
-            <Tab value={2} label="contact"/>
-            <Tab value={3} label="faq"/>
+          <Tabs
+            value={this.props.history.location.pathname}
+            onChange={this.handleCallToRouter}
+          >
+            <Tab
+              label="Home"
+              value="/"
+              component={Link}
+              path={`${Urls.filter.path}`}
+              params={{ type: 'new' }}
+            >
+              <div>
+              </div>
+            </Tab>
+            <Tab
+              label="Portfolio"
+              value="/portfolio"
+            >
+              <div>
+              </div>
+            </Tab>
           </Tabs>
-          </Link>
+  
+          {/*<Tabs value={location} onChange={this.handleChange}>*/}
+            {/*<Tab value={0} label="home" containerElement={<Link to="/my-firs-tab-view" />} />*/}
+            {/*<Tab value={1} label="about"/>*/}
+            {/*<Tab value={2} label="contact"/>*/}
+          {/*</Tabs>*/}
         </AppBar>
-        {value === 0 && <TabContainer>
-          <CreatePost />
-          <PostList/>
-          <PostList/>
-          
-        </TabContainer>}
-        {value === 1 && <TabContainer><PostList/></TabContainer>}
-        {value === 2 && <TabContainer><PostList/></TabContainer>}
+        {/*{value === 0 && <PostContainer>*/}
+          {/*<CreatePost />*/}
+          {/*<PostList/>*/}
+          {/*<PostList/>*/}
+          {/**/}
+        {/*</PostContainer>}*/}
+        {/*{value === 1 && <PostContainer><PostList/></PostContainer>}*/}
+        {/*{value === 2 && <PostContainer><PostList/></PostContainer>}*/}
           </Grid>
           <Grid item md={2}>
             <PaperSheet />
@@ -76,4 +109,4 @@ MainContent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MainContent);
+export default withStyles(styles)(withRouter(MainContent));
