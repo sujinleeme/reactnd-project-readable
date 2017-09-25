@@ -124,7 +124,6 @@ const CustomTheme = createMuiTheme({
     }
   },
   
-  
   overrides: {
     MuiTypography: {
       title: {
@@ -152,8 +151,7 @@ const CustomTheme = createMuiTheme({
     },
     MuiPaper: {
       root: {
-        borderRadius: '0 !important',
-        boxShadow: 'none !important',
+        borderRadius: '0 !important'
       }
       
       

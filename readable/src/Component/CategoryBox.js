@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
+import { withRouter } from 'react-router-dom'
 
 import * as categories from '../api-server/categories'
-
-import { Link } from '../Utils/react-router-patch'
-import { Urls } from '../Utils/urls'
+import {Link} from 'react-router-dom'
 
 const styles = theme => {
   return ({
@@ -23,16 +22,12 @@ const styles = theme => {
   })
 }
 
-function doSomething (event) {
-  // eslint-disable-next-line no-console
-  console.log(event.currentTarget.getAttribute('data-something'))
-}
-
 class CategoryBox extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       categories: [],
+      active: ''
     }
   }
   
@@ -40,8 +35,24 @@ class CategoryBox extends React.Component {
     this.setState({categories: categories.defaultData.categories})
   }
   
+  componentWillReceiveProps(nextProps) {
+    const locationChanged = nextProps.location !== this.props.location
+    if (locationChanged) {
+      if (nextProps.location.state){
+        return this.changeCategory(nextProps.location.state.category)
+      }
+    }
+  }
+  
+  
   componentDidMount(){
-    const { categories } = this.state;
+    let categoryName;
+    if(this.props.location.search) {
+      categoryName = this.props.location.search.match(/\w+/)[0]
+      
+      this.changeCategory(categoryName)
+      return
+    }
   }
   
   handleChange = (e, value) => {
@@ -62,7 +73,8 @@ class CategoryBox extends React.Component {
     const { value } = this.state;
     const { categories } = this.state;
     const props = this.props
-    console.log({value})
+    const { match, location, history } = this.props
+    
     return (
       categories &&
       <div className='category_grp'>
@@ -70,8 +82,11 @@ class CategoryBox extends React.Component {
           <Button
             key={path}
             component={Link}
-            path={`${Urls.category.path}`}
-            params={{categoryName: name}}
+            to={{
+              pathname:'/category',
+              search: name,
+              state: { category: name }
+            }}
             className={this.state.active === name ? 'active' : ''}
             classes={{
               root: props.classes.root,
@@ -89,4 +104,4 @@ CategoryBox.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(CategoryBox)
+export default withRouter(withStyles(styles)(CategoryBox))

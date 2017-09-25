@@ -2,10 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
+import { withRouter, Link } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
-import { Link } from '../Utils/react-router-patch'
-import { Urls } from '../Utils/urls'
 
 const styles = theme => ({
   root: {
@@ -36,11 +35,14 @@ class MainTabs extends React.Component {
   
   handleChange = (event, value) => {
     this.setState({ value });
+    const {classes, currentCategory, location} = this.props
+  
   };
   
   render () {
     const {classes, currentCategory, location} = this.props
     const { value } = this.state;
+    console.log(currentCategory)
     const baseURL = `#/category/${currentCategory}/`
     return (
   
@@ -51,8 +53,11 @@ class MainTabs extends React.Component {
             label={name}
             value={0}
             component={Link}
-            path={`${baseURL}${Urls.filter.path}`}
-            params={{type: name}}
+            to={{
+              pathname: '/category',
+              search: `${currentCategory}?${name}`,
+              state: { tab: name }
+            }}
           />
         ))}
       </Tabs>
@@ -63,4 +68,4 @@ class MainTabs extends React.Component {
 
 MainTabs.propTypes = {}
 
-export default withStyles(styles)(MainTabs)
+export default withRouter(withStyles(styles)(MainTabs))

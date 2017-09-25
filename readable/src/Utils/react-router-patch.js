@@ -1,5 +1,6 @@
 /* https://github.com/zeit/next.js/ */
 
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp'
@@ -41,13 +42,14 @@ export class Link extends Component {
     params: PropTypes.object,
     query: PropTypes.object,
     hash: PropTypes.string,
+    state: PropTypes.object
   }
   
   render() {
     let to = this.props.to;
-    const { path, params, query, hash, ...rest } = this.props;
+    const { path, params, query, hash, state, ...rest } = this.props;
     if (path) {
-      to = getRouteHref(path, params, query, hash)
+      to = getRouteHref(path, params, query, hash, state)
     }
     return <ReactRouterLink {...rest} to={to} />
   }
@@ -55,7 +57,7 @@ export class Link extends Component {
 
 //  Function to get href
 //  Example: getRouteHref('/users/:userId', { userId: '123' }, { referrer: 'ads' }, 'section')
-export function getRouteHref(path, params, query, hash) {
+export function getRouteHref(path, params, query, hash, state) {
   const toPathRegexp = pathToRegexp.compile(path);
   let url;
   try {

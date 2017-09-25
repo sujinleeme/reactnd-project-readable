@@ -4,6 +4,7 @@ import MainContent from '../Component/MainContent'
 import CopyrightBar from '../Component/CopyrightBar'
 import HeaderBar from '../Header/HeaderBar'
 
+
 class HomePage extends React.Component {
   constructor (props) {
     super(props)
@@ -14,6 +15,7 @@ class HomePage extends React.Component {
     
     this.selectCategory = this.selectCategory.bind(this)
     this.selectTab = this.selectTab.bind(this)
+    
   
   }
   
@@ -34,7 +36,6 @@ class HomePage extends React.Component {
         <HeaderBar
           currentCategory={state.currentCategory}
           selectCategory={this.selectCategory}
-          
           {...props}/>
         <MainContent
           currentCategory={state.currentCategory}

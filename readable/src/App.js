@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import CustomTheme from './Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import './App.css'
-import NotFound from './Component/NotFound'
+import NotFound from './Pages/NotFound'
 import HomePage from './Pages/HomePage'
 
 
@@ -14,12 +14,16 @@ const main = [{
   path: '/',
   exact: false,
   component: HomePage,
-  
 }, {
   path: '*',
-  exact: false,
+  exact: true,
+  component: NotFound,
+},{
+  path: '/category(?)',
+  exact: true,
   component: NotFound,
 }
+
   /* And so on. */];
 
 
@@ -29,10 +33,12 @@ class App extends Component {
       <Route exact={!!exact}
              path={path}
              component={component}
-             key={key} />);
+             key={key}
+             {...this.props}
+      />);
   
     return (
-      <Router >
+      <Router location={this.props.location}>
           <MuiThemeProvider theme={CustomTheme}>
             <Switch>
               {routeComponents}
