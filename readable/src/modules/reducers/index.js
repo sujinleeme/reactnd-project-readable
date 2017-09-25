@@ -1,14 +1,14 @@
 import {
   SELECT_CATEGORY,
   SELECT_TAB,
-} from '../Actions'
+} from '../actions/index'
 
 const initSelectState = {
   tab: null,
   category: null,
 }
 
-function selection (state = initSelectState, action) {
+const changeRoute = (state = initSelectState, action) => {
   const {tab, category} = action
   switch (action.type) {
     case SELECT_CATEGORY:
@@ -29,4 +29,4 @@ function selection (state = initSelectState, action) {
   }
 }
 
-export default selection
+export default changeRoute

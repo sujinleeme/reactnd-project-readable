@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import MainContent from '../Component/MainContent'
-import CopyrightBar from '../Component/CopyrightBar'
+import MainContent from '../components/MainContent'
+import CopyrightBar from '../components/CopyrightBar'
 import HeaderBar from '../Header/HeaderBar'
-
+import { selectCategory } from '../modules/actions'
 
 class HomePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentCategory: 'react',
-      currentTab: 'hot',
+      currentCategory: 'null',
+      currentTab: 'null',
     }
     
     this.selectCategory = this.selectCategory.bind(this)
