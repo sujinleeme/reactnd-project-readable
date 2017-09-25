@@ -22,26 +22,22 @@ const styles = theme => ({
 class MainContent extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      value: 0,
-    }
   }
-  
   render () {
-    const {classes, location} = this.props
-    const {value} = this.state
-    console.log('CLICK')
-    
+    const {classes, currentCategory, currentTab} = this.props
+    console.log(currentCategory)
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item md={2}/>
           <Grid item md={6} container={true} direction="column">
               <MainTabs
-                currentCategory={this.props.currentCategory}/>
-            
+                currentCategory={this.props.currentCategory}
+                currentTab={currentTab}
+                selectCategory={this.props.selectCategory}
+                selectTab={this.props.selectTab}
+              />
             <PostContainer />
-          
           </Grid>
           <Grid item md={2}>
             <PaperSheet/>

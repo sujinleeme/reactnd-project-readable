@@ -15,6 +15,10 @@ const styles = theme => ({
 })
 
 class HeaderBar extends React.Component {
+  constructor (props) {
+    super(props)
+  }
+  
   render () {
     const classes = this.props.classes
     return (
@@ -36,7 +40,11 @@ class HeaderBar extends React.Component {
                     / Udacity Nanodegree Student's Projects
                   </Typography>
                 </div>
-                <CategoryBox selectCategory={this.props.selectCategory} />
+                <CategoryBox
+                  selectCategory={this.props.selectCategory}
+                  currentTab={this.props.currentTab}
+                  currentCategory={this.props.currentCategory}
+                />
               </Grid>
               <Grid item md={4}/>
             </Toolbar>

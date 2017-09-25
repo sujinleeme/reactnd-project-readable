@@ -15,8 +15,6 @@ class HomePage extends React.Component {
     
     this.selectCategory = this.selectCategory.bind(this)
     this.selectTab = this.selectTab.bind(this)
-    
-  
   }
   
   selectCategory(name) {
@@ -29,20 +27,20 @@ class HomePage extends React.Component {
   
   
   render () {
-    const props = this.props
-    const state = this.state
+    const {currentCategory, currentTab} = this.state
     return (
       <div>
         <HeaderBar
-          currentCategory={state.currentCategory}
+          currentCategory={currentCategory}
+          currentTab={currentTab}
           selectCategory={this.selectCategory}
-          {...props}/>
+          />
         <MainContent
-          currentCategory={state.currentCategory}
-          currentTab={state.currentCategory}
+          currentCategory={currentCategory}
+          currentTab={currentTab}
           selectCategory={this.selectCategory}
           selectTab={this.selectTab}
-          {...props}/>
+          />
         <CopyrightBar/>
       </div>
     )

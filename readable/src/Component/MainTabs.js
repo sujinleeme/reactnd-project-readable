@@ -11,41 +11,42 @@ const styles = theme => ({
     width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.A300,
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
 })
 
 const tabList = ['hot', 'comments', 'new']
 
-function TabContainer(props) {
-  return <div>{props.children}</div>;
+function TabContainer (props) {
+  return <div>{props.children}</div>
 }
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
-};
-
-
+}
 
 class MainTabs extends React.Component {
   
   state = {
     value: 0,
-  };
+    tabName: tabList[0],
+  }
   
-  handleChange = (event, value) => {
-    this.setState({ value });
-    const {classes, currentCategory, location} = this.props
+  handleChange = (e, value) => {
+    e.stopPropagation()
+    this.setState({value})
+    
+  }
   
-  };
+  componentDidMount () {
+  }
   
   render () {
-    const {classes, currentCategory, location} = this.props
-    const { value } = this.state;
+    const {classes, currentCategory, currentTab, location} = this.props
+    const {value} = this.state
     console.log(currentCategory)
     const baseURL = `#/category/${currentCategory}/`
     return (
-  
       <Tabs className={classes.root} value={value} onChange={this.handleChange}>
         {tabList.map((name) => (
           <Tab
@@ -54,14 +55,14 @@ class MainTabs extends React.Component {
             value={0}
             component={Link}
             to={{
-              pathname: '/category',
-              search: `${currentCategory}?${name}`,
-              state: { tab: name }
+              pathname: `/category/${currentCategory}`,
+              search: name,
+              state: {tab: name},
             }}
           />
         ))}
       </Tabs>
-
+    
     )
   }
 }

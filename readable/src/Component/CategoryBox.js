@@ -44,19 +44,17 @@ class CategoryBox extends React.Component {
     }
   }
   
-  
   componentDidMount(){
     let categoryName;
-    if(this.props.location.search) {
-      categoryName = this.props.location.search.match(/\w+/)[0]
-      
+    if(this.props.location) {
+      const path = this.props.location.pathname
+      categoryName = path.split('/')[2]
       this.changeCategory(categoryName)
       return
     }
   }
   
   handleChange = (e, value) => {
-    e.stopPropagation()
     let categoryName = e.target.innerHTML
     if (e.target.tagName !== 'SPAN'){
       categoryName = e.target.childNodes[0].innerHTML
@@ -70,11 +68,9 @@ class CategoryBox extends React.Component {
   }
   
   render () {
-    const { value } = this.state;
     const { categories } = this.state;
     const props = this.props
-    const { match, location, history } = this.props
-    
+    const { match, location, history, currentTab } = this.props
     return (
       categories &&
       <div className='category_grp'>
@@ -83,8 +79,8 @@ class CategoryBox extends React.Component {
             key={path}
             component={Link}
             to={{
-              pathname:'/category',
-              search: name,
+              pathname:`/category/${name}`,
+              search: currentTab,
               state: { category: name }
             }}
             className={this.state.active === name ? 'active' : ''}
