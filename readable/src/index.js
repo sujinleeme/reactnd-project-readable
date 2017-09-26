@@ -1,30 +1,29 @@
-
 import NotFound from './pages/NotFound'
 import HomePage from './pages/HomePage'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './App'
+
+import './index.css'
 
 import {
   BrowserRouter as Router, Route, Switch, Redirect,
 } from 'react-router-dom'
 
-import CustomTheme from './Theme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
-import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import reducers from './modules/reducers'
+
+
 import createHistory from 'history/createBrowserHistory'
 import registerServiceWorker from './registerServiceWorker'
-import {
-  ConnectedRouter, routerReducer, routerMiddleware, push,
-} from 'react-router-redux'
 
-import reducers from './modules/reducers'
+import CustomTheme from './Theme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 // Create a history of your choosing (we're using a browser history in this
 // case)
@@ -38,51 +37,22 @@ const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if
   // needed
 })
-// Also apply our middleware for navigating
+
 const store = createStore(
-  combineReducers({
-    ...reducers,
-    router: routerReducer,
-  }),
+  reducers,
+  
   composeEnhancers(
     applyMiddleware(middleware),
   ),
 )
 
-console.log(store)
-const main = [
-  {
-    path: '/',
-    exact: false,
-    component: HomePage,
-  }, {
-    path: '*',
-    exact: true,
-    component: NotFound,
-  }, {
-    path: '*',
-    exact: true,
-    component: NotFound,
-  },
-  
-  /* And so on. */]
-
-const routeComponents = main.map(({path, exact, component}, key) =>
-  <Route exact={!!exact}
-         path={path}
-         component={component}
-         key={key}
-         {...this.props}
-  />)
-
 ReactDOM.render(
   <Provider store={store}>
-    {/* ConnectedRouter will use the store from Provider automatically */}
     <ConnectedRouter history={history}>
       <Router>
         <MuiThemeProvider theme={CustomTheme}>
           <Switch>
-            {routeComponents}
+            <App />
           </Switch>
         </MuiThemeProvider>
       </Router>
@@ -90,4 +60,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 )
-registerServiceWorker();
+registerServiceWorker()

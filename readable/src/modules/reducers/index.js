@@ -1,27 +1,36 @@
+import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
+
 import {
   SELECT_CATEGORY,
   SELECT_TAB,
-} from '../actions/index'
+} from '../actions'
 
 const initSelectState = {
   tab: null,
   category: null,
 }
 
-const changeRoute = (state = initSelectState, action) => {
+
+const menu = (state = initSelectState, action) => {
   const {tab, category} = action
+  
   switch (action.type) {
     case SELECT_CATEGORY:
       return {
         ...state,
-        tab,
-        category
+        currentMenu : {
+          [tab] : tab,
+          [category]: category
+        }
       }
     case SELECT_TAB:
       return {
         ...state,
-        tab,
-        category
+        currentMenu : {
+          [tab] : tab,
+          [category]: category
+        }
       }
     default :
       return state
@@ -29,4 +38,7 @@ const changeRoute = (state = initSelectState, action) => {
   }
 }
 
-export default changeRoute
+export default combineReducers({
+  menu,
+  routerReducer,
+})

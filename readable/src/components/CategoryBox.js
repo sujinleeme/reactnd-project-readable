@@ -63,7 +63,7 @@ class CategoryBox extends React.Component {
   }
   
   changeCategory(name) {
-    this.props.selectCategory(name)
+    // this.props.selectCategory(name)
     this.setState({ active: name })
   }
   
