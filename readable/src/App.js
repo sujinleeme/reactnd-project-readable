@@ -40,12 +40,11 @@ class App extends Component {
   
   init () {
     const {changeCategory, changeTab, selectMenu, location} = this.props
-    console.log(location)
     if(location) {
-      // const path = location.pathname
       const categoryName = location.state.category
+      const tabName = location.state.tab
       changeCategory({category: categoryName})
-      changeTab({tab: selectMenu.tab})
+      changeTab({tab: tabName})
     }
     else {
       changeCategory({category: selectMenu.category})

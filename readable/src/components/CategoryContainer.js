@@ -42,14 +42,16 @@ class CategoryContainer extends React.Component {
   
   handleChange = (e, value) => {
     e.stopPropagation()
-    const {changeCategory, changeRoute} = this.props
+    const {changeCategory, selectMenu, changeRoute} = this.props
+    const tabName = selectMenu.tab
+  
     let categoryName = e.target.innerHTML
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
       
     }
     changeCategory({category: categoryName})
-    changeRoute(`/category/${categoryName}`)
+    changeRoute(`/category/${categoryName}?=${tabName}`)
   }
   
   render () {

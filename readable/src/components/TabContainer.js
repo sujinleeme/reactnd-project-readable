@@ -23,15 +23,39 @@ class TabContainer extends React.Component {
   
   state = {
     value: 0,
-    tabName: tabList[0],
+    tabName: '',
+  }
+  
+  componentDidMount() {
+    const {selectMenu} = this.props
+    const categoryName = selectMenu.category
+    // const tabName = selectMenu.tab
+    // const tabNum = tabList.indexOf(tabName)
+    // console.log(tabName)
+    // this.setState({value: tabNum})
+    // this.handleTab(tabName, categoryName)
+  
   }
   
   handleChange = (e, value) => {
     e.stopPropagation()
     this.setState({value})
-    
-    
+    const {changeTab, selectMenu} = this.props
+    const categoryName = selectMenu.category
+  
+    let tabName = e.target.innerHTML
+    if (e.target.tagName !== 'SPAN') {
+      tabName = e.target.childNodes[0].innerHTML
+      this.updateTab(tabName, categoryName)
+    }
   }
+  
+  updateTab(tab, category) {
+    const {changeTab, changeRoute} = this.props
+    changeTab({tab: tab})
+    changeRoute(`/category/${category}?=${tab}`)
+  }
+  
   
   render () {
     const {classes } = this.props
