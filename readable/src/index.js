@@ -1,5 +1,3 @@
-import NotFound from './pages/NotFound'
-import HomePage from './pages/HomePage'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -25,6 +23,8 @@ import registerServiceWorker from './registerServiceWorker'
 import CustomTheme from './Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import { configureStore } from './modules/store'
+
 // Create a history of your choosing (we're using a browser history in this
 // case)
 const history = createHistory()
@@ -38,7 +38,7 @@ const composeEnhancers = composeWithDevTools({
   // needed
 })
 
-const store = createStore(
+export const store = createStore(
   reducers,
   
   composeEnhancers(
@@ -52,7 +52,7 @@ ReactDOM.render(
       <Router>
         <MuiThemeProvider theme={CustomTheme}>
           <Switch>
-            <App />
+            <App store={store}/>
           </Switch>
         </MuiThemeProvider>
       </Router>
@@ -60,4 +60,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 )
+
+
 registerServiceWorker()

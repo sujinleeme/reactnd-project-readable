@@ -25,7 +25,6 @@ class MainContent extends React.Component {
   }
   render () {
     const {classes, currentCategory, currentTab} = this.props
-    console.log(currentCategory)
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>

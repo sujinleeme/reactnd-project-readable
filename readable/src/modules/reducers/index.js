@@ -12,25 +12,20 @@ const initSelectState = {
 }
 
 
-const menu = (state = initSelectState, action) => {
+const currentMenu = (state = initSelectState, action) => {
   const {tab, category} = action
   
   switch (action.type) {
     case SELECT_CATEGORY:
       return {
         ...state,
-        currentMenu : {
-          [tab] : tab,
-          [category]: category
-        }
+        category: category
+        
       }
     case SELECT_TAB:
       return {
         ...state,
-        currentMenu : {
-          [tab] : tab,
-          [category]: category
-        }
+        tab: tab
       }
     default :
       return state
@@ -39,6 +34,6 @@ const menu = (state = initSelectState, action) => {
 }
 
 export default combineReducers({
-  menu,
+  currentMenu,
   routerReducer,
 })

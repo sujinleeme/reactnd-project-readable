@@ -44,7 +44,6 @@ class MainTabs extends React.Component {
   render () {
     const {classes, currentCategory, currentTab, location} = this.props
     const {value} = this.state
-    console.log(currentCategory)
     const baseURL = `#/category/${currentCategory}/`
     return (
       <Tabs className={classes.root} value={value} onChange={this.handleChange}>

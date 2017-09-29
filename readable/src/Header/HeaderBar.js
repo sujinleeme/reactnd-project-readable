@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import CategoryBox from '../components/CategoryBox'
+import CategoryContainer from '../components/CategoryContainer'
 import Grid from 'material-ui/Grid'
 import { Link } from 'react-router-dom'
 
@@ -21,6 +21,7 @@ class HeaderBar extends React.Component {
   
   render () {
     const classes = this.props.classes
+    
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
@@ -40,11 +41,7 @@ class HeaderBar extends React.Component {
                     / Udacity Nanodegree Student's Projects
                   </Typography>
                 </div>
-                <CategoryBox
-                  selectCategory={this.props.selectCategory}
-                  currentTab={this.props.currentTab}
-                  currentCategory={this.props.currentCategory}
-                />
+                <CategoryContainer />
               </Grid>
               <Grid item md={4}/>
             </Toolbar>
