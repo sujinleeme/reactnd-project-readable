@@ -38,7 +38,7 @@ class HeaderBar extends React.Component {
                     <Link to={`/`}>#MakewithUdacity</Link>
                   </Typography>
                   <Typography type="title" color="accent">
-                    / Udacity Nanodegree Student's Projects
+                    / Udacity Nanodegree Student's Projects Showcase
                   </Typography>
                 </div>
                 <CategoryContainer />

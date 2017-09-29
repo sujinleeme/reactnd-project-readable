@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import AppBar from 'material-ui/AppBar'
 import { withRouter, Link } from 'react-router-dom'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -17,15 +16,7 @@ const styles = theme => ({
 
 const tabList = ['hot', 'comments', 'new']
 
-function TabContainer (props) {
-  return <div>{props.children}</div>
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
-class MainTabs extends React.Component {
+class TabContainer extends React.Component {
   
   state = {
     value: 0,
@@ -66,6 +57,6 @@ class MainTabs extends React.Component {
   }
 }
 
-MainTabs.propTypes = {}
+TabContainer.propTypes = {}
 
-export default withRouter(withStyles(styles)(MainTabs))
+export default withRouter(withStyles(styles)(TabContainer))

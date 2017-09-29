@@ -5,7 +5,7 @@ import Grid from 'material-ui/Grid'
 import PostContainer from './PostContainer'
 import PaperSheet from './PaperSheet'
 import CreatePost from './CreatePost'
-import MainTabs from './MainTabs'
+import TabContainer from './TabContainer'
 import { withStyles } from 'material-ui/styles'
 
 
@@ -30,12 +30,7 @@ class MainContent extends React.Component {
         <Grid container spacing={24}>
           <Grid item md={2}/>
           <Grid item md={6} container={true} direction="column">
-              <MainTabs
-                currentCategory={this.props.currentCategory}
-                currentTab={currentTab}
-                selectCategory={this.props.selectCategory}
-                selectTab={this.props.selectTab}
-              />
+              <TabContainer />
             <PostContainer />
           </Grid>
           <Grid item md={2}>

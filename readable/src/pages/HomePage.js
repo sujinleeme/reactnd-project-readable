@@ -4,16 +4,7 @@ import MainContent from '../components/MainContent'
 import CopyrightBar from '../components/CopyrightBar'
 import HeaderBar from '../Header/HeaderBar'
 
-class HomePage extends React.Component {
-  constructor (props, context) {
-    super(props, context)
-  }
-  
-  componentDidMount() {
-    const props = this.props;
-  }
-  render () {
-    console.log(this.props.store)
+const HomePage = () => {
     return (
       <div>
         <HeaderBar/>
@@ -21,8 +12,6 @@ class HomePage extends React.Component {
         <CopyrightBar/>
       </div>
     )
-  }
-  
 }
 
 HomePage.propTypes = {}

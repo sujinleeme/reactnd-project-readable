@@ -5,7 +5,7 @@ import Grid from 'material-ui/Grid'
 import PostList from './PostList'
 import PaperSheet from './PaperSheet'
 import CreatePost from './CreatePost'
-import MainTabs from './MainTabs'
+import MainTabs from './TabContainer'
 import { withStyles } from 'material-ui/styles'
 
 
