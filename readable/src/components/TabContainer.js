@@ -2,7 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 
+import { selectTab } from '../modules/actions'
 import Tabs, { Tab } from 'material-ui/Tabs'
 
 const styles = theme => ({
@@ -27,15 +30,15 @@ class TabContainer extends React.Component {
     e.stopPropagation()
     this.setState({value})
     
-  }
-  
-  componentDidMount () {
+    
   }
   
   render () {
-    const {classes, currentCategory, currentTab, location} = this.props
+    const {classes } = this.props
     const {value} = this.state
-    const baseURL = `#/category/${currentCategory}/`
+    const props = this.props
+    const currentCategory = props.selectMenu.category
+    const currentTab = props.selectMenu.tab
     return (
       <Tabs className={classes.root} value={value} onChange={this.handleChange}>
         {tabList.map((name) => (
@@ -45,9 +48,8 @@ class TabContainer extends React.Component {
             value={0}
             component={Link}
             to={{
-              pathname: `/category/${currentCategory}`,
-              search: name,
-              state: {tab: name},
+              pathname: `/category/${currentCategory}?=${name}`,
+              state: {category: currentCategory, tab: name},
             }}
           />
         ))}
@@ -59,4 +61,23 @@ class TabContainer extends React.Component {
 
 TabContainer.propTypes = {}
 
-export default withRouter(withStyles(styles)(TabContainer))
+const mapStateToProps = (state) => {
+  
+  return {
+    selectMenu: {
+      category: state.currentMenu.category,
+      tab: state.currentMenu.tab,
+    },
+    
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeTab: (data) => dispatch(selectTab(data)),
+    changeRoute: (url) => dispatch(push(url)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(withStyles(styles)(TabContainer)))
