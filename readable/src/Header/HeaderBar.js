@@ -14,42 +14,35 @@ const styles = theme => ({
   },
 })
 
-class HeaderBar extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  
-  render () {
-    const classes = this.props.classes
-    
-    return (
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <AppBar position="static" color="inherit">
-            <Toolbar classes={{
-              root: classes.root,
-            }}>
-              <Grid item md={2}>
-              </Grid>
-              <Grid item md={6} container={true} direction="column">
-                <div className="brandLogo">
-                  <Typography type="title" color="inherit"
-                              className="main">
-                    <Link to={`/`}>#MakewithUdacity</Link>
-                  </Typography>
-                  <Typography type="title" color="accent">
-                    / Udacity Nanodegree Student's Projects Showcase
-                  </Typography>
-                </div>
-                <CategoryContainer />
-              </Grid>
-              <Grid item md={4}/>
-            </Toolbar>
-          </AppBar>
-        </Grid>
-      </div>
-    )
-  }
+const HeaderBar = (props) => {
+  const classes = props.classes
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={24}>
+        <AppBar position="static" color="inherit">
+          <Toolbar classes={{
+            root: classes.root,
+          }}>
+            <Grid item md={2}>
+            </Grid>
+            <Grid item md={6} container={true} direction="column">
+              <div className="brandLogo">
+                <Typography type="title" color="inherit"
+                            className="main">
+                  <Link to={`/`}>#MakewithUdacity</Link>
+                </Typography>
+                <Typography type="title" color="accent">
+                  / Udacity Nanodegree Student's Projects Showcase
+                </Typography>
+              </div>
+              <CategoryContainer/>
+            </Grid>
+            <Grid item md={4}/>
+          </Toolbar>
+        </AppBar>
+      </Grid>
+    </div>
+  )
 }
 
 HeaderBar.propTypes = {

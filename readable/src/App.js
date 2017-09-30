@@ -33,14 +33,17 @@ const routeComponents = main.map(
     />)
 
 class App extends Component {
-  
   componentDidMount () {
     this.init()
   }
   
+  componentWillReceiveProps (nextProps) {
+    this.browserPageMove(nextProps)
+  }
+  
   init () {
     const {changeCategory, changeTab, selectMenu, location} = this.props
-    if(location) {
+    if (location.state) {
       const categoryName = location.state.category
       const tabName = location.state.tab
       changeCategory({category: categoryName})
@@ -51,9 +54,6 @@ class App extends Component {
     }
   }
   
-
-  
-  
   browserPageMove (nextProps) {
     const {changeCategory, location} = this.props
     const locationChanged = nextProps.location !== this.props.location
@@ -63,10 +63,6 @@ class App extends Component {
         return changeCategory({category: categoryName})
       }
     }
-  }
-  
-  componentWillReceiveProps (nextProps) {
-    this.browserPageMove(nextProps)
   }
   
   render () {

@@ -23,54 +23,42 @@ class TabContainer extends React.Component {
   
   state = {
     value: 0,
-    tabName: '',
-  }
-  
-  componentDidMount() {
-    const {selectMenu} = this.props
-    const categoryName = selectMenu.category
-    // const tabName = selectMenu.tab
-    // const tabNum = tabList.indexOf(tabName)
-    // console.log(tabName)
-    // this.setState({value: tabNum})
-    // this.handleTab(tabName, categoryName)
-  
   }
   
   handleChange = (e, value) => {
     e.stopPropagation()
-    this.setState({value})
     const {changeTab, selectMenu} = this.props
     const categoryName = selectMenu.category
-  
-    let tabName = e.target.innerHTML
-    if (e.target.tagName !== 'SPAN') {
-      tabName = e.target.childNodes[0].innerHTML
-      this.updateTab(tabName, categoryName)
-    }
+    const tabName = (value < 0 ? tabList[0] : tabList[value])
+    this.updateTab(tabName, value, categoryName)
   }
   
-  updateTab(tab, category) {
+  updateTab (tab, tabIndex, category) {
     const {changeTab, changeRoute} = this.props
     changeTab({tab: tab})
     changeRoute(`/category/${category}?=${tab}`)
+    this.setState({value: tabIndex})
   }
   
-  
   render () {
-    const {classes } = this.props
+    const {classes} = this.props
     const {value} = this.state
     const props = this.props
     const currentCategory = props.selectMenu.category
     const currentTab = props.selectMenu.tab
+    
+    const tabIndex = (currentTab ? tabList.indexOf(currentTab) : 0)
+    
+    console.log(tabIndex)
     return (
-      <Tabs className={classes.root} value={value} onChange={this.handleChange}>
-        {tabList.map((name) => (
+      <Tabs className={classes.root} value={tabIndex}
+            onChange={this.handleChange}>
+        {tabList.map((name, index) => (
           <Tab
             key={name}
             label={name}
-            value={0}
             component={Link}
+            value={index}
             to={{
               pathname: `/category/${currentCategory}?=${name}`,
               state: {category: currentCategory, tab: name},
@@ -86,7 +74,7 @@ class TabContainer extends React.Component {
 TabContainer.propTypes = {}
 
 const mapStateToProps = (state) => {
-  
+  console.log(state)
   return {
     selectMenu: {
       category: state.currentMenu.category,

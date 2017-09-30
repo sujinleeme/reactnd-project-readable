@@ -2,16 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
-import Button from 'material-ui/Button'
-import { withRouter } from 'react-router-dom'
+import { Button } from 'material-ui'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-
-import { Link } from 'react-router-dom'
+import {} from 'react-router-dom'
 import { selectCategory, selectTab } from '../modules/actions'
 import * as categories from '../api-server/categories'
-
-// import { store } from '../index.js'
 
 const styles = theme => {
   return ({
@@ -28,27 +25,21 @@ const styles = theme => {
 }
 
 class CategoryContainer extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      categories: [],
-    }
-    
+  state = {
+    categories: [],
   }
   
   componentWillMount () {
     this.setState({categories: categories.defaultData.categories})
   }
   
-  handleChange = (e, value) => {
+  handleChange = (e) => {
     e.stopPropagation()
     const {changeCategory, selectMenu, changeRoute} = this.props
     const tabName = selectMenu.tab
-  
     let categoryName = e.target.innerHTML
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
-      
     }
     changeCategory({category: categoryName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
@@ -76,6 +67,7 @@ class CategoryContainer extends React.Component {
               root: props.classes.root,
               label: props.classes.label,
             }}
+            value={name}
             onClick={this.handleChange}
           >{name}
           </Button>
@@ -89,20 +81,17 @@ CategoryContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  
   return {
     selectMenu: {
       category: state.currentMenu.category,
       tab: state.currentMenu.tab,
     },
-    
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeCategory: (data) => dispatch(selectCategory(data)),
-    changeTab: (data) => dispatch(selectTab(data)),
     changeRoute: (url) => dispatch(push(url)),
   }
 }

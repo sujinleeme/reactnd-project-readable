@@ -1,4 +1,3 @@
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
@@ -11,11 +10,10 @@ import {
 
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { Provider, connect } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+import { createStore, applyMiddleware } from 'redux'
 import reducers from './modules/reducers'
-
 
 import createHistory from 'history/createBrowserHistory'
 import registerServiceWorker from './registerServiceWorker'
@@ -60,6 +58,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 )
-
 
 registerServiceWorker()
