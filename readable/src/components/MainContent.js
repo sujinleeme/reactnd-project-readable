@@ -8,14 +8,12 @@ import CreatePost from './CreatePost'
 import TabContainer from './TabContainer'
 import { withStyles } from 'material-ui/styles'
 
-
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
     paddingTop: theme.spacing.unit * 3,
     backgroundColor: theme.palette.background.A300,
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
 })
 
@@ -23,6 +21,7 @@ class MainContent extends React.Component {
   constructor (props) {
     super(props)
   }
+  
   render () {
     const {classes, currentCategory, currentTab} = this.props
     return (
@@ -30,8 +29,8 @@ class MainContent extends React.Component {
         <Grid container spacing={24}>
           <Grid item md={2}/>
           <Grid item md={6} container={true} direction="column">
-              <TabContainer />
-            <PostContainer />
+            <TabContainer/>
+            <PostContainer/>
           </Grid>
           <Grid item md={2}>
             <PaperSheet/>

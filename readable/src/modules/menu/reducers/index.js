@@ -4,7 +4,7 @@ import { routerReducer } from 'react-router-redux'
 import {
   SELECT_CATEGORY,
   SELECT_TAB,
-} from '../actions'
+} from '../actions/index'
 
 const initSelectState = {
   tab: null,

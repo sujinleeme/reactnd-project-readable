@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectCategory, selectTab } from './modules/actions'
+import { selectCategory, selectTab } from './modules/menu/actions'
 
 import { push } from 'react-router-redux'
-import { bindActionCreators } from 'redux'
 
-import NotFound from './pages/NotFound'
-import HomePage from './pages/HomePage'
+import NotFound from './components/pages/NotFound'
+import HomePage from './components/pages/HomePage'
 
 import * as categories from './api-server/categories'
+import * as tabs from './api-server/tabs'
 
 const main = [
   {
@@ -55,7 +55,7 @@ class App extends Component {
   }
   
   browserPageMove (nextProps) {
-    const {changeCategory, location} = this.props
+    const {changeCategory} = this.props
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
       if (nextProps.location.state) {
@@ -80,12 +80,12 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   const categoryList = categories.defaultData.categories
-  const tabList = ['hot', 'commnet', 'udacity']
+  const tabList = tabs.defaultData.tabs
   
   return {
     selectMenu: {
       category: categoryList[0].path,
-      tab: tabList[0],
+      tab: tabList[0].path,
     },
   }
 }

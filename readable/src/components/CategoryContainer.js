@@ -7,7 +7,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {} from 'react-router-dom'
-import { selectCategory, selectTab } from '../modules/actions'
+import { selectCategory, selectTab } from '../modules/menu/actions'
 import * as categories from '../api-server/categories'
 
 const styles = theme => {

@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { selectTab } from '../modules/actions'
+import { selectTab } from '../modules/menu/actions'
 import Tabs, { Tab } from 'material-ui/Tabs'
 
 const styles = theme => ({
