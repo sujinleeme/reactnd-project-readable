@@ -11,15 +11,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { createStore, applyMiddleware } from 'redux'
-import reducers from './modules/menu/reducers'
+import thunk from 'redux-thunk'
+
+import reducers from './modules/root/rootReducer'
 
 import createHistory from 'history/createBrowserHistory'
 import registerServiceWorker from './registerServiceWorker'
 
 import CustomTheme from './Theme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-
-import { configureStore } from './modules/menu/store'
 
 // Create a history of your choosing (we're using a browser history in this
 // case)
@@ -28,7 +28,7 @@ const history = createHistory()
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history)
 
-// Add the reducer to your store on the `router` key
+// Add the reducer to your configStore on the `router` key
 const composeEnhancers = composeWithDevTools({
   // Specify name here, actionsBlacklist, actionsCreators and other options if
   // needed
@@ -38,7 +38,7 @@ export const store = createStore(
   reducers,
   
   composeEnhancers(
-    applyMiddleware(middleware),
+    applyMiddleware(middleware, thunk),
   ),
 )
 

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MainContent from '../MainContent'
 import CopyrightBar from '../CopyrightBar'
-import HeaderBar from '../../Header/HeaderBar'
+import HeaderBar from '../Header/HeaderBar'
 
 const HomePage = () => {
     return (

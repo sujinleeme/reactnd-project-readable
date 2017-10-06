@@ -6,9 +6,9 @@ import { Button } from 'material-ui'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import {} from 'react-router-dom'
-import { selectCategory, selectTab } from '../modules/menu/actions'
-import * as categories from '../api-server/categories'
+import {
+  selectCategory, categoryFetchData, tabFetchData,
+} from '../modules/menu/actions'
 
 const styles = theme => {
   return ({
@@ -25,12 +25,23 @@ const styles = theme => {
 }
 
 class CategoryContainer extends React.Component {
-  state = {
-    categories: [],
+  componentDidMount () {
+    // this.browserFreshing()
   }
   
-  componentWillMount () {
-    this.setState({categories: categories.defaultData.categories})
+  componentWillReceiveProps (nextProps) {
+    this.init(nextProps)
+    // this.browserPageMove(nextProps)
+  }
+  
+  init (nextProps) {
+    //
+    // let categoryName = nextProps.selectMenu.category
+    //
+    // if (!categoryName && nextProps.categories.length) {
+    //   return this.props.changeCategory({category: nextProps.categories[0].name})
+    // }
+    
   }
   
   handleChange = (e) => {
@@ -41,20 +52,21 @@ class CategoryContainer extends React.Component {
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
     }
+    console.log(categoryName)
     changeCategory({category: categoryName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
   }
   
   render () {
-    const {categories} = this.state
     const props = this.props
-    const currentCategory = props.selectMenu.category
+    const categoryItems = props.categories
     const currentTab = props.selectMenu.tab
+    const currentCategory = props.selectMenu.category
     
     return (
-      categories &&
+      categoryItems &&
       <div className='category_grp'>
-        {categories.map(({name, path}) => (
+        {categoryItems.map(({name, path}) => (
           <Button
             key={path}
             component={Link}
@@ -86,6 +98,7 @@ const mapStateToProps = (state) => {
       category: state.currentMenu.category,
       tab: state.currentMenu.tab,
     },
+    categories: state.categories,
   }
 }
 
@@ -93,6 +106,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeCategory: (data) => dispatch(selectCategory(data)),
     changeRoute: (url) => dispatch(push(url)),
+    fetchCategoryList: () => dispatch(categoryFetchData()),
+    fetchTabList: () => dispatch(tabFetchData()),
   }
 }
 

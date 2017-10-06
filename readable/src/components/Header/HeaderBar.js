@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import CategoryContainer from '../components/CategoryContainer'
+import CategoryContainer from '../CategoryContainer'
 import Grid from 'material-ui/Grid'
 import { Link } from 'react-router-dom'
 

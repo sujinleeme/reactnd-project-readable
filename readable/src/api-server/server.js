@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const config = require('./config')
 const categories = require('./categories')
+const tabs = require('./tabs')
 const posts = require('./posts')
 const comments = require('./comments')
 
@@ -127,7 +128,7 @@ app.use((req, res, next) => {
 
 
 app.get('/categories', (req, res) => {
-    categories.getAll(req.token)
+  categories.getAll(req.token)
       .then(
           (data) => res.send(data),
           (error) => {
@@ -137,6 +138,19 @@ app.get('/categories', (req, res) => {
               })
           }
       )
+})
+
+app.get('/tabs', (req, res) => {
+  tabs.getAll(req.token)
+  .then(
+    (data) => res.send(data),
+    (error) => {
+      console.error(error)
+      res.status(500).send({
+        error: 'There was an error.'
+      })
+    }
+  )
 })
 
 app.get('/:category/posts', (req, res) => {

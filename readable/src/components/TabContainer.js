@@ -5,7 +5,8 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { selectTab } from '../modules/menu/actions'
+import { selectTab, tabFetchData } from '../modules/menu/actions'
+
 import Tabs, { Tab } from 'material-ui/Tabs'
 
 const styles = theme => ({
@@ -17,21 +18,38 @@ const styles = theme => ({
   },
 })
 
-const tabList = ['hot', 'comments', 'new']
 
 class TabContainer extends React.Component {
   
   state = {
     value: 0,
+    tabList: []
+    
   }
   
   handleChange = (e, value) => {
     e.stopPropagation()
-    const {changeTab, selectMenu} = this.props
+    const {selectMenu, tabs} = this.props
     const categoryName = selectMenu.category
-    const tabName = (value < 0 ? tabList[0] : tabList[value])
+    const tabName = (value < 0 ? tabs[0].name : tabs[value].name)
     this.updateTab(tabName, value, categoryName)
   }
+  
+  
+  
+  
+  initCurrentTab() {
+    const tabItems = this.props.tabs
+    let hasTab = this.props.selectMenu.tab
+    if (!hasTab && tabItems.length) {
+      return tabItems[0].name
+      
+    }
+    else {
+      return hasTab
+    }
+  }
+  
   
   updateTab (tab, tabIndex, category) {
     const {changeTab, changeRoute} = this.props
@@ -40,31 +58,36 @@ class TabContainer extends React.Component {
     this.setState({value: tabIndex})
   }
   
+  getTabIndexNum(tabList, tabName) {
+    let num = tabList.findIndex(x => x.name === tabName)
+    return (num < 0 ? num === 0 : num)
+  }
+  
   render () {
     const {classes} = this.props
-    const {value} = this.state
     const props = this.props
     const currentCategory = props.selectMenu.category
+    const tabItems = props.tabs
     const currentTab = props.selectMenu.tab
+    const tabIndex = this.getTabIndexNum(tabItems, currentTab)
+
     
-    const tabIndex = (currentTab ? tabList.indexOf(currentTab) : 0)
-    
-    console.log(tabIndex)
     return (
+      tabItems &&
       <Tabs className={classes.root} value={tabIndex}
             onChange={this.handleChange}>
-        {tabList.map((name, index) => (
+        {tabItems.map((({name, path}, index) => (
           <Tab
             key={name}
             label={name}
             component={Link}
             value={index}
             to={{
-              pathname: `/category/${currentCategory}?=${name}`,
+              pathname: `/category/${currentCategory}?=${path}`,
               state: {category: currentCategory, tab: name},
             }}
           />
-        ))}
+        )))}
       </Tabs>
     
     )
@@ -74,12 +97,12 @@ class TabContainer extends React.Component {
 TabContainer.propTypes = {}
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     selectMenu: {
       category: state.currentMenu.category,
       tab: state.currentMenu.tab,
     },
+    tabs: state.tabs,
     
   }
 }
@@ -88,6 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeTab: (data) => dispatch(selectTab(data)),
     changeRoute: (url) => dispatch(push(url)),
+    fetchTabList: () => dispatch(tabFetchData()),
+  
   }
 }
 

@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectCategory, selectTab } from './modules/menu/actions'
+import {
+  selectCategory, selectTab, categoryFetchData, tabFetchData,
+} from './modules/menu/actions'
 
 import { push } from 'react-router-redux'
 
 import NotFound from './components/pages/NotFound'
 import HomePage from './components/pages/HomePage'
-
-import * as categories from './api-server/categories'
-import * as tabs from './api-server/tabs'
 
 const main = [
   {
@@ -33,21 +32,31 @@ const routeComponents = main.map(
     />)
 
 class App extends Component {
-  componentDidMount () {
+  componentWillMount() {
     this.init()
   }
-  
+
   componentWillReceiveProps (nextProps) {
     this.browserPageMove(nextProps)
   }
   
+  componentDidMount() {
+    this.browserRefreshing()
+  }
+  
   init () {
+    this.props.fetchCategoryList()
+    this.props.fetchTabList()
+    
+  }
+  
+  browserRefreshing() {
     const {changeCategory, changeTab, selectMenu, location} = this.props
     if (location.state) {
       const categoryName = location.state.category
       const tabName = location.state.tab
       changeCategory({category: categoryName})
-      changeTab({tab: tabName})
+      // changeTab({tab: tabName})
     }
     else {
       changeCategory({category: selectMenu.category})
@@ -55,7 +64,7 @@ class App extends Component {
   }
   
   browserPageMove (nextProps) {
-    const {changeCategory} = this.props
+    const {changeCategory, location} = this.props
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
       if (nextProps.location.state) {
@@ -66,7 +75,7 @@ class App extends Component {
   }
   
   render () {
-    const {changeTab, selectMenu, store} = this.props
+    
     return (
       <div>
         <Route exact={false}
@@ -79,14 +88,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const categoryList = categories.defaultData.categories
-  const tabList = tabs.defaultData.tabs
-  
   return {
     selectMenu: {
-      category: categoryList[0].path,
-      tab: tabList[0].path,
+      category: state.currentMenu.category,
+      tab: state.currentMenu.tab,
     },
+    categories: state.categories,
   }
 }
 
@@ -95,6 +102,9 @@ const mapDispatchToProps = (dispatch) => {
     changeCategory: (data) => dispatch(selectCategory(data)),
     changeTab: (data) => dispatch(selectTab(data)),
     changeRoute: (url) => dispatch(push(url)),
+    fetchCategoryList: () => dispatch(categoryFetchData()),
+    fetchTabList: () => dispatch(tabFetchData()),
+    
   }
 }
 
