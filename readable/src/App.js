@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
-  selectCategory, selectTab, categoryFetchData, tabFetchData,
+  selectCategory, selectTab, categoryFetchData, tabFetchData, setOperation
 } from './modules/menu/actions'
 
 import { push } from 'react-router-redux'
@@ -37,50 +37,55 @@ class App extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.browserPageMove(nextProps)
+
+  
+    //this.browserPageMove(nextProps)
   }
   
   componentDidMount() {
-    this.browserRefreshing()
+    // this.browserRefreshing()
   }
   
   init () {
     this.props.fetchCategoryList()
     this.props.fetchTabList()
-    
   }
   
-  browserRefreshing() {
-    const {changeCategory, changeTab, selectMenu, location} = this.props
-    if (location.state) {
-      const categoryName = location.state.category
-      const tabName = location.state.tab
-      changeCategory({category: categoryName})
-      // changeTab({tab: tabName})
-    }
-    else {
-      changeCategory({category: selectMenu.category})
-    }
-  }
   
   browserPageMove (nextProps) {
-    const {changeCategory, location} = this.props
-    const locationChanged = nextProps.location !== this.props.location
+    const {changeCategory, location, selectMenu, changeRoute} = this.props
+    const tabName = selectMenu.tab
+    
+    //
+    const locationChanged = nextProps.location !== location
+    console.log(nextProps.location, location)
+  
     if (locationChanged) {
-      if (nextProps.location.state) {
-        const categoryName = nextProps.location.state.category
-        return changeCategory({category: categoryName})
-      }
+
+      console.log(nextProps.location.state)
+      //
+      // if (nextProps.location.state) {
+      //   console.log(nextProps.location.state)
+      //
+      //   const categoryName = nextProps.location.state.category
+      //   changeCategory({category: categoryName})
+      //   // changeRoute(`/category/${categoryName}?=${tabName}`)
+      //
+      //
+      // }
+
     }
   }
   
   render () {
-    
+    const props = this.props
     return (
       <div>
         <Route exact={false}
                path={'/'}
                component={HomePage}
+               {...this.props}
+
         />
       </div>
     )
@@ -104,7 +109,8 @@ const mapDispatchToProps = (dispatch) => {
     changeRoute: (url) => dispatch(push(url)),
     fetchCategoryList: () => dispatch(categoryFetchData()),
     fetchTabList: () => dispatch(tabFetchData()),
-    
+  
+  
   }
 }
 

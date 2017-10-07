@@ -26,23 +26,42 @@ const styles = theme => {
 
 class CategoryContainer extends React.Component {
   componentDidMount () {
-    // this.browserFreshing()
+    this.browserRefreshing()
   }
   
   componentWillReceiveProps (nextProps) {
-    this.init(nextProps)
-    // this.browserPageMove(nextProps)
+    // console.log(nextProps.location)
   }
   
   init (nextProps) {
-    //
-    // let categoryName = nextProps.selectMenu.category
-    //
+
+    let categoryName = nextProps.selectMenu.category
+
     // if (!categoryName && nextProps.categories.length) {
     //   return this.props.changeCategory({category: nextProps.categories[0].name})
     // }
-    
+    //
   }
+  
+  browserRefreshing() {
+    let categoryName;
+    const {changeCategory, changeTab, selectMenu, categories, location} = this.props
+    
+    
+    // refreshing
+    if (location.state) {
+      categoryName = location.state.category
+      const tabName = location.state.tab
+      
+    }
+    // fetching written url
+    else {
+      categoryName = location.pathname.split('/')[2]
+    }
+    return changeCategory({category: categoryName})
+  
+  }
+  
   
   handleChange = (e) => {
     e.stopPropagation()
@@ -52,7 +71,6 @@ class CategoryContainer extends React.Component {
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
     }
-    console.log(categoryName)
     changeCategory({category: categoryName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
   }
@@ -62,7 +80,6 @@ class CategoryContainer extends React.Component {
     const categoryItems = props.categories
     const currentTab = props.selectMenu.tab
     const currentCategory = props.selectMenu.category
-    
     return (
       categoryItems &&
       <div className='category_grp'>
@@ -71,7 +88,7 @@ class CategoryContainer extends React.Component {
             key={path}
             component={Link}
             to={{
-              pathname: `/category/${name}?=${currentTab}`,
+              pathname: `/category/${path}?=${currentTab}`,
               state: {category: name, tab: currentTab},
             }}
             className={currentCategory === name ? 'active' : ''}
@@ -93,12 +110,17 @@ CategoryContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
+  
   return {
     selectMenu: {
       category: state.currentMenu.category,
       tab: state.currentMenu.tab,
     },
     categories: state.categories,
+    pathname: state.routerReducer.location.pathname
+  
+  
+  
   }
 }
 
@@ -108,6 +130,8 @@ const mapDispatchToProps = (dispatch) => {
     changeRoute: (url) => dispatch(push(url)),
     fetchCategoryList: () => dispatch(categoryFetchData()),
     fetchTabList: () => dispatch(tabFetchData()),
+    
+  
   }
 }
 

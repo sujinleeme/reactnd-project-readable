@@ -7,7 +7,7 @@
     "install": "^0.10.1",
     "material-ui": "^1.0.0-beta.11",
     "material-ui-icons": "^1.0.0-beta.10",
-    "npm": "^5.4.2",
+    "npm": "^5.5.1",
     "path-to-regexp": "^2.0.0",
     "prop-types": "^15.5.10",
     "qs": "^6.5.1",
@@ -22,7 +22,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",
-    "redux-multi": "^0.1.12",
+    "redux-multi": "^0.1.91",
     "redux-thunk": "^2.2.0"
   },
   "scripts": {

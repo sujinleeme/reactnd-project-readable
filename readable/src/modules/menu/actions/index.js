@@ -1,16 +1,19 @@
 import { headers } from '../headers'
 import { url } from '../../../api-server/configurl'
+import { push } from 'react-router-redux'
 
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const SELECT_TAB = 'SELECT_TAB'
+export const SET_OPERATION = 'SET_OPERATION';
 
-export const selectCategory = ({category}) => {
+export const selectCategory = ({tab, category}) => {
+  
   return {
     type: SELECT_CATEGORY,
-    category,
+    tab, category,
   }
 }
 
@@ -63,3 +66,6 @@ export const tabFetchData = () => {
     .then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
   }
 }
+
+
+
