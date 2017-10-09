@@ -37,17 +37,12 @@ const routeComponents = main.map(
 
 class App extends Component {
   
-  state = {
-    value: 0,
-  }
-  
   componentWillMount () {
     this.browserRefreshing()
   }
   
   componentWillReceiveProps (nextProps) {
     this.browserPageMove(nextProps)
-    
   }
   
   componentDidMount () {
@@ -68,16 +63,16 @@ class App extends Component {
     if (location.state) {
       categoryName = location.state.category
     }
+    // typing
     else {
       categoryName = location.pathname.split('/')[2]
     }
-    this.updateCurrentMenu(categoryName)
+    return categoryName
   }
   
   browserRefreshing () {
-    this.props.changeRoute()
-    const url = this.parseURL()
-    console.log(url)
+    const categoryName = this.parseURL()
+    this.updateCurrentMenu(categoryName)
     
   }
   

@@ -32,28 +32,19 @@ class TabContainer extends React.Component {
     this.updateTab(tabName, value, categoryName)
   }
   
-  initCurrentTab () {
-    const tabItems = this.props.tabs
-    let hasTab = this.props.selectMenu.tab
-    if (!hasTab && tabItems.length) {
-      return tabItems[0].name
-    }
-    else {
-      return hasTab
-    }
-  }
-  
-  updateTab (tab, tabIndex, category) {
-    const {changeTab, changeRoute} = this.props
-    changeTab({tab: tab})
-    changeRoute(`/category/${category}?=${tab}`)
+  updateTab (tab, tabIndex) {
     this.setState({value: tabIndex})
+    const {changeTab, changeRoute, selectMenu} = this.props
+    changeTab({tab: tab})
+    changeRoute(`/category/${selectMenu.category}?=${tab}`)
   }
   
-  getTabIndexNum (tabList, tabName) {
-    let num = tabList.findIndex(x => x.name === tabName)
-    let checkNum = (num < 0 ? num = 0 : num) // if num is -1, convert to
-                                             // default value 0
+  getTabIndexNum (tabName) {
+    if (!tabName) {
+      tabName = this.props.location.state.tab
+    }
+    let num = this.props.tabs.findIndex(x => x.name === tabName)
+    let checkNum = (num < 0 ? num = 0 : num)
     return checkNum
   }
   
@@ -63,7 +54,7 @@ class TabContainer extends React.Component {
     const currentCategory = props.selectMenu.category
     const tabItems = props.tabs
     const currentTab = props.selectMenu.tab
-    const tabIndex = this.getTabIndexNum(tabItems, currentTab)
+    const tabIndex = this.getTabIndexNum(currentTab)
     
     return (
       tabItems &&
@@ -82,7 +73,6 @@ class TabContainer extends React.Component {
           />
         )))}
       </Tabs>
-    
     )
   }
 }
@@ -96,7 +86,6 @@ const mapStateToProps = (state) => {
       tab: state.currentMenu.tab,
     },
     tabs: state.tabs,
-    
   }
 }
 
