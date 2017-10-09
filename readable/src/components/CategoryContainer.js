@@ -25,43 +25,6 @@ const styles = theme => {
 }
 
 class CategoryContainer extends React.Component {
-  componentDidMount () {
-    this.browserRefreshing()
-  }
-  
-  componentWillReceiveProps (nextProps) {
-    // console.log(nextProps.location)
-  }
-  
-  init (nextProps) {
-
-    let categoryName = nextProps.selectMenu.category
-
-    // if (!categoryName && nextProps.categories.length) {
-    //   return this.props.changeCategory({category: nextProps.categories[0].name})
-    // }
-    //
-  }
-  
-  browserRefreshing() {
-    let categoryName;
-    const {changeCategory, changeTab, selectMenu, categories, location} = this.props
-    
-    
-    // refreshing
-    if (location.state) {
-      categoryName = location.state.category
-      const tabName = location.state.tab
-      
-    }
-    // fetching written url
-    else {
-      categoryName = location.pathname.split('/')[2]
-    }
-    return changeCategory({category: categoryName})
-  
-  }
-  
   
   handleChange = (e) => {
     e.stopPropagation()
@@ -71,6 +34,32 @@ class CategoryContainer extends React.Component {
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
     }
+    return this.updateCurrentMenu(categoryName, tabName)
+  }
+  
+  
+  browserRefreshing() {
+    let categoryName;
+    let tabName;
+    const {location, categories, changeCategory} = this.props
+    
+    // refreshing
+    if (location.state) {
+      categoryName = location.state.category
+      const tabName = location.state.tab
+    }
+    // fetching written url
+    else {
+      categoryName = location.pathname.split('/')[2]
+    }
+    console.log(this.props.category)
+    return new Promise((resolve => resolve(this.updateCurrentMenu(
+    ))))
+    
+  }
+  
+  updateCurrentMenu(categoryName, tabName) {
+    const {changeCategory, changeRoute} = this.props
     changeCategory({category: categoryName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
   }
@@ -117,10 +106,8 @@ const mapStateToProps = (state) => {
       tab: state.currentMenu.tab,
     },
     categories: state.categories,
-    pathname: state.routerReducer.location.pathname
-  
-  
-  
+    pathname: state.routerReducer.location.pathname,
+    
   }
 }
 
@@ -131,7 +118,6 @@ const mapDispatchToProps = (dispatch) => {
     fetchCategoryList: () => dispatch(categoryFetchData()),
     fetchTabList: () => dispatch(tabFetchData()),
     
-  
   }
 }
 

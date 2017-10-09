@@ -1,19 +1,18 @@
 import { headers } from '../headers'
 import { url } from '../../../api-server/configurl'
-import { push } from 'react-router-redux'
 
+export const INIT_MENU_DATA = 'INIT_MENU_DATA'
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const SELECT_TAB = 'SELECT_TAB'
-export const SET_OPERATION = 'SET_OPERATION';
 
-export const selectCategory = ({tab, category}) => {
+export const selectCategory = ({category}) => {
   
   return {
     type: SELECT_CATEGORY,
-    tab, category,
+    category,
   }
 }
 
@@ -55,17 +54,25 @@ export const fetchTabDataSuccess = (tabs) => {
 
 export const tabFetchData = () => {
   return (dispatch) => {
-    fetch(`${url}/tabs`, {headers})
-    .then((response) => {
+    fetch(`${url}/tabs`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
   }
 }
 
 
-
+export const initMenuData = () => (dispatch) => {
+  new Promise(function (resovle, reject) {
+    dispatch({
+      type: 'INIT_MENU_DATA'
+    })
+  
+  })
+  
+}

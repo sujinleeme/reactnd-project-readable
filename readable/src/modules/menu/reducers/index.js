@@ -63,31 +63,31 @@ export const tabs = (state = [], action) => {
 //     action.location : state
 // }
 
-
-export const locationReducer = (state=[], action) => {
-  switch (action.type) {
-    case LOCATION_CHANGE:
-      return  action.location
-    /*
-     action.payload is something like:
-     {
-     pathname: '/',
-     search: '',
-     hash: '',
-     state: null,
-     action: 'PUSH',
-     key: 'xwl8yl',
-     query: {},
-     $searchBase: {
-     search: '',
-     searchBase: ''
-     }
-     }
-     */
-    
-    default:
-      return state
-  }
-}
-
+//
+// export const locationReducer = (state=[], action) => {
+//   switch (action.type) {
+//     case LOCATION_CHANGE:
+//       return  action.location
+//     /*
+//      action.payload is something like:
+//      {
+//      pathname: '/',
+//      search: '',
+//      hash: '',
+//      state: null,
+//      action: 'PUSH',
+//      key: 'xwl8yl',
+//      query: {},
+//      $searchBase: {
+//      search: '',
+//      searchBase: ''
+//      }
+//      }
+//      */
+//
+//     default:
+//       return state
+//   }
+// }
+//
 

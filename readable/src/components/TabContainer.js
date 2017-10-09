@@ -18,13 +18,10 @@ const styles = theme => ({
   },
 })
 
-
 class TabContainer extends React.Component {
   
   state = {
     value: 0,
-    tabList: []
-    
   }
   
   handleChange = (e, value) => {
@@ -35,21 +32,16 @@ class TabContainer extends React.Component {
     this.updateTab(tabName, value, categoryName)
   }
   
-  
-  
-  
-  initCurrentTab() {
+  initCurrentTab () {
     const tabItems = this.props.tabs
     let hasTab = this.props.selectMenu.tab
     if (!hasTab && tabItems.length) {
       return tabItems[0].name
-      
     }
     else {
       return hasTab
     }
   }
-  
   
   updateTab (tab, tabIndex, category) {
     const {changeTab, changeRoute} = this.props
@@ -58,9 +50,11 @@ class TabContainer extends React.Component {
     this.setState({value: tabIndex})
   }
   
-  getTabIndexNum(tabList, tabName) {
+  getTabIndexNum (tabList, tabName) {
     let num = tabList.findIndex(x => x.name === tabName)
-    return (num < 0 ? num === 0 : num)
+    let checkNum = (num < 0 ? num = 0 : num) // if num is -1, convert to
+                                             // default value 0
+    return checkNum
   }
   
   render () {
@@ -70,7 +64,6 @@ class TabContainer extends React.Component {
     const tabItems = props.tabs
     const currentTab = props.selectMenu.tab
     const tabIndex = this.getTabIndexNum(tabItems, currentTab)
-
     
     return (
       tabItems &&
@@ -112,7 +105,7 @@ const mapDispatchToProps = (dispatch) => {
     changeTab: (data) => dispatch(selectTab(data)),
     changeRoute: (url) => dispatch(push(url)),
     fetchTabList: () => dispatch(tabFetchData()),
-  
+    
   }
 }
 

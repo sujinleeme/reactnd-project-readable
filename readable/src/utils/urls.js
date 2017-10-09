@@ -1,5 +1,5 @@
 
-export const Urls = {
+export const urls = {
   user: {
     path: '#/user/:userId',
     // main: UserPage,
