@@ -71,8 +71,7 @@ class App extends Component {
     else {
       categoryName = location.pathname.split('/')[2]
     }
-    return categoryName
-    
+    this.updateCurrentMenu(categoryName)
   }
   
   browserRefreshing () {
@@ -83,8 +82,9 @@ class App extends Component {
   }
   
   updateCurrentMenu (categoryName, tabName) {
-    const {changeCategory, changeRoute} = this.props
+    const {changeCategory, changeTab, changeRoute} = this.props
     changeCategory({category: categoryName})
+    changeTab({category: tabName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
   }
   
@@ -96,6 +96,7 @@ class App extends Component {
     
     if (locationChanged) {
       const categoryName = nextProps.location.state.category
+      const tabName = nextProps.location.state.tab
       return this.updateCurrentMenu(categoryName, tabName)
     }
   }
