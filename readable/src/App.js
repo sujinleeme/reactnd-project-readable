@@ -5,6 +5,8 @@ import {
   selectCategory, selectTab, categoryFetchData, tabFetchData, initMenuData,
 } from './modules/menu/actions'
 
+import { withRouter } from 'react-router-dom'
+
 import {
   urls,
 } from './utils/urls'
@@ -38,7 +40,6 @@ const routeComponents = main.map(
 class App extends Component {
   
   componentWillMount () {
-    this.browserRefreshing()
   }
   
   componentWillReceiveProps (nextProps) {
@@ -46,7 +47,10 @@ class App extends Component {
   }
   
   componentDidMount () {
+    
     this.init()
+    this.browserRefreshing()
+    
   }
   
   init () {
@@ -57,35 +61,36 @@ class App extends Component {
   parseURL () {
     let categoryName
     let tabName
-    const {location, categories, changeCategory} = this.props
-    console.log(this.props.location)
+    const {location, categories, changeCategory, changeRoute} = this.props
+    
     // refreshing
     if (location.state) {
-      categoryName = location.state.category
+      categoryName = this.props.location.state.category
+      tabName = this.props.location.state.tab
+      
     }
-    // typing
     else {
       categoryName = location.pathname.split('/')[2]
+      tabName = location.search.match(/[a-zA-Z]+/g)[0]
     }
-    return categoryName
+    return [categoryName, tabName]
   }
   
   browserRefreshing () {
-    const categoryName = this.parseURL()
-    this.updateCurrentMenu(categoryName)
-    
+    const path = this.parseURL()
+    return this.updateCurrentMenu(path[0], path[1])
   }
   
   updateCurrentMenu (categoryName, tabName) {
     const {changeCategory, changeTab, changeRoute} = this.props
     changeCategory({category: categoryName})
-    changeTab({category: tabName})
+    changeTab({tab: tabName})
     changeRoute(`/category/${categoryName}?=${tabName}`)
+    
   }
   
   browserPageMove (nextProps) {
     const {changeCategory, location, categories, selectMenu, changeRoute} = this.props
-    console.log(location)
     const tabName = selectMenu.tab
     const locationChanged = nextProps.location !== location
     
@@ -129,11 +134,10 @@ const mapDispatchToProps = (dispatch) => {
     changeRoute: (url) => dispatch(push(url)),
     fetchCategoryList: () => dispatch(categoryFetchData()),
     fetchTabList: () => dispatch(tabFetchData()),
-    initMenu: () => dispatch(initMenuData()),
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(App)
+)(App))

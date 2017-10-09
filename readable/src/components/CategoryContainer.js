@@ -37,28 +37,7 @@ class CategoryContainer extends React.Component {
     return this.updateCurrentMenu(categoryName, tabName)
   }
   
-  
-  browserRefreshing() {
-    let categoryName;
-    let tabName;
-    const {location, categories, changeCategory} = this.props
-    
-    // refreshing
-    if (location.state) {
-      categoryName = location.state.category
-      const tabName = location.state.tab
-    }
-    // fetching written url
-    else {
-      categoryName = location.pathname.split('/')[2]
-    }
-    console.log(this.props.category)
-    return new Promise((resolve => resolve(this.updateCurrentMenu(
-    ))))
-    
-  }
-  
-  updateCurrentMenu(categoryName, tabName) {
+  updateCurrentMenu (categoryName, tabName) {
     const {changeCategory, changeRoute} = this.props
     changeCategory({category: categoryName})
     changeRoute(`/category/${categoryName}?=${tabName}`)

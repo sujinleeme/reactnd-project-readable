@@ -40,7 +40,7 @@ class TabContainer extends React.Component {
   }
   
   getTabIndexNum (tabName) {
-    if (!tabName) {
+    if (this.props.location.state ) {
       tabName = this.props.location.state.tab
     }
     let num = this.props.tabs.findIndex(x => x.name === tabName)
@@ -94,7 +94,6 @@ const mapDispatchToProps = (dispatch) => {
     changeTab: (data) => dispatch(selectTab(data)),
     changeRoute: (url) => dispatch(push(url)),
     fetchTabList: () => dispatch(tabFetchData()),
-    
   }
 }
 
