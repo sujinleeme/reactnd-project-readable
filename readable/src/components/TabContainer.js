@@ -5,7 +5,7 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { selectTab, tabFetchData } from '../modules/menu/actions'
+import { selectTab, tabFetchData } from '../modules/menu/actions/menu'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
 

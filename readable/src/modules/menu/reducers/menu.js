@@ -1,20 +1,18 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
-
 import {
   SELECT_CATEGORY,
   SELECT_TAB,
   FETCH_CATEGORY_DATA_SUCCESS,
-  FETCH_TAB_DATA_SUCCESS
-} from '../actions/index'
+  FETCH_TAB_DATA_SUCCESS,
+  SETUP_MENU_SUCCESS,
+} from '../actions/menu'
 
 const initSelectState = {
   tab: null,
-  category: null
+  category: null,
 }
 
 export const currentMenu = (state = initSelectState, action) => {
   const {tab, category} = action
-  
   switch (action.type) {
     case SELECT_CATEGORY:
       return {
@@ -27,34 +25,42 @@ export const currentMenu = (state = initSelectState, action) => {
         ...state,
         tab: tab,
       }
+    
     default :
       return state
     
   }
 }
 
-
 export const categories = (state = [], action) => {
   switch (action.type) {
     case 'FETCH_CATEGORY_DATA_SUCCESS':
-      return action.categories;
+      return action.categories
     
     default:
-      return state;
+      return state
   }
 }
-
 
 export const tabs = (state = [], action) => {
   switch (action.type) {
     case 'FETCH_TAB_DATA_SUCCESS':
-      return action.tabs;
+      return action.tabs
     
     default:
-      return state;
+      return state
   }
 }
 
+export const setupMenuComplete = (state = false, action) => {
+  switch (action.type) {
+    case 'SETUP_MENU_SUCCESS':
+      return action.hasloaded
+    
+    default:
+      return state
+  }
+}
 
 //
 // const initialLocation = { pathname: '/', search: '', hash: '' }

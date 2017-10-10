@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {
   selectCategory, categoryFetchData, tabFetchData,
-} from '../modules/menu/actions'
+} from '../modules/menu/actions/menu'
 
 const styles = theme => {
   return ({

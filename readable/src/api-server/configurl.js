@@ -1,2 +1,2 @@
 const port = 3001
-export const url = `http://localhost:${port}`
+export const baseurl = `http://localhost:${port}`

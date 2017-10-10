@@ -1,15 +1,38 @@
 import { headers } from '../headers'
-import { url } from '../../../api-server/configurl'
+import { baseurl } from '../../../api-server/configurl'
+import { push } from 'react-router-redux'
 
-export const INIT_MENU_DATA = 'INIT_MENU_DATA'
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
 
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const SELECT_TAB = 'SELECT_TAB'
+export const SETUP_MENU_SUCCESS = 'SETUP_MENU_SUCCESS'
+
+export const setupMenuComplete = (bool) => {
+  return {
+    type: SETUP_MENU_SUCCESS,
+    hasloaded: bool,
+  }
+}
+
+export const setupMenu = (categoryName, tabName) => {
+  return (dispatch) => {
+     Promise.all([
+  
+       dispatch(selectCategory({category: categoryName})),
+      dispatch(selectTab({tab: tabName}),
+      )]).then((response) => {
+        dispatch(setupMenuComplete(true))
+       dispatch(push(`/category/${categoryName}?=${tabName}`))
+     }).
+    catch((failure) => dispatch(setupMenuComplete(false)))
+  }
+}
 
 export const selectCategory = ({category}) => {
-  
+//   return new Promise((res) => {
+// \  })
   return {
     type: SELECT_CATEGORY,
     category,
@@ -32,18 +55,17 @@ export const fetchCategoryDataSuccess = (categories) => {
 
 export const categoryFetchData = () => {
   return (dispatch) => {
-    fetch(`${url}/categories`, {headers})
-    .then((response) => {
+    fetch(`${baseurl}/categories`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
   }
 }
-
 
 export const fetchTabDataSuccess = (tabs) => {
   return {
@@ -54,7 +76,7 @@ export const fetchTabDataSuccess = (tabs) => {
 
 export const tabFetchData = () => {
   return (dispatch) => {
-    fetch(`${url}/tabs`, {headers}).
+    fetch(`${baseurl}/tabs`, {headers}).
     then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -66,13 +88,3 @@ export const tabFetchData = () => {
   }
 }
 
-
-export const initMenuData = () => (dispatch) => {
-  new Promise(function (resovle, reject) {
-    dispatch({
-      type: 'INIT_MENU_DATA'
-    })
-  
-  })
-  
-}
