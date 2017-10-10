@@ -29,14 +29,14 @@ export function itemsFetchDataSuccess(items) {
 
 export function itemsFetchData() {
   return (dispatch) => {
-    dispatch(itemsIsLoading(true));
+    dispatch(itemsIsLoading(true))
     fetch(`${baseurl}/posts`, {headers})
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
       }
       dispatch(itemsIsLoading(false));
-      return response;
+      return response
     })
     .then((response) => response.json())
     .then((items) => dispatch(itemsFetchDataSuccess(items)))

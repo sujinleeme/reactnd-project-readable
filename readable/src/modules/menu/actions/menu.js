@@ -19,20 +19,18 @@ export const setupMenuComplete = (bool) => {
 export const setupMenu = (categoryName, tabName) => {
   return (dispatch) => {
      Promise.all([
-  
-       dispatch(selectCategory({category: categoryName})),
+      dispatch(push(`/category/${categoryName}?=${tabName}`)),
+      dispatch(selectCategory({category: categoryName})),
       dispatch(selectTab({tab: tabName}),
       )]).then((response) => {
-        dispatch(setupMenuComplete(true))
-       dispatch(push(`/category/${categoryName}?=${tabName}`))
-     }).
+      dispatch(setupMenuComplete(true))
+    }).
     catch((failure) => dispatch(setupMenuComplete(false)))
   }
 }
 
+
 export const selectCategory = ({category}) => {
-//   return new Promise((res) => {
-// \  })
   return {
     type: SELECT_CATEGORY,
     category,

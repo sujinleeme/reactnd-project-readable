@@ -38,40 +38,34 @@ const routeComponents = main.map(
     />)
 
 class App extends Component {
-  
   componentWillReceiveProps (nextProps) {
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
-      this.setMenu(locationChanged, nextProps)
+      this.changeCurrentMenu(locationChanged, nextProps)
     }
   }
   
   async componentDidMount () {
     const haslocationState = this.props.location.state
     const props = this.props
-    await Promise.all([
-      this.props.fetchCategoryList(),
-      this.props.fetchTabList(),
-      this.props.fetchData(),
-    ]).then(
-      await this.setMenu(haslocationState, props)
+    await Promise.all(
+      [this.props.fetchCategoryList(), this.props.fetchTabList()]).then(
+      this.changeCurrentMenu(haslocationState, props),
     )
   }
   
-  setMenu (bool, props) {
+  changeCurrentMenu (bool, props) {
     let categoryName, tabName
-    if (bool) {
+    if (bool && props.location.state) {
       categoryName = props.location.state.category
       tabName = props.location.state.tab
     }
     else {
-      console.log(this.props.categories)
-      categoryName = 'react'
-      tabName = 'hot'
+      categoryName = this.props.selectMenu.category
+      tabName = this.props.selectMenu.tab
     }
-    return new Promise((res) => {
-      res(this.props.setCurrentMenu(categoryName, tabName))
-    })
+    console.log(this.props)
+    return this.props.setCurrentMenu(categoryName, tabName)
   }
   
   render () {
@@ -89,25 +83,21 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  
-  return {
-    selectMenu: {
-      category: state.currentMenu.category,
-      tab: state.currentMenu.tab,
-    },
-    categories: state.categories,
-    tabs: state.tabs,
-    items: state.items,
+  if (!state.currentMenu.tabs || state.currentMenu.category) {
+    return {
+      selectMenu: {
+        category: 'react',
+        tab: 'hot',
+      },
+    }
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeCategory: (data) => dispatch(selectCategory(data)),
-    changeTab: (data) => dispatch(selectTab(data)),
-    changeRoute: (url) => dispatch(push(url)),
-    fetchCategoryList: () => dispatch(categoryFetchData()),
-    fetchTabList: () => dispatch(tabFetchData()),
+    fetchCategoryList: () => new Promise(
+      (res) => dispatch(categoryFetchData())),
+    fetchTabList: () => new Promise((res) => dispatch(tabFetchData())),
     fetchData: (url) => dispatch(itemsFetchData(url)),
     setCurrentMenu: (category, tab) => dispatch(setupMenu(category, tab)),
     

@@ -1,10 +1,14 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import MainContent from '../MainContent'
 import CopyrightBar from '../CopyrightBar'
 import HeaderBar from '../Header/HeaderBar'
+import React, { Component } from 'react'
 
-const HomePage = () => {
+class HomePage extends Component {
+  
+  render () {
+    
+    const props = this.props
     return (
       <div>
         <HeaderBar/>
@@ -12,6 +16,7 @@ const HomePage = () => {
         <CopyrightBar/>
       </div>
     )
+  }
 }
 
 HomePage.propTypes = {}
