@@ -4,7 +4,6 @@ import { push } from 'react-router-redux'
 
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
-
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const SELECT_TAB = 'SELECT_TAB'
 export const SETUP_MENU_SUCCESS = 'SETUP_MENU_SUCCESS'
@@ -24,11 +23,9 @@ export const setupMenu = (categoryName, tabName) => {
       dispatch(selectTab({tab: tabName}),
       )]).then((response) => {
       dispatch(setupMenuComplete(true))
-    }).
-    catch((failure) => dispatch(setupMenuComplete(false)))
+    }).catch((failure) => dispatch(setupMenuComplete(false)))
   }
 }
-
 
 export const selectCategory = ({category}) => {
   return {
@@ -51,7 +48,7 @@ export const fetchCategoryDataSuccess = (categories) => {
   }
 }
 
-export const categoryFetchData = () => {
+export const getCategories = () => {
   return (dispatch) => {
     fetch(`${baseurl}/categories`, {headers}).
     then((response) => {
@@ -59,9 +56,8 @@ export const categoryFetchData = () => {
         throw Error(response.statusText)
       }
       return response
-    }).
-    then((response) => response.json()).
-    then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
+    }).then((response) => response.json())
+    .then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
   }
 }
 
@@ -72,17 +68,20 @@ export const fetchTabDataSuccess = (tabs) => {
   }
 }
 
-export const tabFetchData = () => {
+
+
+
+export const getTabs = () => {
   return (dispatch) => {
-    fetch(`${baseurl}/tabs`, {headers}).
-    then((response) => {
+    fetch(`${baseurl}/tabs`, {headers})
+    .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    }).
-    then((response) => response.json()).
-    then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
+    })
+    .then((response) => response.json())
+    .then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
   }
 }
 

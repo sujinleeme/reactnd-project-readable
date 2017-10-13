@@ -3,11 +3,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-
-import { selectTab, tabFetchData } from '../modules/menu/actions/menu'
-
 import Tabs, { Tab } from 'material-ui/Tabs'
+import { setupMenu } from '../modules/menu/actions/menu'
 
 const styles = theme => ({
   root: {
@@ -29,18 +26,11 @@ class TabContainer extends React.Component {
     const {selectMenu, tabs} = this.props
     const categoryName = selectMenu.category
     const tabName = (value < 0 ? tabs[0].name : tabs[value].name)
-    this.updateTab(tabName, value, categoryName)
-  }
-  
-  updateTab (tab, tabIndex) {
-    this.setState({value: tabIndex})
-    const {changeTab, changeRoute, selectMenu} = this.props
-    changeTab({tab: tab})
-    changeRoute(`/category/${selectMenu.category}?=${tab}`)
+    return this.props.changeCurrentMenu(tabName, categoryName)
   }
   
   getTabIndexNum (tabName) {
-    if (this.props.location.state ) {
+    if (this.props.location.state) {
       tabName = this.props.location.state.tab
     }
     let num = this.props.tabs.findIndex(x => x.name === tabName)
@@ -91,9 +81,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeTab: (data) => dispatch(selectTab(data)),
-    changeRoute: (url) => dispatch(push(url)),
-    fetchTabList: () => dispatch(tabFetchData()),
+    changeCurrentMenu: (category, tab) => new Promise(
+      (res) => dispatch(setupMenu(category, tab))),
   }
 }
 

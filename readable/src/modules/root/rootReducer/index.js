@@ -1,15 +1,17 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { currentMenu, categories, tabs, setupMenuComplete} from '../../menu/reducers/menu'
-import { items, itemsHasErrored, itemsIsLoading, } from '../../menu/reducers/posts'
+import { posts, postsHasErrored, postsIsLoading, } from '../../menu/reducers/posts'
+import { comments } from '../../menu/reducers/comments'
 
 export default combineReducers({
   currentMenu,
   categories,
   tabs,
-  items,
-  itemsHasErrored,
-  itemsIsLoading,
+  posts,
+  postsHasErrored,
+  postsIsLoading,
   setupMenuComplete,
+  comments,
   routerReducer,
 })

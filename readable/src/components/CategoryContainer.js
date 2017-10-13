@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { withStyles } from 'material-ui/styles'
 import { Button } from 'material-ui'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import {
-  selectCategory, categoryFetchData, tabFetchData,
-} from '../modules/menu/actions/menu'
+import { setupMenu } from '../modules/menu/actions/menu'
+import { postsFetchData } from '../modules/menu/actions/posts'
 
 const styles = theme => {
   return ({
@@ -28,19 +25,14 @@ class CategoryContainer extends React.Component {
   
   handleChange = (e) => {
     e.stopPropagation()
-    const {changeCategory, selectMenu, changeRoute} = this.props
-    const tabName = selectMenu.tab
+    const tabName = this.props.selectMenu.tab
     let categoryName = e.target.innerHTML
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
     }
-    return this.updateCurrentMenu(categoryName, tabName)
-  }
-  
-  updateCurrentMenu (categoryName, tabName) {
-    const {changeCategory, changeRoute} = this.props
-    changeCategory({category: categoryName})
-    changeRoute(`/category/${categoryName}?=${tabName}`)
+    return this.props.changeCurrentMenu(categoryName, tabName).then(
+      this.props.fetchPosts(categoryName),
+    )
   }
   
   render () {
@@ -78,25 +70,21 @@ CategoryContainer.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  
   return {
     selectMenu: {
       category: state.currentMenu.category,
       tab: state.currentMenu.tab,
     },
     categories: state.categories,
-    pathname: state.routerReducer.location.pathname,
-    
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeCategory: (data) => dispatch(selectCategory(data)),
-    changeRoute: (url) => dispatch(push(url)),
-    fetchCategoryList: () => dispatch(categoryFetchData()),
-    fetchTabList: () => dispatch(tabFetchData()),
-    
+    fetchPosts: (category) => new Promise(
+      (res) => dispatch(postsFetchData(category))),
+    changeCurrentMenu: (category, tab) => new Promise(
+      (res) => dispatch(setupMenu(category, tab))),
   }
 }
 

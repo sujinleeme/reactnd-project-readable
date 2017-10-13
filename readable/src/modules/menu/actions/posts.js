@@ -1,45 +1,44 @@
 import { headers } from '../headers'
 import { baseurl } from '../../../api-server/configurl'
 
-export const ITEMS_HAS_ERRORED = 'ITEMS_HAS_ERRORED'
-export const ITEMS_IS_LOADING = 'ITEMS_IS_LOADING'
-export const ITEMS_FETCH_DATA_SUCCESS = 'ITEMS_FETCH_DATA_SUCCESS'
+export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
+export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'
+export const POSTS_FETCH_DATA_SUCCESS = 'POSTS_FETCH_DATA_SUCCESS'
 
-
-export function itemsHasErrored(bool) {
+export const postsHasErrored = (bool) => {
   return {
-    type: 'ITEMS_HAS_ERRORED',
-    hasErrored: bool
-  };
+    type: 'POSTS_HAS_ERRORED',
+    hasErrored: bool,
+  }
 }
 
-export function itemsIsLoading(bool) {
+export const postsIsLoading = (bool) => {
   return {
-    type: 'ITEMS_IS_LOADING',
-    isLoading: bool
-  };
+    type: 'POSTS_IS_LOADING',
+    isLoading: bool,
+  }
 }
 
-export function itemsFetchDataSuccess(items) {
+export const postsFetchDataSuccess = (posts) => {
   return {
-    type: 'ITEMS_FETCH_DATA_SUCCESS',
-    items
-  };
+    type: 'POSTS_FETCH_DATA_SUCCESS',
+    posts,
+  }
 }
 
-export function itemsFetchData() {
+export const postsFetchData = (category) => {
   return (dispatch) => {
-    dispatch(itemsIsLoading(true))
-    fetch(`${baseurl}/posts`, {headers})
-    .then((response) => {
+    dispatch(postsIsLoading(true))
+    fetch(`${baseurl}/${category}/posts`, {headers}).
+    then((response) => {
       if (!response.ok) {
-        throw Error(response.statusText);
+        throw Error(response.statusText)
       }
-      dispatch(itemsIsLoading(false));
+      dispatch(postsIsLoading(false))
       return response
-    })
-    .then((response) => response.json())
-    .then((items) => dispatch(itemsFetchDataSuccess(items)))
-    .catch(() => dispatch(itemsHasErrored(true)));
-  };
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(postsFetchDataSuccess(post))).
+    catch(() => dispatch(postsHasErrored(true)))
+  }
 }

@@ -2,16 +2,10 @@ import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
-  selectCategory, selectTab, categoryFetchData, tabFetchData, setupMenu,
+  getCategories, getTabs, setupMenu,
 } from './modules/menu/actions/menu'
-import { itemsFetchData } from './modules/menu/actions/posts'
+import { postsFetchData } from './modules/menu/actions/posts'
 import { withRouter } from 'react-router-dom'
-
-import {
-  urls,
-} from './utils/urls'
-
-import { push } from 'react-router-redux'
 
 import NotFound from './components/pages/NotFound'
 import HomePage from './components/pages/HomePage'
@@ -41,16 +35,21 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
-      this.changeCurrentMenu(locationChanged, nextProps)
+      return this.changeCurrentMenu(locationChanged, nextProps).then(
+        this.props.fetchPosts(this.props.selectMenu.category),
+      )
     }
   }
   
   async componentDidMount () {
     const haslocationState = this.props.location.state
     const props = this.props
-    await Promise.all(
-      [this.props.fetchCategoryList(), this.props.fetchTabList()]).then(
+    await Promise.all([
+      this.props.fetchCategories(),
+      this.props.fetchTabs()]).then(
       this.changeCurrentMenu(haslocationState, props),
+    ).then(
+      this.props.fetchPosts(this.props.selectMenu.category),
     )
   }
   
@@ -64,8 +63,7 @@ class App extends Component {
       categoryName = this.props.selectMenu.category
       tabName = this.props.selectMenu.tab
     }
-    console.log(this.props)
-    return this.props.setCurrentMenu(categoryName, tabName)
+    return this.props.changeCurrentMenu(categoryName, tabName)
   }
   
   render () {
@@ -95,12 +93,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchCategoryList: () => new Promise(
-      (res) => dispatch(categoryFetchData())),
-    fetchTabList: () => new Promise((res) => dispatch(tabFetchData())),
-    fetchData: (url) => dispatch(itemsFetchData(url)),
-    setCurrentMenu: (category, tab) => dispatch(setupMenu(category, tab)),
-    
+    fetchCategories: () => new Promise((res) => dispatch(getCategories())),
+    fetchTabs: () => new Promise((res) => dispatch(getTabs())),
+    fetchPosts: (category) => new Promise(
+      (res) => dispatch(postsFetchData(category))),
+    changeCurrentMenu: (category, tab) => new Promise(
+      (res) => dispatch(setupMenu(category, tab))),
   }
 }
 

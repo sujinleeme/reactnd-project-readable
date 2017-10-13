@@ -62,38 +62,4 @@ export const setupMenuComplete = (state = false, action) => {
   }
 }
 
-//
-// const initialLocation = { pathname: '/', search: '', hash: '' }
-// export const locationReducer = (state = initialLocation, action) => {
-//   return action.type === 'LOCATION_CHANGE' ?
-//     action.location : state
-// }
-
-//
-// export const locationReducer = (state=[], action) => {
-//   switch (action.type) {
-//     case LOCATION_CHANGE:
-//       return  action.location
-//     /*
-//      action.payload is something like:
-//      {
-//      pathname: '/',
-//      search: '',
-//      hash: '',
-//      state: null,
-//      action: 'PUSH',
-//      key: 'xwl8yl',
-//      query: {},
-//      $searchBase: {
-//      search: '',
-//      searchBase: ''
-//      }
-//      }
-//      */
-//
-//     default:
-//       return state
-//   }
-// }
-//
 

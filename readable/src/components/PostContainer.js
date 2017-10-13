@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import Grid from 'material-ui/Grid'
-import PostList from './PostList'
-import PaperSheet from './PaperSheet'
+import PostCard from './PostCard'
 import CreatePost from './CreatePost'
-import MainTabs from './TabContainer'
 import { withStyles } from 'material-ui/styles'
-
-
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -18,20 +14,21 @@ const styles = theme => ({
 })
 
 class PostContainer extends React.Component {
-
   
   render () {
-    const {classes, location} = this.props
-    
+    const {classes} = this.props
+    const postItems = this.props.posts
     return (
-   
-            
-            <div className={classes.root} >
-              <CreatePost/>
-              <PostList/>
-              <PostList/>
-            </div>
-          
+      <div className={classes.root}>
+        <CreatePost/>
+        {postItems.map(post => (
+          <PostCard
+            key={post.id}
+            post={post}
+            {...this.props}/>
+        ))}
+      </div>
+    
     )
   }
 }
@@ -40,4 +37,16 @@ PostContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(PostContainer)
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(withStyles(styles)(PostContainer)))

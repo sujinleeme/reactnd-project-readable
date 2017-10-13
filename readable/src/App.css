@@ -1,29 +1,34 @@
 .App {
 	text-align: center;
-}
+	}
+html {
+	height: 100%;
+	}
+body {
+	min-height: 100%;
+	}
 
 html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	max-width: 100%;
 	overflow-x: hidden;
-	height:100%;
 	color: #616161;
 	}
 
-.brandLogo{
+.brandLogo {
 	display: inherit;
 	padding: 15px 0;
 	}
-
 
 .brandLogo .main {
 	margin-right: 10px;
 	}
 
-.brandLogo h2:link{
+.brandLogo h2:link {
 	text-decoration: none;
 	}
+
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
 	color: inherit;
