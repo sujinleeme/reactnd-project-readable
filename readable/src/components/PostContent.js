@@ -31,25 +31,29 @@ const styles = theme => ({
   },
 })
 
-class Comments extends React.Component {
+class PostContent extends React.Component {
   
   state = {
+    
     author: this.props.comment.author,
+    date: this.props.comment.timestamp,
+  
     fullAuthorName: this.props.comment.author,
     shortAuthorName: '',
     like: false,
-    date: this.props.comment.timestamp,
+  
   }
   
   componentDidMount () {
     this.setState({author: username(this.state.author)})
-    this.setState({shortAuthorName: username(this.state.fullAuthorName)})
     this.setState({date: date(this.state.date)})
+  
+  
   }
   
   render () {
     const {classes, comment} = this.props
-    const {fullAuthorName, shortAuthorName} = this.state
+    const {fullAuthorName} = this.state
     const isLiked = this.state.like
     return (
       <div className={classes.root}>
@@ -58,7 +62,7 @@ class Comments extends React.Component {
           <CardHeader
             avatar={
               <Avatar aria-label="post" className={classes.avatar}>
-                {shortAuthorName}
+                {fullAuthorName}
               </Avatar>
             }
             title={fullAuthorName}
@@ -69,17 +73,17 @@ class Comments extends React.Component {
               {comment.body}
             </Typography>
           </CardContent>
-          
+    
           <CardActions disableActionSpacing>
             <IconButton aria-label="Add to favorites"
                         onClick={this.handleLikeClick}>
               {!isLiked ? <ThumbUp className={classes.favorite}/>
                 : <ThumbUp className={classes.liked}/>
               }
-            
+    
             </IconButton>
-            
-            
+    
+    
             <Typography className={
               !isLiked ? '' : classes.liked}
             >
@@ -90,12 +94,12 @@ class Comments extends React.Component {
               {!isLiked ? <ThumbDown className={classes.favorite}/>
                 : <ThumbDown className={classes.liked}/>
               }
-            
+    
             </IconButton>
           </CardActions>
         </Card>
-      
-      
+       
+        
       </div>
     
     )
@@ -104,7 +108,7 @@ class Comments extends React.Component {
   
 }
 
-Comments.propTypes = {
+PostContent.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
@@ -125,4 +129,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(Comments)))
+  withRouter(withStyles(styles)(PostContent)))

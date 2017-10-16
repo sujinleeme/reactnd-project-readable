@@ -35,25 +35,23 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
-      return this.changeCurrentMenu(locationChanged, nextProps).then(
-        this.props.fetchPosts(this.props.selectMenu.category),
-      )
+      return this.changeMenu(locationChanged, nextProps)
     }
   }
   
   async componentDidMount () {
     const haslocationState = this.props.location.state
     const props = this.props
+    console.log(haslocationState)
+    
     await Promise.all([
       this.props.fetchCategories(),
       this.props.fetchTabs()]).then(
-      this.changeCurrentMenu(haslocationState, props),
-    ).then(
-      this.props.fetchPosts(this.props.selectMenu.category),
+      this.changeMenu(haslocationState, props),
     )
   }
   
-  changeCurrentMenu (bool, props) {
+  changeMenu (bool, props) {
     let categoryName, tabName
     if (bool && props.location.state) {
       categoryName = props.location.state.category
@@ -62,8 +60,11 @@ class App extends Component {
     else {
       categoryName = this.props.selectMenu.category
       tabName = this.props.selectMenu.tab
+      
     }
-    return this.props.changeCurrentMenu(categoryName, tabName)
+    return this.props.changeCurrentMenu(categoryName, tabName).then(
+      this.props.fetchPosts(categoryName),
+    )
   }
   
   render () {

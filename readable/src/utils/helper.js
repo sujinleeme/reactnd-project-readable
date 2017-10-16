@@ -14,3 +14,10 @@ export const date = (timestamp) => {
     + pubDate.getDate() + ', ' + pubDate.getFullYear()
   return formattedDate
 }
+
+
+export const username = (str = '') => {
+  return typeof str !== 'string'
+    ? ''
+    : str.substring(0, 2).toUpperCase();
+}

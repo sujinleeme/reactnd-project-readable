@@ -13,7 +13,7 @@ export const fetchCommentDataSuccess = (comments) => {
 export const getComments = (id) => {
   
   return (dispatch) => {
-    fetch(`${baseurl}/posts/${id}`, {headers}).
+    fetch(`${baseurl}/posts/${id}/comments`, {headers}).
     then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -23,22 +23,3 @@ export const getComments = (id) => {
     then((data) => dispatch(fetchCommentDataSuccess(data)))
   }
 }
-
-//
-//
-// export const postsFetchData = (category) => {
-//   return (dispatch) => {
-//     dispatch(postsIsLoading(true))
-//     fetch(`${baseurl}/${category}/posts`, {headers}).
-//     then((response) => {
-//       if (!response.ok) {
-//         throw Error(response.statusText)
-//       }
-//       dispatch(postsIsLoading(false))
-//       return response
-//     }).
-//     then((response) => response.json()).
-//     then((post) => dispatch(postsFetchDataSuccess(post))).
-//     catch(() => dispatch(postsHasErrored(true)))
-//   }
-// }
