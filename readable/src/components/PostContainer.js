@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import PostCard from './PostCard'
+import LoadingProgress from './LoadingProgress'
+
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -20,7 +22,7 @@ class PostContainer extends React.Component {
     const {classes} = this.props
     const postItems = this.props.posts
     if (this.props.postsIsLoading) {
-      return <p>Loading…</p>;
+      return <LoadingProgress/>;
     }
   
     return (
@@ -35,7 +37,6 @@ class PostContainer extends React.Component {
         ))}
         </CardContent>
       </div>
-      
     
     )
   }
