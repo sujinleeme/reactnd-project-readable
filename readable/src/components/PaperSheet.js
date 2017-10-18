@@ -20,7 +20,7 @@ const PaperSheet = (props) => {
           This is a sheet of paper.
         </Typography>
         <Typography type="body1" component="p">
-          Paper can be used to build surface or other elements for your application.
+          Sujin Lee
         </Typography>
       </Paper>
     </div>

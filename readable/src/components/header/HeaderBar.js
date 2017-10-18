@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import CategoryContainer from '../CategoryContainer'
+import CategoryContainer from './CategoryContainer'
 import Grid from 'material-ui/Grid'
 import { Link } from 'react-router-dom'
 
@@ -12,6 +12,17 @@ const styles = theme => ({
   root: {
     minHeight: '150px',
   },
+  header: {
+    display: 'block',
+    padding: theme.spacing.unit * 2
+  },
+  typoLogo: {
+    display: 'flex',
+    marginBottom: theme.spacing.unit * 2,
+  },
+  detailTypoLogo: {
+    marginLeft: theme.spacing.unit * 2,
+  }
 })
 
 const HeaderBar = (props) => {
@@ -23,21 +34,24 @@ const HeaderBar = (props) => {
           <Toolbar classes={{
             root: classes.root,
           }}>
-            <Grid item md={2}>
-            </Grid>
-            <Grid item md={6} container={true} direction="column">
-              <div className="brandLogo">
+            <Grid item md={2} />
+            <Grid item md={8} container={true} direction="column">
+              <div className={classes.header}>
+                <div className={classes.typoLogo}>
                 <Typography type="title" color="inherit"
                             className="main">
                   <Link to={`/`}>#MakewithUdacity</Link>
                 </Typography>
-                <Typography type="title" color="accent">
-                  / Udacity Nanodegree Student's Projects Showcase
+                
+                <Typography type="title" color="accent" className={classes.detailTypoLogo}>
+                  Udacity Nanodegree Student's Projects Showcase
                 </Typography>
+                </div>
+                <CategoryContainer/>
               </div>
-              <CategoryContainer/>
+              
             </Grid>
-            <Grid item md={4}/>
+            <Grid item md={2}/>
           </Toolbar>
         </AppBar>
       </Grid>

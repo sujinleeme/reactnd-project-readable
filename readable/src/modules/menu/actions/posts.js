@@ -42,3 +42,24 @@ export const postsFetchData = (category) => {
     catch(() => dispatch(postsHasErrored(true)))
   }
 }
+
+export const updateVote = (id, type) => {
+  return (dispatch) => {
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({option: type})
+    }).
+    then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(postsIsLoading(false))
+      return response
+    }).
+    then((response) => response.json())
+  }
+}

@@ -7,6 +7,9 @@ export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
 export const SELECT_CATEGORY = 'SELECT_CATEGORY'
 export const SELECT_TAB = 'SELECT_TAB'
 export const SETUP_MENU_SUCCESS = 'SETUP_MENU_SUCCESS'
+export const CHANGE_EDIT_MENU = 'CHANGE_EDIT_MENU'
+
+
 
 export const setupMenuComplete = (bool) => {
   return {
@@ -68,9 +71,6 @@ export const fetchTabDataSuccess = (tabs) => {
   }
 }
 
-
-
-
 export const getTabs = () => {
   return (dispatch) => {
     fetch(`${baseurl}/tabs`, {headers})
@@ -85,3 +85,9 @@ export const getTabs = () => {
   }
 }
 
+export const changeEditView = (bool) => {
+  return {
+    type: CHANGE_EDIT_MENU,
+    isEditing: bool,
+  }
+}

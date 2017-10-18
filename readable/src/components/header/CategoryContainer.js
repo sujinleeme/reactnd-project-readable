@@ -4,8 +4,8 @@ import { withStyles } from 'material-ui/styles'
 import { Button } from 'material-ui'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setupMenu } from '../modules/menu/actions/menu'
-import { postsFetchData } from '../modules/menu/actions/posts'
+import { setupMenu } from '../../modules/menu/actions/menu'
+import { postsFetchData } from '../../modules/menu/actions/posts'
 
 const styles = theme => {
   return ({

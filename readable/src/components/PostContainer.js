@@ -6,9 +6,7 @@ import LoadingProgress from './LoadingProgress'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import Card, {
-  CardHeader, CardContent, CardActions,
-} from 'material-ui/Card'
+import { CardContent } from 'material-ui/Card'
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -19,8 +17,7 @@ const styles = theme => ({
 class PostContainer extends React.Component {
   
   render () {
-    const {classes} = this.props
-    const postItems = this.props.posts
+    const {classes, posts} = this.props
     if (this.props.postsIsLoading) {
       return <LoadingProgress/>;
     }
@@ -28,12 +25,12 @@ class PostContainer extends React.Component {
     return (
       <div className={classes.root}>
         <CardContent>
-  
-        {postItems.map(post => (
+        {posts.map(post => (
           <PostCard
             key={post.id}
             post={post}
-            {...this.props}/>
+          />
+          
         ))}
         </CardContent>
       </div>

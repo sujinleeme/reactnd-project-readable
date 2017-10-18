@@ -12,7 +12,8 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 3,
     backgroundColor: theme.palette.background.A300,
     boxShadow: 'none',
-    minHeight: '700px'
+    minHeight: '1000px',
+    paddingBottom: theme.spacing.unit
   },
   
 })
@@ -29,7 +30,7 @@ class MainContent extends React.Component {
             <TabContainer/>
             <PostContainer/>
           </Grid>
-          <Grid item md={2}>
+        <Grid item md={2}><q>             </q>
             <PaperSheet/>
           </Grid>
           <Grid item md={2}/>

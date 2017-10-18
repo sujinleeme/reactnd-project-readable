@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import MainContent from '../MainContent'
 import CopyrightBar from '../CopyrightBar'
-import HeaderBar from '../Header/HeaderBar'
+import HeaderBar from '../header/HeaderBar'
 import React, { Component } from 'react'
 
 class HomePage extends Component {

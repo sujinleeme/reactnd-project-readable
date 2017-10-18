@@ -4,6 +4,7 @@ import {
   FETCH_CATEGORY_DATA_SUCCESS,
   FETCH_TAB_DATA_SUCCESS,
   SETUP_MENU_SUCCESS,
+  CHANGE_EDIT_MENU,
 } from '../actions/menu'
 
 const initSelectState = {
@@ -56,6 +57,16 @@ export const setupMenuComplete = (state = false, action) => {
   switch (action.type) {
     case 'SETUP_MENU_SUCCESS':
       return action.hasloaded
+    
+    default:
+      return state
+  }
+}
+
+export const postsIsEditing = (state = false, action) => {
+  switch (action.type) {
+    case 'CHANGE_EDIT_MENU':
+      return action.isEditing
     
     default:
       return state

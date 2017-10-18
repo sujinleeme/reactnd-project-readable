@@ -12,6 +12,8 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.A300,
     boxShadow: 'none',
+    paddingLeft: theme.spacing.unit * 2,
+  
   },
 })
 
