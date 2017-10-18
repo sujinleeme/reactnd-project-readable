@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
-import PostContainer from './PostContainer'
-import PaperSheet from './PaperSheet'
-import TabContainer from './TabContainer'
+import PostContainer from '../container/PostContainer'
+import PaperSheet from '../assests/PaperSheet'
+import TabContainer from '../container/TabContainer'
 import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
@@ -18,7 +18,7 @@ const styles = theme => ({
   
 })
 
-class MainContent extends React.Component {
+class MainLayout extends React.Component {
   
   render () {
     const {classes} = this.props
@@ -40,8 +40,8 @@ class MainContent extends React.Component {
   }
 }
 
-MainContent.propTypes = {
+MainLayout.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MainContent)
+export default withStyles(styles)(MainLayout)

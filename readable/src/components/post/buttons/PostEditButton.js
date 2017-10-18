@@ -4,7 +4,7 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
 import { withStyles } from 'material-ui/styles'
 
-import { changeEditView } from '../modules/menu/actions/menu'
+import { changeEditView } from '../../../modules/actions/menu'
 import { connect } from 'react-redux'
 
 import PropTypes from 'prop-types'
@@ -28,7 +28,7 @@ const options = [
 
 const ITEM_HEIGHT = 48
 
-class PostMenu extends React.Component {
+class PostEditButton extends React.Component {
   state = {
     anchorEl: null,
     open: false,
@@ -63,7 +63,7 @@ class PostMenu extends React.Component {
       <div className={classes.root}>
         <IconButton
           aria-label="More"
-          aria-owns={this.state.open ? 'long-menu' : null}
+          aria-owns={this.state.open ? 'long-utils' : null}
           aria-haspopup="true"
           onClick={this.handleClick}
         >
@@ -105,11 +105,11 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-PostMenu.propTypes = {
+PostEditButton.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(PostMenu))
+  withStyles(styles)(PostEditButton))
 
 

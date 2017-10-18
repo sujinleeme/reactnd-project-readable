@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import CategoryContainer from './CategoryContainer'
+import CategoryContainer from '../container/CategoryContainer'
 import Grid from 'material-ui/Grid'
 import { Link } from 'react-router-dom'
 
@@ -38,12 +38,12 @@ const HeaderBar = (props) => {
             <Grid item md={8} container={true} direction="column">
               <div className={classes.header}>
                 <div className={classes.typoLogo}>
-                <Typography type="title" color="inherit"
+                <Typography type="headline" color="inherit"
                             className="main">
                   <Link to={`/`}>#MakewithUdacity</Link>
                 </Typography>
                 
-                <Typography type="title" color="accent" className={classes.detailTypoLogo}>
+                <Typography type="headline" color="accent" className={classes.detailTypoLogo}>
                   Udacity Nanodegree Student's Projects Showcase
                 </Typography>
                 </div>

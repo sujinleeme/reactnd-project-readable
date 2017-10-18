@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import { setupMenu } from '../modules/menu/actions/menu'
+import { setupMenu } from '../../modules/actions/menu'
 
 const styles = theme => ({
   root: {

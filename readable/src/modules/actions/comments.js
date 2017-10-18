@@ -1,5 +1,5 @@
-import { headers } from '../headers'
-import { baseurl } from '../../../api-server/configurl'
+import { headers } from '../root/headers'
+import { baseurl } from '../../api-server/configurl'
 
 export const FETCH_COMMENT_DATA_SUCCESS = 'FETCH_COMMENT_DATA_SUCCESS'
 

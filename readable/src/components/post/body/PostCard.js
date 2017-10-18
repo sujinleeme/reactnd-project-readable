@@ -1,27 +1,32 @@
+// react
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import classnames from 'classnames'
 
+// actions
+import { date, username } from '../../../utils/helper'
+import { getComments } from '../../../modules/actions/comments'
+import { changeEditView } from '../../../modules/actions/menu'
+
+// materialUI components
 import { withStyles } from 'material-ui/styles'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
-import IconButton from 'material-ui/IconButton'
-
-import classnames from 'classnames'
+import ExpandLessIcon from 'material-ui-icons/ExpandLess'
 import Card, { CardContent } from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
 import Collapse from 'material-ui/transitions/Collapse'
+
+// components
 import PostContent from './PostContent'
-import PostVote from './PostVote'
-import NewComment from './NewComment'
+import PostVote from '../footer/PostVote'
+import NewComment from '../create/NewComment'
 
-import { date, username } from '../utils/helper'
-import { getComments } from '../modules/menu/actions/comments'
-import { changeEditView } from '../modules/menu/actions/menu'
-
-import { styles } from '../styles/PostCard'
+// styles
+import { styles } from '../../../styles/post/PostCard'
 
 class PostCard extends React.Component {
-  
   constructor (props) {
     super(props)
     this.state = {
@@ -65,26 +70,36 @@ class PostCard extends React.Component {
             {...classes}/>
           <div className={classes.footer}>
             <PostVote className={classes.postVote}
-              content={post}
-              {...classes}/>
-            <IconButton>
-              <ExpandMoreIcon/>
-            </IconButton>
+                      content={post}
+                      {...classes}/>
+            
+            {!expanded ? <IconButton>
+                <ExpandMoreIcon/>
+              </IconButton>
+              
+              : <IconButton>
+                <ExpandLessIcon/>
+              </IconButton>
+            }
+          
           </div>
           <Collapse in={expanded} transitionDuration="auto"
                     unmountOnExit
           >
-            <NewComment/>
             
-            <CardContent onClick={this.handleCommentClick}>
+            
+            <CardContent className={classes.comments}
+                         onClick={this.handleCommentClick}>
+              <NewComment/>
               {comments.map((comment, index) => (
-                <div key={index}>
+                <div key={index} className={classes.commentCard}>
                   <PostContent
                     content={comment}
                     {...classes} />
                   <PostVote
                     content={comment}
                     {...classes} />
+                
                 </div>
               ))}
             </CardContent>

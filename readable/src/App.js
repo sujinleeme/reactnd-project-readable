@@ -3,8 +3,8 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   getCategories, getTabs, setupMenu,
-} from './modules/menu/actions/menu'
-import { postsFetchData } from './modules/menu/actions/posts'
+} from './modules/actions/menu'
+import { postsFetchData } from './modules/actions/posts'
 import { withRouter } from 'react-router-dom'
 
 import NotFound from './components/pages/NotFound'

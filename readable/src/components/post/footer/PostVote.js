@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { CardActions } from 'material-ui/Card'
-import { styles } from '../styles/PostVote'
+import { styles } from '../../../styles/post/PostVote'
 
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'

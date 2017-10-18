@@ -1,5 +1,5 @@
-import { headers } from '../headers'
-import { baseurl } from '../../../api-server/configurl'
+import { headers } from '../root/headers'
+import { baseurl } from '../../api-server/configurl'
 
 export const POSTS_HAS_ERRORED = 'POSTS_HAS_ERRORED'
 export const POSTS_IS_LOADING = 'POSTS_IS_LOADING'

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import { withStyles } from 'material-ui/styles'
 import Card, {
@@ -11,16 +10,17 @@ import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
 
 import Typography from 'material-ui/Typography'
-import TextField from 'material-ui/TextField'
+import Input from 'material-ui/Input'
 
-import PostMenu from './PostMenu'
+import PostEditButton from '../buttons/PostEditButton'
+import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
-import { date, username } from '../utils/helper'
+import { date, username } from '../../../utils/helper'
 
-import { getComments } from '../modules/menu/actions/comments'
-import { changeEditView } from '../modules/menu/actions/menu'
+import { getComments } from '../../../modules/actions/comments'
+import { changeEditView } from '../../../modules/actions/menu'
 
-import { styles } from '../styles/PostContent'
+import { styles } from '../../../styles/post/PostContent'
 
 class PostContent extends React.Component {
   state = {
@@ -48,7 +48,7 @@ class PostContent extends React.Component {
   }
   
   render () {
-    const { content, classes} = this.props
+    const {content, classes} = this.props
     const {fullAuthorName, shortAuthorName, isEditing} = this.state
     
     return (
@@ -63,7 +63,7 @@ class PostContent extends React.Component {
                       title={fullAuthorName}
                       subheader={this.state.date}
           />
-          <PostMenu className={classes.postMenu}
+          <PostEditButton className={classes.postMenu}
                     changeEditView={this.changeEditView}
           />
         </div>
@@ -79,25 +79,33 @@ class PostContent extends React.Component {
             </CardContent>
             
             : <CardContent>
-              <Button color="accent" className={classes.button}
-                      onClick={this.closePostEdit}>
-                cancel
-              </Button>
-              <Button color="accent" className={classes.button}>
-                save
-              </Button>
+              <PostSaveCancelButton
+                cancelPost={this.closePostEdit}
+              />
+              {/*<Button color="accent" className={classes.button}*/}
+              {/*onClick={this.closePostEdit}>*/}
+              {/*cancel*/}
+              {/*</Button>*/}
+              {/*<Button color="accent" className={classes.button}>*/}
+              {/*save*/}
+              {/*</Button>*/}
               <form noValidate autoComplete="off">
-                {content.title ? <TextField
-                  id="required"
-                  label="Required"
+                {content.title ? <Input
+                  placeholder="Write down your post title..."
+                  fullWidth="true"
+                  disableUnderline="true"
+                  inputProps={{
+                    'aria-label': 'Description',
+                  }}
                   defaultValue={content.title}
                   className={classes.textField}
                   margin="normal"
                 /> : null}
-                {content.body ? <TextField
-                  required
-                  id="required"
-                  label="Required"
+                {content.body ? <Input
+                  placeholder="What do you want to say..."
+                  multiline="true"
+                  fullWidth="true"
+                  disableUnderline="true"
                   defaultValue={content.body}
                   className={classes.textField}
                   margin="normal"
@@ -105,8 +113,6 @@ class PostContent extends React.Component {
               </form>
             </CardContent>
         }
-      
-      
       </div>
     
     )
@@ -132,4 +138,4 @@ PostContent.propTypes = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(PostContent)))
+  withStyles(styles)(PostContent))

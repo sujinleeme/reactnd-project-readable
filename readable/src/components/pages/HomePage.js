@@ -1,18 +1,15 @@
 import PropTypes from 'prop-types'
-import MainContent from '../MainContent'
-import CopyrightBar from '../CopyrightBar'
+import MainLayout from '../mainLayout/MainLayout'
+import CopyrightBar from '../footer/CopyrightBar'
 import HeaderBar from '../header/HeaderBar'
 import React, { Component } from 'react'
 
 class HomePage extends Component {
-  
   render () {
-    
-    const props = this.props
     return (
       <div>
         <HeaderBar/>
-        <MainContent/>
+        <MainLayout/>
         <CopyrightBar/>
       </div>
     )

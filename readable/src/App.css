@@ -16,24 +16,7 @@ html, body {
 	color: #616161;
 	}
 
-.brandLogo {
-	display: inherit;
-	padding: 15px 0;
-	}
-
-.brandLogo .main {
-	margin-right: 10px;
-	}
-
-.brandLogo h2:link {
-	text-decoration: none;
-	}
-
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
 	color: inherit;
-	}
-
-.active {
-	background: #4FC3F7 !important;
 	}
