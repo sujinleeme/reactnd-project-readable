@@ -13,37 +13,62 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-class PostVote extends React.Component {
-  
-  state = {
-    upVote: false,
-    downVote: false,
+import { updateVote, getPost } from '../../../modules/actions/posts'
+
+class UpDownVoter extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+
+      upVote: false,
+      downVote: false,
+      
+    }
   }
   
   handleClickUpVote = (e, type) => {
+    const id = this.props.content.id
     e.stopPropagation()
-    
     this.setState({upVote: !this.state.upVote})
+
     if (this.state.downVote) {
       this.setState({downVote: false})
     }
-    
-  }
+    if (this.state.upVote) {
+      this.props.updatePostVote(id, 'downVote')
+      this.props.fetchPost(id)
   
+  
+    }
+    if (!this.state.upVote) {
+      this.props.updatePostVote(id, 'upVote')
+      this.props.fetchPost(id)
+  
+    }
+    console.log(this.props.VoteIsUpdated)
+
+  }
   handleClickDownVote = (e) => {
+    const id = this.props.content.id
     e.stopPropagation()
+
     this.setState({downVote: !this.state.downVote})
     if (this.state.upVote) {
       this.setState({upVote: false})
-      
+    }
+
+    if (this.state.downVote) {
+      this.props.updatePostVote(id, 'upVote')
+    }
+    if (!this.state.downVote) {
+      this.props.updatePostVote(id, 'downVote')
     }
     
   }
   
   render () {
-    const {content, classes} = this.props
+    const {classes, content} = this.props
     const {upVote, downVote} = this.state
-    
     return (
       <CardActions disableActionSpacing className={classes.root}>
         <IconButton aria-label="Add to favorites"
@@ -51,7 +76,7 @@ class PostVote extends React.Component {
           <ThumbUp className={classnames(classes.button, {
             [classes.clicked]: upVote,
           })}/>
-          
+        
         </IconButton>
         <Typography className={classnames('', {
           [classes.clicked]: downVote || upVote,
@@ -73,8 +98,22 @@ class PostVote extends React.Component {
   }
 }
 
-PostVote.propTypes = {
+const mapStateToProps = (state) => {
+  return {
+    VoteIsUpdated: state.voteUpdateSuccess,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updatePostVote: (id, option) => dispatch(updateVote(id, option)),
+    fetchPost: (id) => dispatch(getPost(id)),
+  }
+}
+
+UpDownVoter.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(PostVote))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(withStyles(styles)(UpDownVoter)))

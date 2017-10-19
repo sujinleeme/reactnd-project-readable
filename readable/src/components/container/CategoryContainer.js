@@ -5,7 +5,7 @@ import { Button } from 'material-ui'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setupMenu } from '../../modules/actions/menu'
-import { postsFetchData } from '../../modules/actions/posts'
+import { getPostLists } from '../../modules/actions/posts'
 
 const styles = theme => {
   return ({
@@ -82,7 +82,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPosts: (category) => new Promise(
-      (res) => dispatch(postsFetchData(category))),
+      (res) => dispatch(getPostLists(category))),
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),
   }

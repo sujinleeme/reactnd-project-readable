@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
   getCategories, getTabs, setupMenu,
 } from './modules/actions/menu'
-import { postsFetchData } from './modules/actions/posts'
+import { getPostLists } from './modules/actions/posts'
 import { withRouter } from 'react-router-dom'
 
 import NotFound from './components/pages/NotFound'
@@ -40,14 +40,13 @@ class App extends Component {
   }
   
   async componentDidMount () {
-    const haslocationState = this.props.location.state
+    const hasLocationState = this.props.location.state
     const props = this.props
-    console.log(haslocationState)
     
     await Promise.all([
       this.props.fetchCategories(),
       this.props.fetchTabs()]).then(
-      this.changeMenu(haslocationState, props),
+      this.changeMenu(hasLocationState, props),
     )
   }
   
@@ -63,7 +62,7 @@ class App extends Component {
       
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
-      this.props.fetchPosts(categoryName),
+      this.props.getPostLists(categoryName),
     )
   }
   
@@ -96,8 +95,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
-    fetchPosts: (category) => new Promise(
-      (res) => dispatch(postsFetchData(category))),
+    getPostLists: (category) => new Promise(
+      (res) => dispatch(getPostLists(category))),
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),
   }

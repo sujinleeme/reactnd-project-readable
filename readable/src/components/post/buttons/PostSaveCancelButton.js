@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
-import { getComments } from '../../../modules/actions/comments'
-import { changeEditView } from '../../../modules/actions/menu'
 
 import { styles } from '../../../styles/post/PostSaveCancelButton'
 
@@ -30,23 +28,6 @@ class PostSaveCancelButton extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    comments: state.comments,
-    isEditing: state.postsIsEditing,
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchComments: (id) => dispatch(getComments(id)),
-    changeEditView: (bool) => dispatch(changeEditView(bool)),
-  }
-}
-
-PostSaveCancelButton.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(PostSaveCancelButton))
+export default
+  withStyles(styles)(PostSaveCancelButton)

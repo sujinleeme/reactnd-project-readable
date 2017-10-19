@@ -3,11 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { withStyles } from 'material-ui/styles'
-import Card, {
-  CardHeader, CardContent, CardActions,
-} from 'material-ui/Card'
+import { CardHeader, CardContent } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
-import Button from 'material-ui/Button'
 
 import Typography from 'material-ui/Typography'
 import Input from 'material-ui/Input'
@@ -17,8 +14,7 @@ import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
 import { date, username } from '../../../utils/helper'
 
-import { getComments } from '../../../modules/actions/comments'
-import { changeEditView } from '../../../modules/actions/menu'
+import { getComments } from '../../../modules/actions/posts'
 
 import { styles } from '../../../styles/post/PostContent'
 
@@ -64,7 +60,7 @@ class PostContent extends React.Component {
                       subheader={this.state.date}
           />
           <PostEditButton className={classes.postMenu}
-                    changeEditView={this.changeEditView}
+                          changeEditView={this.changeEditView}
           />
         </div>
         
@@ -82,13 +78,6 @@ class PostContent extends React.Component {
               <PostSaveCancelButton
                 cancelPost={this.closePostEdit}
               />
-              {/*<Button color="accent" className={classes.button}*/}
-              {/*onClick={this.closePostEdit}>*/}
-              {/*cancel*/}
-              {/*</Button>*/}
-              {/*<Button color="accent" className={classes.button}>*/}
-              {/*save*/}
-              {/*</Button>*/}
               <form noValidate autoComplete="off">
                 {content.title ? <Input
                   placeholder="Write down your post title..."
@@ -119,17 +108,28 @@ class PostContent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+
+
+
+function mapStateToProps(globalState, ownProps) {
   return {
-    comments: state.comments,
-    isEditing: state.postsIsEditing,
-  }
+    activePost: globalState.posts.activePost,
+    id: ownProps.id
+  };
 }
+
+//
+// const mapStateToProps = (state) => {
+//   return {
+//     comments: state.comments,
+//     voteIsUpdating: state.voteIsUpdating,
+//
+//   }
+// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchComments: (id) => dispatch(getComments(id)),
-    changeEditView: (bool) => dispatch(changeEditView(bool)),
   }
 }
 

@@ -6,9 +6,10 @@ import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 
 // actions
-import { date, username } from '../../../utils/helper'
-import { getComments } from '../../../modules/actions/comments'
-import { changeEditView } from '../../../modules/actions/menu'
+// import { getComments } from '../../../modules/actions/comments'
+import {
+  getPost, updateVote, resetPost, getComments,
+} from '../../../modules/actions/posts'
 
 // materialUI components
 import { withStyles } from 'material-ui/styles'
@@ -20,7 +21,7 @@ import Collapse from 'material-ui/transitions/Collapse'
 
 // components
 import PostContent from './PostContent'
-import PostVote from '../footer/PostVote'
+import UpDownVoter from '../buttons/UpDownVoter'
 import NewComment from '../create/NewComment'
 
 // styles
@@ -31,18 +32,27 @@ class PostCard extends React.Component {
     super(props)
     this.state = {
       expanded: false,
-      post: this.props.post,
+      upVote: false,
+      downVote: false,
+      
     }
+    this.handleClickUpVote = this.handleClickUpVote.bind(this)
+    this.handleClickDownVote = this.handleClickDownVote.bind(this)
+    
+  }
+  
+  componentWillUnmount () {
+    this.props.resetPost()
   }
   
   componentDidMount = () => {
-    const id = this.props.post.id
-    this.props.fetchComments(id)
-    
-    this.setState(prevState => ({
-      shortAuthorName: username(prevState.fullAuthorName),
-      date: date(prevState.date),
-    }))
+    const postId = this.props.id
+    this.props.fetchPost(postId)
+    this.props.fetchComments(postId)
+    // this.setState(prevState => ({
+    //   shortAuthorName: username(prevState.fullAuthorName),
+    //   date: date(prevState.date),
+    // }))
   }
   
   handleExpandClick = (e) => {
@@ -54,9 +64,46 @@ class PostCard extends React.Component {
     e.stopPropagation()
   }
   
+  handleClickUpVote = (e, type) => {
+    const id = this.state.id
+    e.stopPropagation()
+    this.setState({upVote: !this.state.upVote})
+    
+    if (this.state.downVote) {
+      this.setState({downVote: false})
+    }
+    if (this.state.upVote) {
+      this.props.updatePostVote(id, 'downVote')
+    }
+    if (!this.state.upVote) {
+      this.props.updatePostVote(id, 'upVote')
+    }
+    console.log(this.props.VoteIsUpdated)
+    
+  }
+  handleClickDownVote = (e) => {
+    const id = this.state.id
+    e.stopPropagation()
+    
+    this.setState({downVote: !this.state.downVote})
+    if (this.state.upVote) {
+      this.setState({upVote: false})
+    }
+    
+    if (this.state.downVote) {
+      this.props.updatePostVote(id, 'upVote')
+    }
+    if (!this.state.downVote) {
+      this.props.updatePostVote(id, 'downVote')
+    }
+  }
+  
   render () {
-    const {classes, post, comments} = this.props
     const {expanded} = this.state
+    const {classes, activePost} = this.props
+    const {post, comments, loading, error} = activePost
+    
+    
     return (
       <div className={classnames(classes.expand, {
         [classes.expandOpen]: expanded,
@@ -64,14 +111,14 @@ class PostCard extends React.Component {
            aria-expanded={expanded}
            aria-label="Show more"
       >
-        <Card className={classes.root}>
+        {post ? <Card className={classes.root}>
           <PostContent
             content={post}
             {...classes}/>
           <div className={classes.footer}>
-            <PostVote className={classes.postVote}
-                      content={post}
-                      {...classes}/>
+            <UpDownVoter className={classes.postVote}
+                         content={post}
+                         {...classes}/>
             
             {!expanded ? <IconButton>
                 <ExpandMoreIcon/>
@@ -91,37 +138,42 @@ class PostCard extends React.Component {
             <CardContent className={classes.comments}
                          onClick={this.handleCommentClick}>
               <NewComment/>
-              {comments.map((comment, index) => (
-                <div key={index} className={classes.commentCard}>
-                  <PostContent
-                    content={comment}
-                    {...classes} />
-                  <PostVote
-                    content={comment}
-                    {...classes} />
+              {comments ? <div>
+                {comments.map((comment, index) => (
+                  <div key={index} className={classes.commentCard}>
+                    <PostContent
+                      content={comment}
+                      {...classes} />
+                    <UpDownVoter
+                      content={comment}
+                      {...classes}
+                    />
+                  
+                  </div>
                 
-                </div>
-              ))}
+                ))} </div> : null}
             </CardContent>
           
           </Collapse>
-        </Card>
+        </Card> : null}
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps (globalState, ownProps) {
   return {
-    comments: state.comments,
-    isEditing: state.postsIsEditing,
+    activePost: globalState.posts.activePost,
+    id: ownProps.id,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updatePostVote: (id, option) => dispatch(updateVote(id, option)),
+    fetchPost: (id) => dispatch(getPost(id)),
     fetchComments: (id) => dispatch(getComments(id)),
-    changeEditView: (bool) => dispatch(changeEditView(bool)),
+    resetPost: () => dispatch(resetPost()),
   }
 }
 

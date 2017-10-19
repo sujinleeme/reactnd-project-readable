@@ -5,8 +5,9 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
+import Copyright from 'material-ui-icons/Copyright'
+import { styles } from '../../styles/CopyrightBar'
 
-const styles = theme => ({})
 
 const CopyrightBar = (props) => {
   const classes = props.classes
@@ -16,9 +17,10 @@ const CopyrightBar = (props) => {
         <Toolbar>
           <Grid container spacing={24}>
             <Grid item md={2}/>
-            <Grid item md={8}>
-              <Typography type="title" color="inherit">
-                SUJIN LEE
+            <Grid item md={8} className={classes.root}>
+              <Copyright className={classes.copyright}/>
+              <Typography type="subheading" color="inherit">
+                Sujin Lee
               </Typography>
             </Grid>
             <Grid item md={2}/>

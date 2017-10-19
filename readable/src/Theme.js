@@ -43,6 +43,12 @@ const CustomTheme = createMuiTheme({
         color: 'inherit',
       },
     },
+    MuiTab: {
+      root: {
+        minWidth: '80px !important'
+      },
+    
+    },
     MuiPaper: {
       root: {
         borderRadius: '0 !important',

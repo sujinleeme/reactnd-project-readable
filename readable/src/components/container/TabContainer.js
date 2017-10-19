@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import Paper from 'material-ui/Paper'
+
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Tabs, { Tab } from 'material-ui/Tabs'
@@ -8,12 +10,11 @@ import { setupMenu } from '../../modules/actions/menu'
 
 const styles = theme => ({
   root: {
-    width: '100%',
     flexGrow: 1,
     backgroundColor: theme.palette.background.A300,
     boxShadow: 'none',
-    paddingLeft: theme.spacing.unit * 2,
-  
+    paddingLeft: theme.spacing.unit * 3,
+    
   },
 })
 
@@ -50,8 +51,14 @@ class TabContainer extends React.Component {
     
     return (
       tabItems &&
+      
       <Tabs className={classes.root} value={tabIndex}
-            onChange={this.handleChange}>
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+      
+      
+      >
         {tabItems.map((({name, path}, index) => (
           <Tab
             key={name}

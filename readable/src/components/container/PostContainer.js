@@ -11,28 +11,46 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.A300,
-    padding: '16px',
+    padding: theme.spacing.unit * 3,
   },
   
 })
 
 class PostContainer extends React.Component {
   
+  componentDidMount () {
+  
+  }
+  
+  renderPosts (posts) {
+    return posts.map(post => (
+      <PostCard
+        key={post.id}
+      
+      />
+    
+    ))
+  }
+  
   render () {
-    const {classes, posts} = this.props
-    if (this.props.postsIsLoading) {
+    const {classes, postsList} = this.props
+    const {posts, loading} = postsList
+    if (loading) {
       return <LoadingProgress/>
     }
     
     return (
       <div className={classes.root}>
-        {posts.map(post => (
-          <PostCard
-            key={post.id}
-            post={post}
-          />
-        
-        ))}
+        {
+          posts ? posts.map((post) => (
+            <PostCard
+              key={post.id}
+              post={post}
+              id={post.id}
+            
+            />
+          
+          )) : null}
       </div>
     
     )
@@ -45,8 +63,7 @@ PostContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
-    postsIsLoading: state.postsIsLoading,
+    postsList: state.posts.postsList,
     
   }
 }
