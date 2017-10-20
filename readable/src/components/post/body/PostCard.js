@@ -32,12 +32,7 @@ class PostCard extends React.Component {
     super(props)
     this.state = {
       expanded: false,
-      upVote: false,
-      downVote: false,
-      
     }
-    this.handleClickUpVote = this.handleClickUpVote.bind(this)
-    this.handleClickDownVote = this.handleClickDownVote.bind(this)
     
   }
   
@@ -49,10 +44,6 @@ class PostCard extends React.Component {
     const postId = this.props.id
     this.props.fetchPost(postId)
     this.props.fetchComments(postId)
-    // this.setState(prevState => ({
-    //   shortAuthorName: username(prevState.fullAuthorName),
-    //   date: date(prevState.date),
-    // }))
   }
   
   handleExpandClick = (e) => {
@@ -64,45 +55,10 @@ class PostCard extends React.Component {
     e.stopPropagation()
   }
   
-  handleClickUpVote = (e, type) => {
-    const id = this.state.id
-    e.stopPropagation()
-    this.setState({upVote: !this.state.upVote})
-    
-    if (this.state.downVote) {
-      this.setState({downVote: false})
-    }
-    if (this.state.upVote) {
-      this.props.updatePostVote(id, 'downVote')
-    }
-    if (!this.state.upVote) {
-      this.props.updatePostVote(id, 'upVote')
-    }
-    console.log(this.props.VoteIsUpdated)
-    
-  }
-  handleClickDownVote = (e) => {
-    const id = this.state.id
-    e.stopPropagation()
-    
-    this.setState({downVote: !this.state.downVote})
-    if (this.state.upVote) {
-      this.setState({upVote: false})
-    }
-    
-    if (this.state.downVote) {
-      this.props.updatePostVote(id, 'upVote')
-    }
-    if (!this.state.downVote) {
-      this.props.updatePostVote(id, 'downVote')
-    }
-  }
-  
   render () {
     const {expanded} = this.state
     const {classes, activePost} = this.props
     const {post, comments, loading, error} = activePost
-    
     
     return (
       <div className={classnames(classes.expand, {
@@ -170,7 +126,6 @@ function mapStateToProps (globalState, ownProps) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePostVote: (id, option) => dispatch(updateVote(id, option)),
     fetchPost: (id) => dispatch(getPost(id)),
     fetchComments: (id) => dispatch(getComments(id)),
     resetPost: () => dispatch(resetPost()),

@@ -10,6 +10,10 @@ import {
   RESET_ACTIVE_POST,
   
   
+  EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_FAILURE,
+  
   FETCH_COMMENTS,
   FETCH_COMMENTS_SUCCESS,
   FETCH_COMMENTS_FAILURE,
@@ -44,6 +48,9 @@ export function posts(state = INITIAL_STATE, action) {
     
     case FETCH_POST:
       return {...state, activePost: {...state.activePost, loading: true, voting:false}};
+      
+      
+      
 
   
     case FETCH_POST_SUCCESS:
@@ -76,58 +83,3 @@ export function posts(state = INITIAL_STATE, action) {
       return state;
   }
 }
-
-
-
-//
-// export function postsHasErrored(state = false, action) {
-//   switch (action.type) {
-//     case 'POSTS_HAS_ERRORED':
-//       return action.hasErrored;
-//
-//     default:
-//       return state;
-//   }
-// }
-//
-// export function postsIsLoading(state = false, action) {
-//   switch (action.type) {
-//     case 'POSTS_IS_LOADING':
-//       return action.isLoading;
-//
-//     default:
-//       return state;
-//   }
-// }
-//
-// export function posts(state = [], action) {
-//   switch (action.type) {
-//     case 'POSTS_FETCH_DATA_SUCCESS':
-//       return action.posts;
-//
-//     default:
-//       return state;
-//   }
-// }
-//
-//
-// export function voteIsUpdating(state = false, action) {
-//   switch (action.type) {
-//     case 'VOTE_IS_UPDATING':
-//       return action.isUpdating;
-//
-//     default:
-//       return state;
-//   }
-// }
-//
-//
-// export function voteUpdateSuccess(state = false, action) {
-//   switch (action.type) {
-//     case 'VOTE_UPDATE_SUCCESS':
-//       return action.updated;
-//
-//     default:
-//       return state;
-//   }
-// }

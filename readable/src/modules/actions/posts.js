@@ -15,6 +15,14 @@ export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
 export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
 export const RESET_DELETED_POST = 'RESET_DELETED_POST'
 
+
+//Edit Post
+export const EDIT_POST = 'EDIT_POST'
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
+
+
+// Vote
 export const UPDATE_VOTE_SCORE = 'UPDATE_VOTE_SCORE'
 
 
@@ -82,7 +90,7 @@ export const fetchPostFailure = (error) => {
 
 
 
-
+// comments
 export const fetchComments = (request) => {
   return {
     type: 'FETCH_POST_COMMENTS',
@@ -104,6 +112,21 @@ export const fetchCommentsFailure = (comments) => {
   }
 }
 
+
+// Vote
+export const updateVoteScore = (bool) => {
+  return {
+    type: 'UPDATE_VOTE_SCORE',
+    payload: bool,
+  }
+}
+
+export const voteUpdateSuccess = (bool) => {
+  return {
+    type: 'VOTE_UPDATE_SUCCESS',
+    updated: bool,
+  }
+}
 
 // combine actions
 export const getPostLists = (category) => {
@@ -139,6 +162,9 @@ export const getPost = (id) => {
 }
 
 
+
+
+
 export const getComments = (id) => {
   return (dispatch) => {
     dispatch(fetchComments())
@@ -162,21 +188,6 @@ export const resetPost = () => {
 }
 
 
-
-export const updateVoteScore = (bool) => {
-  return {
-    type: 'UPDATE_VOTE_SCORE',
-    payload: bool,
-  }
-}
-
-export const voteUpdateSuccess = (bool) => {
-  return {
-    type: 'VOTE_UPDATE_SUCCESS',
-    updated: bool,
-  }
-}
-
 export const updateVote = (id, type) => {
   return (dispatch) => {
     
@@ -198,38 +209,48 @@ export const updateVote = (id, type) => {
 }
 
 
-// export const resetActivePost = () =>{
-//   return {
-//     type: 'RESET_ACTIVE_POST'
-//   }
-// }
-//
-// export function resetDeletedPost() {
-//   return {
-//     type: RESET_DELETED_POST
-//   }
-// }
 
+// EDIT POST
+export const editPost = (request) => {
+  return {
+    type: 'EDIT_POST',
+    payload: request,
+  }
+}
 
+export const editPostSuccess = (post) => {
+  return {
+    type: 'EDIT_POST_SUCCESS',
+    payload: post,
+  }
+}
 
-// option - String: Either "upVote" or "downVote"
+export const editPostFailure = (error) => {
+  return {
+    type: 'EDIT_POST_FAILURE',
+    payload: error,
+  }
+}
+    
+export const updatePostContent = (id, content) => {
+  return (dispatch) => {
+    dispatch(editPost())
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify(content),
+    }).
+    then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(editPostSuccess(true))
+      return response
+    })
+    .then((response) => response.json())
+    .then((post) => dispatch(editPostSuccess(post)))
+    .catch(() => dispatch(editPostFailure()))
+  }
+}
 
-
-//
-// export const fetchPost = (id) => {
-//   return (dispatch) => {
-//     // dispatch(voteIsUpdating(true))
-//
-//     fetch(`${baseurl}/post/${id}`, {headers}).
-//     then((response) => {
-//       if (!response.ok) {
-//         throw Error(response.statusText)
-//       }
-//       dispatch(fetchPostSuccess(response))
-//       return response
-//     })
-//     .then((post) => dispatch(fetchPostSuccess(post)))
-//     .catch(() => dispatch(fetchPostFailure(false)))
-//   }
-//
-// }
+    

@@ -14,16 +14,25 @@ import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
 import { date, username } from '../../../utils/helper'
 
-import { getComments } from '../../../modules/actions/posts'
+import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 import { styles } from '../../../styles/post/PostContent'
 
 class PostContent extends React.Component {
-  state = {
-    date: this.props.content.timestamp,
-    fullAuthorName: this.props.content.author,
-    shortAuthorName: '',
-    isEditing: false,
+  constructor (props) {
+    super(props)
+    
+    this.state = {
+      date: this.props.content.timestamp,
+      fullAuthorName: this.props.content.author,
+      shortAuthorName: '',
+      title: this.props.content.title,
+      body: this.props.content.body,
+      isEditing: false,
+    }
+    
+    this.handleTitleChange = this.handleTitleChange.bind(this)
+    
   }
   
   componentDidMount = () => {
@@ -32,6 +41,14 @@ class PostContent extends React.Component {
       shortAuthorName: username(prevState.fullAuthorName),
       date: date(prevState.date),
     }))
+  }
+  
+  savePostEdit = (e) => {
+    e.stopPropagation()
+    const id = this.props.content.id
+    const content = {title: this.state.title, body: this.state.body }
+    this.props.updatePost(id, content)
+    return this.changeEditView(false)
   }
   
   closePostEdit = (e) => {
@@ -43,9 +60,19 @@ class PostContent extends React.Component {
     this.setState({isEditing: bool})
   }
   
+  handleTitleChange = (e) => {
+    
+    this.setState({title: e.target.value})
+  }
+  
+  handleBodyChange = (e) => {
+    
+    this.setState({body: e.target.value})
+  }
+  
   render () {
     const {content, classes} = this.props
-    const {fullAuthorName, shortAuthorName, isEditing} = this.state
+    const {fullAuthorName, shortAuthorName, isEditing, title, body} = this.state
     
     return (
       <div>
@@ -77,15 +104,17 @@ class PostContent extends React.Component {
             : <CardContent>
               <PostSaveCancelButton
                 cancelPost={this.closePostEdit}
+                savePost={this.savePostEdit}
               />
-              <form noValidate autoComplete="off">
+              <form noValidate autoComplete="off"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}>
                 {content.title ? <Input
                   placeholder="Write down your post title..."
                   fullWidth="true"
                   disableUnderline="true"
-                  inputProps={{
-                    'aria-label': 'Description',
-                  }}
+                  onChange={this.handleTitleChange}
                   defaultValue={content.title}
                   className={classes.textField}
                   margin="normal"
@@ -95,6 +124,8 @@ class PostContent extends React.Component {
                   multiline="true"
                   fullWidth="true"
                   disableUnderline="true"
+                  onChange={this.handleBodyChange}
+                  
                   defaultValue={content.body}
                   className={classes.textField}
                   margin="normal"
@@ -108,14 +139,13 @@ class PostContent extends React.Component {
   }
 }
 
+function
 
-
-
-function mapStateToProps(globalState, ownProps) {
+mapStateToProps (globalState, ownProps) {
   return {
     activePost: globalState.posts.activePost,
-    id: ownProps.id
-  };
+    id: ownProps.id,
+  }
 }
 
 //
@@ -129,13 +159,23 @@ function mapStateToProps(globalState, ownProps) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComments: (id) => dispatch(getComments(id)),
+    updatePost: (id, option) => {
+      dispatch(updatePostContent(id, option))
+      dispatch(getPost(id))
+    }
   }
 }
 
-PostContent.propTypes = {
+PostContent.
+  propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(PostContent))
+export default connect(mapStateToProps, mapDispatchToProps)
+
+(
+  withStyles(styles)
+  
+  (
+    PostContent,
+  ))
