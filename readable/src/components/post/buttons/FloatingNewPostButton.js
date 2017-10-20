@@ -6,11 +6,12 @@ import AddIcon from 'material-ui-icons/Add';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    position: 'absolute',
+    bottom: '100px'
   },
 });
 
-const NewPostButton = (props) => {
+const FloatingNewPostButton = (props) => {
   const classes = props.classes;
   return (
     <div>
@@ -21,8 +22,8 @@ const NewPostButton = (props) => {
   );
 }
 
-NewPostButton.propTypes = {
+FloatingNewPostButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NewPostButton);
+export default withStyles(styles)(FloatingNewPostButton);

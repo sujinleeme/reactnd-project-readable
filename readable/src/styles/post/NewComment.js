@@ -5,7 +5,6 @@ export const styles = theme => ({
     background: '#fafafa',
     display: 'flex',
     alignItems: 'center',
-    padding: '16px'
 },
   avatar: {
     marginRight: '16px',

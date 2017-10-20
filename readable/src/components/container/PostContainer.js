@@ -1,17 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PostCard from '../post/body/PostCard'
-import LoadingProgress from '../assests/LoadingProgress'
+
 
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+
+import PostCard from '../post/body/PostCard'
+import NewPost from '../post/create/NewPost'
+import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
+import LoadingProgress from '../assests/LoadingProgress'
+
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.A300,
-    padding: theme.spacing.unit * 3,
   },
   
 })
@@ -20,16 +25,6 @@ class PostContainer extends React.Component {
   
   componentDidMount () {
   
-  }
-  
-  renderPosts (posts) {
-    return posts.map(post => (
-      <PostCard
-        key={post.id}
-      
-      />
-    
-    ))
   }
   
   render () {
@@ -41,16 +36,20 @@ class PostContainer extends React.Component {
     
     return (
       <div className={classes.root}>
+          <NewPost />
         {
           posts ? posts.map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              id={post.id}
-            
-            />
+
+              <PostCard
+                key={post.id}
+                post={post}
+                id={post.id}
+              
+              />
           
           )) : null}
+        <FloatingNewPostButton />
+
       </div>
     
     )

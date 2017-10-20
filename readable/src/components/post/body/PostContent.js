@@ -13,7 +13,6 @@ import PostEditButton from '../buttons/PostEditButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
 import { date, username } from '../../../utils/helper'
-
 import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 import { styles } from '../../../styles/post/PostContent'
@@ -30,8 +29,6 @@ class PostContent extends React.Component {
       body: this.props.content.body,
       isEditing: false,
     }
-    
-    this.handleTitleChange = this.handleTitleChange.bind(this)
     
   }
   
@@ -61,12 +58,10 @@ class PostContent extends React.Component {
   }
   
   handleTitleChange = (e) => {
-    
     this.setState({title: e.target.value})
   }
   
   handleBodyChange = (e) => {
-    
     this.setState({body: e.target.value})
   }
   

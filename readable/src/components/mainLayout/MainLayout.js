@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
 import PostContainer from '../container/PostContainer'
 import PaperSheet from '../assests/PaperSheet'
+import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
+
 import TabContainer from '../container/TabContainer'
 import { withStyles } from 'material-ui/styles'
 
@@ -30,9 +32,10 @@ class MainLayout extends React.Component {
             <TabContainer/>
             <PostContainer/>
           </Grid>
-        <Grid item md={2}><q>             </q>
+        <Grid item md={2}>
             <PaperSheet/>
-          </Grid>
+            <FloatingNewPostButton />
+        </Grid>
           <Grid item md={2}/>
         </Grid>
       </div>

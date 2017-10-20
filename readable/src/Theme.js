@@ -58,7 +58,6 @@ const CustomTheme = createMuiTheme({
     MuiCardContent : {
       root: {
         '&:last-child' : {
-          paddingBottom: '0 !important'
         }
       }
     }
