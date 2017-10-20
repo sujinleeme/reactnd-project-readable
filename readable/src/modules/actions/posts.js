@@ -15,6 +15,8 @@ export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
 export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
 export const RESET_DELETED_POST = 'RESET_DELETED_POST'
 
+export const UPDATE_VOTE_SCORE = 'UPDATE_VOTE_SCORE'
+
 
 //Comments
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
@@ -52,7 +54,7 @@ export const resetActivePost = () =>{
 
 export function resetDeletedPost() {
   return {
-    type: RESET_DELETED_POST
+    type: 'RESET_DELETED_POST'
   }
 }
 
@@ -73,7 +75,7 @@ export const fetchPostsSuccess = (posts) => {
 
 export const fetchPostFailure = (error) => {
   return {
-    type: FETCH_POST_FAILURE,
+    type: 'FETCH_POST_FAILURE',
     payload: error,
   }
 }
@@ -161,6 +163,39 @@ export const resetPost = () => {
 
 
 
+export const updateVoteScore = (bool) => {
+  return {
+    type: 'UPDATE_VOTE_SCORE',
+    payload: bool,
+  }
+}
+
+export const voteUpdateSuccess = (bool) => {
+  return {
+    type: 'VOTE_UPDATE_SUCCESS',
+    updated: bool,
+  }
+}
+
+export const updateVote = (id, type) => {
+  return (dispatch) => {
+    
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({option: type}),
+    }).
+    then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(updateVoteScore(true))
+      return response
+    }).
+    then((response) => response.json()).
+    catch(() => dispatch(voteUpdateSuccess(false)))
+  }
+}
 
 
 // export const resetActivePost = () =>{
@@ -179,40 +214,6 @@ export const resetPost = () => {
 
 // option - String: Either "upVote" or "downVote"
 
-export const voteIsUpdating = (bool) => {
-  return {
-    type: 'VOTE_IS_UPDATING',
-    isUpdating: bool,
-  }
-}
-
-export const voteUpdateSuccess = (bool) => {
-  return {
-    type: 'VOTE_UPDATE_SUCCESS',
-    updated: bool,
-  }
-}
-
-export const updateVote = (id, type) => {
-  return (dispatch) => {
-    dispatch(voteIsUpdating(true))
-    
-    fetch(`${baseurl}/posts/${id}`, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({option: type}),
-    }).
-    then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText)
-      }
-      dispatch(voteIsUpdating(false))
-      return response
-    }).
-    then((response) => response.json()).
-    catch(() => dispatch(voteUpdateSuccess(false)))
-  }
-}
 
 //
 // export const fetchPost = (id) => {

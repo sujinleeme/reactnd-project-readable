@@ -19,51 +19,75 @@ class UpDownVoter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-
+      
       upVote: false,
       downVote: false,
-      
+      voted: false,
+      initVoteScore: this.props.content.voteScore,
     }
   }
   
   handleClickUpVote = (e, type) => {
-    const id = this.props.content.id
     e.stopPropagation()
-    this.setState({upVote: !this.state.upVote})
-
-    if (this.state.downVote) {
+    const id = this.props.content.id
+    const {upVote, downVote} = this.state
+  
+    //Change UI
+    this.setState({upVote: !upVote})
+    if (downVote) {
       this.setState({downVote: false})
     }
-    if (this.state.upVote) {
-      this.props.updatePostVote(id, 'downVote')
-      this.props.fetchPost(id)
-  
-  
-    }
-    if (!this.state.upVote) {
-      this.props.updatePostVote(id, 'upVote')
-      this.props.fetchPost(id)
-  
-    }
-    console.log(this.props.VoteIsUpdated)
-
+    
+    // Update Data
+    this.updateUpDownVote(id, 'upVote')
   }
+  
   handleClickDownVote = (e) => {
-    const id = this.props.content.id
     e.stopPropagation()
-
-    this.setState({downVote: !this.state.downVote})
-    if (this.state.upVote) {
+    const id = this.props.content.id
+    const {upVote, downVote} = this.state
+    
+    //Change UI
+    this.setState({downVote: !downVote})
+    if (upVote) {
       this.setState({upVote: false})
     }
-
-    if (this.state.downVote) {
-      this.props.updatePostVote(id, 'upVote')
-    }
-    if (!this.state.downVote) {
-      this.props.updatePostVote(id, 'downVote')
+    // Update Data
+    this.updateUpDownVote(id, 'downVote')
+  }
+  
+  updateUpDownVote = (id, type) => {
+    const {upVote, downVote} = this.state
+    let notActived
+    let opposite
+    switch (type) {
+      case 'downVote' :
+        opposite = 'upVote'
+        notActived = downVote
+        break
+      case 'upVote' :
+        opposite = 'downVote'
+        notActived = upVote
+        break
     }
     
+    if (!notActived) {
+      if (this.state.voted) {
+        // move to another thump button
+        this.handleChange(id, type)
+      }
+      this.setState({voted: true})
+      return this.handleChange(id, type)
+    }
+    else {
+      this.setState({voted: false})
+      return this.handleChange(id, opposite)
+    }
+  }
+  
+  handleChange = (id, type) => {
+    this.props.updatePostVote(id, type)
+    this.props.fetchPost(id)
   }
   
   render () {
@@ -98,9 +122,10 @@ class UpDownVoter extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps (globalState, ownProps) {
   return {
-    VoteIsUpdated: state.voteUpdateSuccess,
+    activePost: globalState.posts.activePost,
+    id: ownProps.id,
   }
 }
 
