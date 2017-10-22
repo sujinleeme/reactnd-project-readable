@@ -21,3 +21,8 @@ export const username = (str = '') => {
     ? ''
     : str.substring(0, 2).toUpperCase();
 }
+
+
+export const uuid = () => {
+  return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+}

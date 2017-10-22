@@ -31,7 +31,7 @@ class CategoryContainer extends React.Component {
       categoryName = e.target.childNodes[0].innerHTML
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
-      this.props.fetchPosts(categoryName),
+      this.props.fetchPosts(categoryName)
     )
   }
   

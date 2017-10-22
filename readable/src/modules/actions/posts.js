@@ -15,6 +15,12 @@ export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
 export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
 export const RESET_DELETED_POST = 'RESET_DELETED_POST'
 
+//Create Post
+export const CREATE_POST = 'CREATE_POST';
+export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
+export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
+export const RESET_NEW_POST = 'RESET_NEW_POST';
+
 
 //Edit Post
 export const EDIT_POST = 'EDIT_POST'
@@ -24,7 +30,6 @@ export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
 
 // Vote
 export const UPDATE_VOTE_SCORE = 'UPDATE_VOTE_SCORE'
-
 
 //Comments
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
@@ -88,6 +93,48 @@ export const fetchPostFailure = (error) => {
   }
 }
 
+//createPOst
+export function createPost(request) {
+  return {
+    type: 'CREATE_POST',
+    payload: request
+  };
+}
+
+
+export const createPostSuccess = (newPost) => {
+  return {
+    type: 'CREATE_POST_SUCCESS',
+    payload: newPost
+  };
+}
+
+export const createPostFailure = (error) => {
+  return {
+    type: 'CREATE_POST_FAILURE',
+    payload: error
+  };
+}
+
+
+export const addNewPost = (id, type) => {
+  return (dispatch) => {
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({option: type}),
+    }).
+    then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(updateVoteScore(true))
+      return response
+    }).
+    then((response) => response.json()).
+    catch(() => dispatch(voteUpdateSuccess(false)))
+  }
+}
 
 
 // comments
@@ -165,6 +212,8 @@ export const getPost = (id) => {
 
 
 
+
+
 export const getComments = (id) => {
   return (dispatch) => {
     dispatch(fetchComments())
@@ -210,6 +259,8 @@ export const updateVote = (id, type) => {
 
 
 
+
+
 // EDIT POST
 export const editPost = (request) => {
   return {
@@ -252,5 +303,7 @@ export const updatePostContent = (id, content) => {
     .catch(() => dispatch(editPostFailure()))
   }
 }
+
+
 
     

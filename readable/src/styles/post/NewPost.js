@@ -38,4 +38,13 @@ export const styles = theme => ({
     },
   },
   
+  chip: {
+    margin: 4,
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'center',
+    float: 'right'
+  },
+  
 })

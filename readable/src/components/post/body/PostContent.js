@@ -134,23 +134,13 @@ class PostContent extends React.Component {
   }
 }
 
-function
 
-mapStateToProps (globalState, ownProps) {
+const mapStateToProps = (globalState, ownProps) => {
   return {
     activePost: globalState.posts.activePost,
     id: ownProps.id,
   }
 }
-
-//
-// const mapStateToProps = (state) => {
-//   return {
-//     comments: state.comments,
-//     voteIsUpdating: state.voteIsUpdating,
-//
-//   }
-// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -161,16 +151,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-PostContent.
-  propTypes = {
+PostContent.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
-
-(
-  withStyles(styles)
-  
-  (
-    PostContent,
-  ))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)
+(PostContent))
