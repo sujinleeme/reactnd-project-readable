@@ -19,7 +19,6 @@ class UpDownVoter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      
       upVote: false,
       downVote: false,
       voted: false,

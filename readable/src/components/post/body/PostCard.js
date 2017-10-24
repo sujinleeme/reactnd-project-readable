@@ -33,7 +33,6 @@ class PostCard extends React.Component {
     this.state = {
       expanded: false,
     }
-    
   }
   
   componentWillUnmount () {
@@ -42,8 +41,8 @@ class PostCard extends React.Component {
   
   componentDidMount = () => {
     const postId = this.props.id
-    this.props.fetchPost(postId)
-    this.props.fetchComments(postId)
+    // this.props.fetchPost(postId)
+    // this.props.fetchComments(postId)
   }
   
   handleExpandClick = (e) => {
@@ -55,11 +54,22 @@ class PostCard extends React.Component {
     e.stopPropagation()
   }
   
+  changeUpdatedPostContent = () => {
+    // decide inner contents if item content is updated
+    let post = this.props.post
+    const activePost = this.props.activePost
+    if (activePost) {
+      if (activePost.id === post.id) {
+        post = activePost
+      }
+    }
+    return post
+  }
   render () {
     const {expanded} = this.state
-    const {classes, activePost} = this.props
-    const {post, comments, loading, error} = activePost
-    
+    const {classes, activePost, comments} = this.props
+    const post = this.changeUpdatedPostContent()
+   
     return (
       <div className={classnames(classes.expand, {
         [classes.expandOpen]: expanded,
@@ -119,7 +129,7 @@ class PostCard extends React.Component {
 
 function mapStateToProps (globalState, ownProps) {
   return {
-    activePost: globalState.posts.activePost,
+    activePost: globalState.posts.activePost.post,
     id: ownProps.id,
   }
 }

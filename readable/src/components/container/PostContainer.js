@@ -28,12 +28,11 @@ class PostContainer extends React.Component {
   }
   
   render () {
-    const {classes, postsList} = this.props
-    const {posts, loading} = postsList
+    const {classes, postList,activePost} = this.props
+    const {posts, loading} = postList
     if (loading) {
       return <LoadingProgress/>
     }
-    
     return (
       <div className={classes.root}>
           <NewPost />
@@ -60,10 +59,10 @@ PostContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (globalState, ownProps) => {
   return {
-    postsList: state.posts.postsList,
-    
+    postList: globalState.posts.postList,
+  
   }
 }
 

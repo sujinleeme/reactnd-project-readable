@@ -15,6 +15,7 @@ import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 import { styles } from '../../../styles/post/NewPost'
 
 import { date, username, uuid } from '../../../utils/helper'
+import { createNewPost, getPostLists } from '../../../modules/actions/posts'
 
 class NewPost extends React.Component {
   constructor (props) {
@@ -29,16 +30,23 @@ class NewPost extends React.Component {
         author: '',
         category: '',
       },
+      date: '',
       checkValid: false,
-      isValid: false
+      isValid: false,
     }
   }
   
   componentDidMount = () => {
     const postId = uuid()
-    const today = date(Date.now())
+    const today = Date.now()
+    const convertedTimestamp = date(today)
     this.setState(
-      {content: {...this.state.content, id: postId, timestamp: today}})
+      {
+        content: {
+          ...this.state.content, author: postId, id: postId, timestamp: today,
+        },
+        date : convertedTimestamp
+      })
   }
   
   handleTitleChange = (e) => {
@@ -47,15 +55,31 @@ class NewPost extends React.Component {
   
   handleBodyChange = (e) => {
     this.setState({content: {...this.state.content, body: e.target.value}})
-    
   }
   
   handleExpandForm = () => {
     this.setState({isWriting: true})
   }
   
+  handleHideForm = () => {
+    this.setState({isWriting: false})
+  }
+  
   initForm = () => {
-    this.setState({...this.state, isWriting: false, checkValid: false})
+    this.setState({
+        ...this.state,
+        isWriting: false,
+        content: {
+          ...this.state.content,
+          id: '',
+          title: '',
+          body: '',
+          category: '',
+        },
+        checkValid: false,
+        isValid: false,
+      },
+    )
   }
   
   selectCategory = (e) => {
@@ -68,16 +92,21 @@ class NewPost extends React.Component {
   }
   
   submitForm = () => {
+    const isValid = this.checkEmptyFields()
+    const content = this.state.content
+    
+    if (isValid) {
+      const selectedCategory = this.state.content.category
+      this.props._createNewPost(content, selectedCategory)
+      this.handleHideForm()
+    }
+  }
+  
+  checkEmptyFields = () => {
     const {title, body, category} = this.state.content
     const isFilled = title && body && category ? true : false
-    this.setState({checkValid: true, isValid: isFilled})
-    // if (content.title && content.body)
-    // PARAMS:
-    //   id - UUID should be fine, but any unique id will work
-    // timestamp - timestamp in whatever format you like, you can use
-    // Date.now() if you like title - String body - String author - String
-    // category: Any of the categories listed in categories.js. Feel free to
-    // extend this
+    this.setState({checkValid: true})
+    return isFilled
   }
   
   render () {
@@ -98,23 +127,25 @@ class NewPost extends React.Component {
             }}
             onClick={this.handleExpandForm}
           /> : <div className={classes.inputField}>
-            <div className={classes.row}>
-              {categories ? categories.map(({name, path}) => (
-                <Chip key={name}
-                      label={name}
-                      className={classnames(classes.chip,
-                        category === name ? 'active' : '')}
-                      onClick={this.selectCategory}
+            <div className={classes.categorybuttons}>
+              <div className={classes.row}>
                 
-                />
-              
-              )) : null}
+                {categories ? categories.map(({name, path}) => (
+                  <Chip key={name}
+                        label={name}
+                        className={classnames(classes.chip,
+                          category === name ? 'active' : '')}
+                        onClick={this.selectCategory}
+                  
+                  />
+                
+                
+                )) : null} </div>
               {checkValid && !category ?
-                <FormHelperText>Select a category</FormHelperText>
-                
-                : null}
-            </div>
-            <FormControl>
+                <FormHelperText className={classes.error}>Choose a
+                  category</FormHelperText>
+                : null}</div>
+            <FormControl className={classes.inputTitle}>
               <Input
                 placeholder="Title"
                 fullWidth="true"
@@ -125,7 +156,8 @@ class NewPost extends React.Component {
                 onChange={this.handleTitleChange}
               />
               {checkValid && !title ?
-                <FormHelperText>Title is empty</FormHelperText>
+                <FormHelperText className={classes.error}>Title is
+                  empty</FormHelperText>
                 
                 : null}
             
@@ -142,7 +174,8 @@ class NewPost extends React.Component {
               onChange={this.handleBodyChange}
             />
             {checkValid && !body ?
-              <FormHelperText>Body is empty</FormHelperText>
+              <FormHelperText className={classes.error}>Body is
+                empty</FormHelperText>
               
               : null}
             
@@ -154,7 +187,6 @@ class NewPost extends React.Component {
           }
         
         </form>
-        {/*</CardContent>*/}
       </Card>
     )
   }
@@ -168,12 +200,21 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // updatePost: (id, option) => {
-    //   dispatch(updatePostContent(id, option))
-    //   dispatch(getPost(id))
-    // }
+    _createNewPost: (content, category) => {
+      dispatch(createNewPost(content, category))
+      dispatch(getPostLists(category))
+    },
   }
 }
-
+//
+//
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     updatePostVote: (id, option) => {
+//       dispatch(updateVote(id, option))
+//       dispatch(getPost(id))
+//     }
+//   }
+// }
 export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(NewPost))

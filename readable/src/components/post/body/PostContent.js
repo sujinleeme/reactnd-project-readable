@@ -28,6 +28,7 @@ class PostContent extends React.Component {
       title: this.props.content.title,
       body: this.props.content.body,
       isEditing: false,
+      isInit: true,
     }
     
   }
@@ -38,22 +39,24 @@ class PostContent extends React.Component {
       shortAuthorName: username(prevState.fullAuthorName),
       date: date(prevState.date),
     }))
+    
   }
   
-  savePostEdit = (e) => {
+  sendUpdatedPost = (e) => {
     e.stopPropagation()
     const id = this.props.content.id
-    const content = {title: this.state.title, body: this.state.body }
+    const content = {title: this.state.title, body: this.state.body}
     this.props.updatePost(id, content)
     return this.changeEditView(false)
   }
   
-  closePostEdit = (e) => {
+  closePostEditView = (e) => {
     e.stopPropagation()
     this.changeEditView(false)
   }
   
   changeEditView = (bool) => {
+    
     this.setState({isEditing: bool})
   }
   
@@ -66,9 +69,9 @@ class PostContent extends React.Component {
   }
   
   render () {
-    const {content, classes} = this.props
-    const {fullAuthorName, shortAuthorName, isEditing, title, body} = this.state
-    
+    const {content, classes, activePost} = this.props
+    const {fullAuthorName, shortAuthorName, isEditing} = this.state
+
     return (
       <div>
         <div className={classes.root}>
@@ -87,19 +90,24 @@ class PostContent extends React.Component {
         </div>
         
         {
-          !isEditing ? <CardContent>
-              <Typography type="subheading" component="h6">
-                {content.title}
-              </Typography>
-              <Typography component="p">
-                {content.body}
-              </Typography>
-            </CardContent>
+          !isEditing ?
+            
+  
+              <CardContent>
+                <Typography type="subheading" component="h6">
+                  {content.title}
+                </Typography>
+                <Typography component="p">
+                  {content.body}
+                </Typography>
+              </CardContent>
+              
+            
             
             : <CardContent>
               <PostSaveCancelButton
-                cancelPost={this.closePostEdit}
-                savePost={this.savePostEdit}
+                cancelPost={this.closePostEditView}
+                savePost={this.sendUpdatedPost}
               />
               <form noValidate autoComplete="off"
                     onClick={(e) => {
@@ -135,10 +143,10 @@ class PostContent extends React.Component {
 }
 
 
-const mapStateToProps = (globalState, ownProps) => {
+function mapStateToProps (globalState, state) {
   return {
     activePost: globalState.posts.activePost,
-    id: ownProps.id,
+    isInit: globalState.posts.activePost.init,
   }
 }
 
@@ -147,7 +155,9 @@ const mapDispatchToProps = (dispatch) => {
     updatePost: (id, option) => {
       dispatch(updatePostContent(id, option))
       dispatch(getPost(id))
-    }
+      // dispatch(getPostLists(category))
+      
+    },
   }
 }
 

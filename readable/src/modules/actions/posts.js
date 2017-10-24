@@ -116,23 +116,23 @@ export const createPostFailure = (error) => {
   };
 }
 
-
-export const addNewPost = (id, type) => {
+export const createNewPost = (content) => {
   return (dispatch) => {
-    fetch(`${baseurl}/posts/${id}`, {
+    dispatch(createPost())
+    fetch(`${baseurl}/posts/`, {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({option: type}),
+      body: JSON.stringify(content),
     }).
     then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
-      dispatch(updateVoteScore(true))
       return response
-    }).
-    then((response) => response.json()).
-    catch(() => dispatch(voteUpdateSuccess(false)))
+    })
+    .then((response) => response.json())
+    .then((post) => dispatch(createPostSuccess(post)))
+    .catch(() => dispatch(createPostFailure()))
   }
 }
 
@@ -145,14 +145,14 @@ export const fetchComments = (request) => {
   }
 }
 
-export const fetchCommentsSuccess = (error) => {
+export const fetchCommentsFailure = (error) => {
   return {
     type: 'FETCH_COMMENTS_SUCCESS',
     payload: error,
   }
 }
 
-export const fetchCommentsFailure = (comments) => {
+export const fetchCommentsSuccess = (comments) => {
   return {
     type: 'FETCH_COMMENTS_FAILURE',
     payload: comments,
@@ -239,7 +239,6 @@ export const resetPost = () => {
 
 export const updateVote = (id, type) => {
   return (dispatch) => {
-    
     fetch(`${baseurl}/posts/${id}`, {
       method: 'POST',
       headers: headers,
@@ -256,9 +255,6 @@ export const updateVote = (id, type) => {
     catch(() => dispatch(voteUpdateSuccess(false)))
   }
 }
-
-
-
 
 
 // EDIT POST
@@ -299,7 +295,6 @@ export const updatePostContent = (id, content) => {
       return response
     })
     .then((response) => response.json())
-    .then((post) => dispatch(editPostSuccess(post)))
     .catch(() => dispatch(editPostFailure()))
   }
 }

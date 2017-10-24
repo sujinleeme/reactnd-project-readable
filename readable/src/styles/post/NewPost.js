@@ -25,6 +25,10 @@ export const styles = theme => ({
     width: '100%',
   },
   
+  inputTitle: {
+    width: '100%'
+  },
+  
   avatar: {
     marginRight: '16px',
   },
@@ -38,6 +42,11 @@ export const styles = theme => ({
     },
   },
   
+  categorybuttons: {
+    float: 'right'
+  
+},
+  
   chip: {
     margin: 4,
   },
@@ -46,5 +55,8 @@ export const styles = theme => ({
     justifyContent: 'center',
     float: 'right'
   },
+  error: {
+    color: 'red'
+  }
   
 })
