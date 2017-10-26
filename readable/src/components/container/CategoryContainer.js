@@ -9,16 +9,21 @@ import { getPostLists } from '../../modules/actions/posts'
 
 const styles = theme => {
   return ({
-    root: {
-      marginRight: '8px',
-      marginTop: '8px',
-      backgroundColor: theme.palette.background.A300,
-      fontWeight: 'bolder',
-    },
-    label: {
-      textTransform: 'capitalize',
-    },
-  })
+      root: {
+        marginRight: '8px',
+        marginTop: '8px',
+        backgroundColor: theme.palette.background.A300,
+        fontWeight: 'bolder',
+      },
+      label: {
+        textTransform: 'capitalize',
+      },
+      active: {
+        background: '#4FC3F7 !important',
+      },
+    }
+  
+  )
 }
 
 class CategoryContainer extends React.Component {
@@ -31,19 +36,19 @@ class CategoryContainer extends React.Component {
       categoryName = e.target.childNodes[0].innerHTML
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
-      this.props.fetchPosts(categoryName)
+      this.props.fetchPosts(categoryName),
     )
   }
   
   render () {
-    const props = this.props
-    const categoryItems = props.categories
-    const currentTab = props.selectMenu.tab
-    const currentCategory = props.selectMenu.category
+    
+    const {classes, categories, selectMenu} = this.props
+    const currentTab = selectMenu.tab
+    const currentCategory = selectMenu.category
     return (
-      categoryItems &&
+      categories &&
       <div className='category_grp'>
-        {categoryItems.map(({name, path}) => (
+        {categories.map(({name, path}) => (
           <Button
             key={path}
             component={Link}
@@ -51,10 +56,10 @@ class CategoryContainer extends React.Component {
               pathname: `/category/${path}?=${currentTab}`,
               state: {category: name, tab: currentTab},
             }}
-            className={currentCategory === name ? 'active' : ''}
+            className={currentCategory === name ? classes.active : ''}
             classes={{
-              root: props.classes.root,
-              label: props.classes.label,
+              root: classes.root,
+              label: classes.label,
             }}
             value={name}
             onClick={this.handleChange}
@@ -69,13 +74,13 @@ CategoryContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (globalState) => {
   return {
     selectMenu: {
-      category: state.currentMenu.category,
-      tab: state.currentMenu.tab,
+      category: globalState.currentMenu.category,
+      tab: globalState.currentMenu.tab,
     },
-    categories: state.categories,
+    categories: globalState.categories,
   }
 }
 

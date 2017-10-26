@@ -21,28 +21,29 @@ import Collapse from 'material-ui/transitions/Collapse'
 
 // components
 import PostContent from './PostContent'
+import PostDetail from './PostDetail'
+
 import UpDownVoter from '../buttons/UpDownVoter'
 import NewComment from '../create/NewComment'
 
 // styles
-import { styles } from '../../../styles/post/PostCard'
+import { styles } from '../../../styles/post/PostCardList'
 
-class PostCard extends React.Component {
+class PostCardList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       expanded: false,
     }
+    
+    this.handleRequestClose = this.handleRequestClose.bind(this)
   }
   
   componentWillUnmount () {
-    this.props.resetPost()
+    // this.props.resetPost()
   }
   
   componentDidMount = () => {
-    const postId = this.props.id
-    // this.props.fetchPost(postId)
-    // this.props.fetchComments(postId)
   }
   
   handleExpandClick = (e) => {
@@ -54,22 +55,16 @@ class PostCard extends React.Component {
     e.stopPropagation()
   }
   
-  changeUpdatedPostContent = () => {
-    // decide inner contents if item content is updated
-    let post = this.props.post
-    const activePost = this.props.activePost
-    if (activePost) {
-      if (activePost.id === post.id) {
-        post = activePost
-      }
-    }
-    return post
+  handleRequestClose = (e) => {
+    e.stopPropagation()
+    this.setState({expanded: false})
   }
+  
   render () {
     const {expanded} = this.state
-    const {classes, activePost, comments} = this.props
-    const post = this.changeUpdatedPostContent()
-   
+    const {classes, post, comments} = this.props
+    const currentPost = this.props.activePost.post
+    
     return (
       <div className={classnames(classes.expand, {
         [classes.expandOpen]: expanded,
@@ -78,14 +73,18 @@ class PostCard extends React.Component {
            aria-label="Show more"
       >
         {post ? <Card className={classes.root}>
+          
           <PostContent
             content={post}
-            {...classes}/>
-          <div className={classes.footer}>
-            <UpDownVoter className={classes.postVote}
-                         content={post}
-                         {...classes}/>
-            
+            hideDetailView={true}
+          />
+          
+          <div className={classes.footer} >
+            <UpDownVoter
+              
+              className={classes.postVote}
+              content={post}
+                         />
             {!expanded ? <IconButton>
                 <ExpandMoreIcon/>
               </IconButton>
@@ -96,31 +95,17 @@ class PostCard extends React.Component {
             }
           
           </div>
-          <Collapse in={expanded} transitionDuration="auto"
-                    unmountOnExit
-          >
-            
-            
-            <CardContent className={classes.comments}
-                         onClick={this.handleCommentClick}>
-              <NewComment/>
-              {comments ? <div>
-                {comments.map((comment, index) => (
-                  <div key={index} className={classes.commentCard}>
-                    <PostContent
-                      content={comment}
-                      {...classes} />
-                    <UpDownVoter
-                      content={comment}
-                      {...classes}
-                    />
-                  
-                  </div>
-                
-                ))} </div> : null}
-            </CardContent>
+          {/*{expanded ?*/}
+            {/*<PostDetail*/}
+              {/*id={post.id}*/}
+              {/*open={this.state.expanded}*/}
+              {/*onRequestClose={this.handleExpandClick}*/}
+              {/*classes={{*/}
+                {/*root: classes.root,*/}
+                {/*label: classes.label,*/}
+              {/*}}*/}
+            {/*/> : null}*/}
           
-          </Collapse>
         </Card> : null}
       </div>
     )
@@ -129,22 +114,20 @@ class PostCard extends React.Component {
 
 function mapStateToProps (globalState, ownProps) {
   return {
-    activePost: globalState.posts.activePost.post,
-    id: ownProps.id,
+    activePost: globalState.posts.activePost,
+    postId: ownProps.id,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPost: (id) => dispatch(getPost(id)),
     fetchComments: (id) => dispatch(getComments(id)),
-    resetPost: () => dispatch(resetPost()),
   }
 }
 
-PostCard.propTypes = {
+PostCardList.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(PostCard)))
+  withRouter(withStyles(styles)(PostCardList)))

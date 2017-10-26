@@ -14,7 +14,7 @@ const styles = theme => ({
   },
   header: {
     display: 'block',
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
   },
   typoLogo: {
     display: 'flex',
@@ -22,36 +22,36 @@ const styles = theme => ({
   },
   detailTypoLogo: {
     marginLeft: theme.spacing.unit * 2,
-  }
+  },
 })
 
 const HeaderBar = (props) => {
   const classes = props.classes
   return (
     <div className={classes.root}>
-      <Grid container spacing={24}>
+      <Grid container spacing={0}>
         <AppBar position="static" color="inherit">
           <Toolbar classes={{
             root: classes.root,
           }}>
-            <Grid item md={2} />
-            <Grid item md={8} container={true} direction="column">
+            <Grid item md={3}/>
+            <Grid item md={7} container={true} direction="column">
               <div className={classes.header}>
                 <div className={classes.typoLogo}>
-                <Typography type="headline" color="inherit"
-                            className="main">
-                  <Link to={`/`}>#MakewithUdacity</Link>
-                </Typography>
-                
-                <Typography type="headline" color="accent" className={classes.detailTypoLogo}>
-                  Udacity Nanodegree Student's Projects Showcase
-                </Typography>
+                  <Typography type="headline" color="inherit"
+                              className="main">
+                    <Link to={`/`}>#MakewithUdacity</Link>
+                  </Typography>
+                  
+                  <Typography type="headline" color="accent"
+                              className={classes.detailTypoLogo}>
+                    Udacity Nanodegree Student's Projects Showcase
+                  </Typography>
                 </div>
                 <CategoryContainer/>
               </div>
-              
             </Grid>
-            <Grid item md={2}/>
+            <Grid item md={3}/>
           </Toolbar>
         </AppBar>
       </Grid>

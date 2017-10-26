@@ -3,8 +3,6 @@ import IconButton from 'material-ui/IconButton'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
 import { withStyles } from 'material-ui/styles'
-
-import { changeEditView } from '../../../modules/actions/menu'
 import { connect } from 'react-redux'
 
 import PropTypes from 'prop-types'
@@ -28,11 +26,12 @@ const options = [
 
 const ITEM_HEIGHT = 48
 
-class PostEditButton extends React.Component {
+class PostSettingButton extends React.Component {
   state = {
     anchorEl: null,
     open: false,
     selectedIndex: null,
+    showDeleteModal: false
   }
   
   handleClick = (e) => {
@@ -43,22 +42,25 @@ class PostEditButton extends React.Component {
   handleRequestClose = (e) => {
     e.stopPropagation()
     this.setState({open: false})
-    this.props.changeEditView(false)
+    this.props.showPostEditView(false)
   }
   
   selectMenuItem = (e, index) => {
     this.setState({open: false, selectedIndex: index})
+    const {location} = this.props
     switch (index) {
       case 0:
-        this.props.changeEditView(true)
+        this.props.showPostEditView(true)
         break
       case 1:
+        if (window.confirm("Do you really want to delete post?")) {
+          window.open(`${location.pathname}${location.search}`, "Delete!");
+        }
     }
   }
   
   render () {
-    const classes = this.props.classes
-  
+    const {classes} = this.props
     return (
       <div className={classes.root}>
         <IconButton
@@ -78,7 +80,6 @@ class PostEditButton extends React.Component {
             style: {
               maxHeight: ITEM_HEIGHT * 4,
               width: 100,
-              
             },
           }}
         >
@@ -88,28 +89,29 @@ class PostEditButton extends React.Component {
               {option}
             </MenuItem>
           ))}
-        
         </Menu>
       </div>
+  
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    location: state.routerReducer.location
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // changeEditView: (bool) => dispatch(changeEditView(bool)),
   }
 }
 
-PostEditButton.propTypes = {
+PostSettingButton.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(PostEditButton))
+  withStyles(styles)(PostSettingButton))
 
 

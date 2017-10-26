@@ -1,9 +1,10 @@
 export const styles = theme => ({
+ 
   root: {
     maxWidth: '100%',
     padding: '0px',
     margin: theme.spacing.unit * 3,
-  
+    //
     '&:hover': {
       background: '#f9f9f9',
       transition: '.5s all',
@@ -23,7 +24,17 @@ export const styles = theme => ({
     padding: '0',
   },
   commentCard: {
-    borderBottom: '1px solid #ebebeb'
+    borderBottom: '1px solid #ebebeb',
+    '&:hover': {
+      background: '#f5f8fa',
+      transition: '.5s all',
+      cursor: 'pointer',
+    },
+  },
+  close: {
+    position: 'absolute',
+    color: '#fff',
+    marginLeft: theme.spacing.unit * 3,
   }
   
 })

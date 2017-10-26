@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch, Router } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   getCategories, getTabs, setupMenu,
@@ -9,27 +9,7 @@ import { withRouter } from 'react-router-dom'
 
 import NotFound from './components/pages/NotFound'
 import HomePage from './components/pages/HomePage'
-
-const main = [
-  {
-    path: '/',
-    exact: false,
-    component: HomePage,
-  }, {
-    path: '*',
-    exact: true,
-    component: NotFound,
-  },
-]
-
-const routeComponents = main.map(
-  ({path, exact, component, store, history}, key) =>
-    <Route exact={!!exact}
-           path={path}
-           component={component}
-           key={key}
-           history={history}
-    />)
+import PostDetail from './components/post/body/PostDetail'
 
 class App extends Component {
   componentWillReceiveProps (nextProps) {
@@ -67,21 +47,23 @@ class App extends Component {
   }
   
   render () {
-    const props = this.props
     return (
-      <div>
-        <Route exact={false}
-               path={'/'}
-               component={HomePage}
-               {...this.props}
+      <Switch>
+        
+        <Route
+          path='/'
+          component={HomePage}
         />
-      </div>
+
+      </Switch>
+    
+    
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  if (!state.currentMenu.tabs || state.currentMenu.category) {
+const mapStateToProps = (globalState, ownProps) => {
+  if (!globalState.currentMenu.tabs || globalState.currentMenu.category) {
     return {
       selectMenu: {
         category: 'react',

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { withStyles } from 'material-ui/styles'
+import classnames from 'classnames'
+
 import { CardHeader, CardContent } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
 
 import Typography from 'material-ui/Typography'
 import Input from 'material-ui/Input'
 
-import PostEditButton from '../buttons/PostEditButton'
+import PostSettingButton from '../buttons/PostSettingButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
 import { date, username } from '../../../utils/helper'
@@ -28,7 +30,6 @@ class PostContent extends React.Component {
       title: this.props.content.title,
       body: this.props.content.body,
       isEditing: false,
-      isInit: true,
     }
     
   }
@@ -39,7 +40,6 @@ class PostContent extends React.Component {
       shortAuthorName: username(prevState.fullAuthorName),
       date: date(prevState.date),
     }))
-    
   }
   
   sendUpdatedPost = (e) => {
@@ -56,10 +56,14 @@ class PostContent extends React.Component {
   }
   
   changeEditView = (bool) => {
-    
     this.setState({isEditing: bool})
   }
   
+  deletePostItem = (e) => {
+    e.stopPropagation()
+  }
+
+
   handleTitleChange = (e) => {
     this.setState({title: e.target.value})
   }
@@ -69,9 +73,9 @@ class PostContent extends React.Component {
   }
   
   render () {
-    const {content, classes, activePost} = this.props
+    const {content, classes, activePost, hideDetailView} = this.props
     const {fullAuthorName, shortAuthorName, isEditing} = this.state
-
+    
     return (
       <div>
         <div className={classes.root}>
@@ -84,25 +88,23 @@ class PostContent extends React.Component {
                       title={fullAuthorName}
                       subheader={this.state.date}
           />
-          <PostEditButton className={classes.postMenu}
-                          changeEditView={this.changeEditView}
+          
+          {hideDetailView ? null : <PostSettingButton className={classes.postMenu}
+                                                   showPostEditView={this.changeEditView}
+                                                      deletePost={this.deletePostItem}
           />
+          }
         </div>
         
         {
-          !isEditing ?
-            
-  
-              <CardContent>
-                <Typography type="subheading" component="h6">
-                  {content.title}
-                </Typography>
-                <Typography component="p">
-                  {content.body}
-                </Typography>
-              </CardContent>
-              
-            
+          !isEditing ? <CardContent>
+              <Typography type="subheading" component="h6">
+                {content.title}
+              </Typography>
+              <Typography component="p">
+                {content.body}
+              </Typography>
+            </CardContent>
             
             : <CardContent>
               <PostSaveCancelButton
@@ -142,11 +144,9 @@ class PostContent extends React.Component {
   }
 }
 
-
 function mapStateToProps (globalState, state) {
   return {
     activePost: globalState.posts.activePost,
-    isInit: globalState.posts.activePost.init,
   }
 }
 
@@ -155,8 +155,6 @@ const mapDispatchToProps = (dispatch) => {
     updatePost: (id, option) => {
       dispatch(updatePostContent(id, option))
       dispatch(getPost(id))
-      // dispatch(getPostLists(category))
-      
     },
   }
 }

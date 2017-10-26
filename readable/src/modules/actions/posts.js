@@ -147,14 +147,14 @@ export const fetchComments = (request) => {
 
 export const fetchCommentsFailure = (error) => {
   return {
-    type: 'FETCH_COMMENTS_SUCCESS',
+    type: 'FETCH_COMMENTS_FAILURE',
     payload: error,
   }
 }
 
 export const fetchCommentsSuccess = (comments) => {
   return {
-    type: 'FETCH_COMMENTS_FAILURE',
+    type: 'FETCH_COMMENTS_SUCCESS',
     payload: comments,
   }
 }

@@ -134,7 +134,7 @@ class NewPost extends React.Component {
                   <Chip key={name}
                         label={name}
                         className={classnames(classes.chip,
-                          category === name ? 'active' : '')}
+                          category === name ? classes.active : '')}
                         onClick={this.selectCategory}
                   
                   />

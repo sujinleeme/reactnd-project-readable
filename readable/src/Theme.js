@@ -60,6 +60,25 @@ const CustomTheme = createMuiTheme({
         '&:last-child' : {
         }
       }
+    },
+    MuiDialog: {
+      paperWidthSm: {
+        maxWidth: '620px'
+      }
+    },
+    MuiDialogContent: {
+      root: {
+        padding: '0'
+      }
+    },
+    MuiDialogActions: {
+      root: {
+        padding: '0',
+        margin: '0'
+      },
+      button: {
+        minWidth: 'auto',
+      }
     }
   },
 })
