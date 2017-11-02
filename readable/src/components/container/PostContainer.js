@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom'
 
 import PostCardList from '../post/body/PostCardList'
-import PostDetail from '../post/body/PostDetail'
 
 import NewPost from '../post/create/NewPost'
 import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
@@ -32,11 +31,9 @@ class PostContainer extends React.Component {
   }
   
   render () {
-    const {classes, postList, activePost, selectMenu} = this.props
+    const {classes, postList, selectMenu, currentCategory, currentTab} = this.props
     const {loading} = postList
     const posts = postList.posts
-    const currentTab = selectMenu.tab
-    const currentCategory = selectMenu.category
     if (loading) {
       return <LoadingProgress/>
     }
@@ -51,6 +48,8 @@ class PostContainer extends React.Component {
                 key={post.id}
                 to={{
                   pathname: `/posts/${post.id}`,
+  
+                  // pathname: `/category/${currentCategory}?=${currentTab}/posts/${post.id}`,
                   state: {id: post.id}
                 }}
               >
@@ -79,14 +78,11 @@ PostContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (globalState, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    postList: globalState.posts.postList,
-    selectMenu: {
-      category: globalState.currentMenu.category,
-      tab: globalState.currentMenu.tab,
-    },
-    categories: globalState.categories,
+    postList: state.posts.postList,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
     
   }
 }

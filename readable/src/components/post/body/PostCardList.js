@@ -79,12 +79,12 @@ class PostCardList extends React.Component {
             hideDetailView={true}
           />
           
-          <div className={classes.footer} >
+          <div className={classes.footer}>
             <UpDownVoter
               
               className={classes.postVote}
               content={post}
-                         />
+            />
             {!expanded ? <IconButton>
                 <ExpandMoreIcon/>
               </IconButton>
@@ -95,17 +95,6 @@ class PostCardList extends React.Component {
             }
           
           </div>
-          {/*{expanded ?*/}
-            {/*<PostDetail*/}
-              {/*id={post.id}*/}
-              {/*open={this.state.expanded}*/}
-              {/*onRequestClose={this.handleExpandClick}*/}
-              {/*classes={{*/}
-                {/*root: classes.root,*/}
-                {/*label: classes.label,*/}
-              {/*}}*/}
-            {/*/> : null}*/}
-          
         </Card> : null}
       </div>
     )

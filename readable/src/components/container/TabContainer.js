@@ -56,8 +56,6 @@ class TabContainer extends React.Component {
             onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"
-      
-      
       >
         {tabItems.map((({name, path}, index) => (
           <Tab

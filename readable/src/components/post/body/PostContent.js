@@ -62,8 +62,7 @@ class PostContent extends React.Component {
   deletePostItem = (e) => {
     e.stopPropagation()
   }
-
-
+  
   handleTitleChange = (e) => {
     this.setState({title: e.target.value})
   }
@@ -89,10 +88,11 @@ class PostContent extends React.Component {
                       subheader={this.state.date}
           />
           
-          {hideDetailView ? null : <PostSettingButton className={classes.postMenu}
-                                                   showPostEditView={this.changeEditView}
-                                                      deletePost={this.deletePostItem}
-          />
+          {hideDetailView ? null :
+            <PostSettingButton className={classes.postMenu}
+                               showPostEditView={this.changeEditView}
+                               deletePost={this.deletePostItem}
+            />
           }
         </div>
         
@@ -130,7 +130,6 @@ class PostContent extends React.Component {
                   fullWidth="true"
                   disableUnderline="true"
                   onChange={this.handleBodyChange}
-                  
                   defaultValue={content.body}
                   className={classes.textField}
                   margin="normal"

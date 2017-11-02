@@ -30,7 +30,7 @@ class CategoryContainer extends React.Component {
   
   handleChange = (e) => {
     e.stopPropagation()
-    const tabName = this.props.selectMenu.tab
+    const tabName = this.props.currentTab
     let categoryName = e.target.innerHTML
     if (e.target.tagName !== 'SPAN') {
       categoryName = e.target.childNodes[0].innerHTML
@@ -42,9 +42,7 @@ class CategoryContainer extends React.Component {
   
   render () {
     
-    const {classes, categories, selectMenu} = this.props
-    const currentTab = selectMenu.tab
-    const currentCategory = selectMenu.category
+    const {classes, categories, currentCategory, currentTab} = this.props
     return (
       categories &&
       <div className='category_grp'>
@@ -76,10 +74,8 @@ CategoryContainer.propTypes = {
 
 const mapStateToProps = (globalState) => {
   return {
-    selectMenu: {
-      category: globalState.currentMenu.category,
-      tab: globalState.currentMenu.tab,
-    },
+    currentCategory: globalState.currentMenu.category,
+    currentTab: globalState.currentMenu.tab,
     categories: globalState.categories,
   }
 }

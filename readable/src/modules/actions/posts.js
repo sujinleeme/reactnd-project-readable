@@ -7,7 +7,6 @@ export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE'
 export const RESET_POSTS = 'RESET_POSTS';
 
-
 //Post
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
@@ -21,12 +20,15 @@ export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS';
 export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE';
 export const RESET_NEW_POST = 'RESET_NEW_POST';
 
-
 //Edit Post
 export const EDIT_POST = 'EDIT_POST'
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
 
+//Delete Post
+export const DELETE_POST = 'DELETE_POST'
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
 
 // Vote
 export const UPDATE_VOTE_SCORE = 'UPDATE_VOTE_SCORE'
@@ -93,7 +95,7 @@ export const fetchPostFailure = (error) => {
   }
 }
 
-//createPOst
+//createPost
 export function createPost(request) {
   return {
     type: 'CREATE_POST',
@@ -208,12 +210,6 @@ export const getPost = (id) => {
   }
 }
 
-
-
-
-
-
-
 export const getComments = (id) => {
   return (dispatch) => {
     dispatch(fetchComments())
@@ -299,6 +295,52 @@ export const updatePostContent = (id, content) => {
   }
 }
 
+// DELETE POST
+// export const deletePost = (request) => {
+//   return {
+//     type: 'DELETE_POST',
+//     payload: request,
+//   }
+// }
 
+export const deletePostSuccess = (post) => {
+  return {
+    type: 'DELETE_POST_SUCCESS',
+    payload: post,
+  }
+}
+
+export const deletePostFailure = (error) => {
+  return {
+    type: 'DELETE_POST_FAILURE',
+    payload: error,
+  }
+}
+
+export const deletePost = (id) => {
+  return (dispatch) => {
+    // dispatch(editPost())
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'PUT',
+      headers: headers,
+      body: JSON.stringify({deleted: true}),
+    }).
+    then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(deletePostSuccess(true))
+      return response
+    })
+    .then((response) => response.json())
+    .catch(() => dispatch(deletePostFailure()))
+  }
+}
+//
+//
+// DELETE /posts/:id
+// USAGE:
+//   Sets the deleted flag for a post to 'true'.
+//   Sets the parentDeleted flag for all child comments to 'true'.
 
     

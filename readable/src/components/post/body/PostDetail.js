@@ -19,8 +19,6 @@ import NewComment from '../create/NewComment'
 import PostContent from './PostContent'
 
 // materialUI components
-
-import Button from 'material-ui/Button'
 import Dialog, {
   DialogActions,
   DialogContent,
@@ -58,10 +56,7 @@ class PostDetail extends React.Component {
     const {post, comments} = activePost
     return (
       <Card>
-        
         <Dialog fullWidth={true} open={this.state.open}>
-          
-          
           <Link to={{
             pathname: `/category/${currentMenu.category}?=${currentMenu.tab}`,
             state: {category: currentMenu.category, tab: currentMenu.tab},
@@ -83,11 +78,8 @@ class PostDetail extends React.Component {
                   content={post}
                 />
               </div>
-              
               : null
             }
-            
-            
             <Collapse in={this.state.open} transitionDuration="auto"
                       unmountOnExit
             >

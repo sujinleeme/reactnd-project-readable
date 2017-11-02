@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { Route, Switch, Router } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {
-  getCategories, getTabs, setupMenu,
-} from './modules/actions/menu'
+import { getCategories, getTabs, setupMenu, } from './modules/actions/menu'
 import { getPostLists } from './modules/actions/posts'
 import { withRouter } from 'react-router-dom'
 
-import NotFound from './components/pages/NotFound'
 import HomePage from './components/pages/HomePage'
-import PostDetail from './components/post/body/PostDetail'
 
 class App extends Component {
   componentWillReceiveProps (nextProps) {
@@ -39,7 +35,6 @@ class App extends Component {
     else {
       categoryName = this.props.selectMenu.category
       tabName = this.props.selectMenu.tab
-      
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
       this.props.getPostLists(categoryName),
@@ -49,7 +44,6 @@ class App extends Component {
   render () {
     return (
       <Switch>
-        
         <Route
           path='/'
           component={HomePage}

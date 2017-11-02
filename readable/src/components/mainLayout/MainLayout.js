@@ -6,7 +6,9 @@ import PostDetailContainer from '../container/PostDetailContainer'
 
 import PaperSheet from '../assests/PaperSheet'
 import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
-import { Switch, Route } from 'react-router-dom'
+import {  withRouter,
+  Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import TabContainer from '../container/TabContainer'
 import { withStyles } from 'material-ui/styles'
@@ -26,14 +28,17 @@ const styles = theme => ({
 class MainLayout extends React.Component {
   
   render () {
-    const {classes} = this.props
+    const {classes, currentCategory, currentTab} = this.props
     return (
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item md={3}/>
           <Grid item md={6} container={true} direction="column">
             <TabContainer/>
-            <Route path='/category/:categoryName' component={PostContainer}/>
+            {/*/category/${currentCategory}?=${currentTab}/posts/${post.id}*/}
+            <Route path='/category/:categoryName/' component={PostContainer}/>
+            {/*<Route path='/category/:categoryName?=:tabName/posts/:id' component={PostDetailContainer}/>*/}
+  
             <Route path='/posts/:id' component={PostDetailContainer}/>
           </Grid>
           <Grid item md={3}>
@@ -46,8 +51,23 @@ class MainLayout extends React.Component {
   }
 }
 
+
 MainLayout.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MainLayout)
+const mapStateToProps = (state) => {
+  return {
+    postList: state.posts.postList,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(withStyles(styles)(MainLayout)))

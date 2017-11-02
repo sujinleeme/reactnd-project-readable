@@ -12,7 +12,7 @@ import { ConnectedRouter} from 'react-router-redux'
 
 import registerServiceWorker from './registerServiceWorker'
 
-import CustomTheme from './Theme'
+import CustomTheme from './CustomTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 ReactDOM.render(
