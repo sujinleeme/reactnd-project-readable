@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { withStyles } from 'material-ui/styles'
 import classnames from 'classnames'
@@ -15,7 +14,6 @@ import PostSettingButton from '../buttons/PostSettingButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 
 import { date, username } from '../../../utils/helper'
-import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 import { styles } from '../../../styles/post/PostContent'
 
@@ -24,18 +22,17 @@ class PostContent extends React.Component {
     super(props)
     
     this.state = {
+      
       date: this.props.content.timestamp,
-      fullAuthorName: this.props.content.author,
-      shortAuthorName: '',
-      title: this.props.content.title,
-      body: this.props.content.body,
+      fullAuthorName: this.props.content.author, shortAuthorName: '',
+      title: this.props.content.title, body: this.props.content.body,
       isEditing: false,
     }
-    
   }
   
   componentDidMount = () => {
     const id = this.props.content.id
+    console.log()
     this.setState(prevState => ({
       shortAuthorName: username(prevState.fullAuthorName),
       date: date(prevState.date),
@@ -44,9 +41,9 @@ class PostContent extends React.Component {
   
   sendUpdatedPost = (e) => {
     e.stopPropagation()
-    const id = this.props.content.id
-    const content = {title: this.state.title, body: this.state.body}
-    this.props.updatePost(id, content)
+    const {id, parentId} = this.props.content
+    const body = {title: this.state.title, body: this.state.body}
+    this.props.updateBodyContent(id, body, parentId)
     return this.changeEditView(false)
   }
   
@@ -59,8 +56,8 @@ class PostContent extends React.Component {
     this.setState({isEditing: bool})
   }
   
-  deletePostItem = (e) => {
-    e.stopPropagation()
+  deletePostItem = () => {
+  
   }
   
   handleTitleChange = (e) => {
@@ -72,18 +69,16 @@ class PostContent extends React.Component {
   }
   
   render () {
-    const {content, classes, activePost, hideDetailView} = this.props
+    const {content, classes, hideDetailView, deleteBodyContent} = this.props
     const {fullAuthorName, shortAuthorName, isEditing} = this.state
-    
     return (
       <div>
         <div className={classes.root}>
           <CardHeader className={classes.cardHeader}
-                      avatar={
-                        <Avatar aria-label="post" className={classes.avatar}>
-                          {shortAuthorName}
-                        </Avatar>
-                      }
+                      avatar={<Avatar aria-label="post"
+                                      className={classes.avatar}>
+                        {shortAuthorName}
+                      </Avatar>}
                       title={fullAuthorName}
                       subheader={this.state.date}
           />
@@ -91,70 +86,54 @@ class PostContent extends React.Component {
           {hideDetailView ? null :
             <PostSettingButton className={classes.postMenu}
                                showPostEditView={this.changeEditView}
-                               deletePost={this.deletePostItem}
-            />
-          }
+                               content={content}
+                               deletePost={deleteBodyContent}
+            />}
         </div>
         
-        {
-          !isEditing ? <CardContent>
-              <Typography type="subheading" component="h6">
-                {content.title}
-              </Typography>
-              <Typography component="p">
-                {content.body}
-              </Typography>
-            </CardContent>
-            
-            : <CardContent>
-              <PostSaveCancelButton
-                cancelPost={this.closePostEditView}
-                savePost={this.sendUpdatedPost}
-              />
-              <form noValidate autoComplete="off"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                    }}>
-                {content.title ? <Input
-                  placeholder="Write down your post title..."
-                  fullWidth="true"
-                  disableUnderline="true"
-                  onChange={this.handleTitleChange}
-                  defaultValue={content.title}
-                  className={classes.textField}
-                  margin="normal"
-                /> : null}
-                {content.body ? <Input
-                  placeholder="What do you want to say..."
-                  multiline="true"
-                  fullWidth="true"
-                  disableUnderline="true"
-                  onChange={this.handleBodyChange}
-                  defaultValue={content.body}
-                  className={classes.textField}
-                  margin="normal"
-                /> : null}
-              </form>
-            </CardContent>
-        }
+        {!isEditing ? <CardContent>
+            <Typography type="subheading" component="h6">
+              {content.title}
+            </Typography>
+            <Typography component="p">
+              {content.body}
+            </Typography>
+          </CardContent>
+          
+          : <CardContent>
+            <PostSaveCancelButton
+              cancelPost={this.closePostEditView}
+              savePost={this.sendUpdatedPost}
+            />
+            <form noValidate autoComplete="off"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}>
+              {content.title ? <Input
+                placeholder="Write down your post title..."
+                fullWidth="true"
+                disableUnderline="true"
+                onChange={this.handleTitleChange}
+                defaultValue={content.title}
+                className={classes.textField}
+                margin="normal"
+              /> : null}
+              {content.body ? <Input
+                placeholder="What do you want to say..."
+                multiline="true"
+                fullWidth="true"
+                disableUnderline="true"
+                onChange={this.handleBodyChange}
+                
+                defaultValue={content.body}
+                className={classes.textField}
+                margin="normal"
+              /> : null}
+            </form>
+          </CardContent>}
       </div>
     
     )
-  }
-}
-
-function mapStateToProps (globalState, state) {
-  return {
-    activePost: globalState.posts.activePost,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updatePost: (id, option) => {
-      dispatch(updatePostContent(id, option))
-      dispatch(getPost(id))
-    },
   }
 }
 
@@ -162,5 +141,4 @@ PostContent.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)
-(PostContent))
+export default withStyles(styles)(PostContent)

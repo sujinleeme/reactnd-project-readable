@@ -10,54 +10,51 @@ import {
   Route,
   Link,
 } from 'react-router-dom'
-import { parse } from 'qs'
-
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
+import Card, { CardContent } from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import CloseIcon from 'material-ui-icons/Close'
 
 import {
   getPost, updateVote, resetPost, getComments,
 } from '../../modules/actions/posts'
 
-
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
-import ExpandLessIcon from 'material-ui-icons/ExpandLess'
-import Card, { CardContent } from 'material-ui/Card'
-import IconButton from 'material-ui/IconButton'
-import Collapse from 'material-ui/transitions/Collapse'
-
-import PostCardList from '../post/body/PostCardList'
-import PostContainer from './PostContainer'
-
-import PostContent from '../post/body/PostContent'
-import UpDownVoter from '../post/buttons/UpDownVoter'
+import { styles } from '../../styles/post/PostCardList'
 import PostDetail from '../post/body/PostDetail'
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.A300,
-  },
-  
-})
+import LoadingProgress from '../assests/LoadingProgress'
 
 class PostDetailContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       expanded: false,
+      open: true,
     }
   }
   
+  handleClickOpen = () => {
+    this.setState({open: true})
+  }
+  
+  handleRequestClose = () => {
+    this.setState({open: false})
+    window.history.back()
+    
+  }
   componentWillUnmount () {
     this.props.resetPost()
   }
   
   componentDidMount () {
-    const postId = this.props.location.pathname.split('/')[2]
+    const postId = this.props.location.pathname.split('/')[4]
     this.props.fetchPost(postId)
     this.props.fetchComments(postId)
-  
   }
-  
   
   handleExpandClick = (e) => {
     e.stopPropagation()
@@ -68,33 +65,31 @@ class PostDetailContainer extends React.Component {
     e.stopPropagation()
   }
   
-  
   render () {
-    const {expanded} = this.state
-    const {classes, activePost} = this.props
-    const {post, comments} = activePost
-    
+    const {activePost, comments, classes, activeComment, postId} = this.props
+   
     return (
-      <div>
-        <PostContainer/>
-        <PostDetail/>
-      </div>
+      <Card>
+      <PostDetail
+        activePost={activePost}
+        activeComment={activeComment}
+        comments={comments}
+      />
+      </Card>
     )
   }
 }
 
-
 const mapStateToProps = (globalState, ownProps) => {
+  const {activePost, activeComment} = globalState.posts
+  
   return {
-    postList: globalState.posts.postList,
-    selectMenu: {
-      category: globalState.currentMenu.category,
-      tab: globalState.currentMenu.tab,
-    },
-    categories: globalState.categories,
-    activePost: globalState.posts.activePost,
-  
-  
+    activePost: activePost.post,
+    comments: activePost.comments,
+    activeComment: activeComment.comment,
+    postId: ownProps.id,
+    currentMenu: globalState.currentMenu,
+    loading: globalState.posts.postList.loading,
   }
 }
 

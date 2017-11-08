@@ -77,7 +77,6 @@ class NewPost extends React.Component {
           category: '',
         },
         checkValid: false,
-        isValid: false,
       },
     )
   }
@@ -98,7 +97,7 @@ class NewPost extends React.Component {
     if (isValid) {
       const selectedCategory = this.state.content.category
       this.props._createNewPost(content, selectedCategory)
-      this.handleHideForm()
+      return this.handleHideForm()
     }
   }
   
@@ -202,19 +201,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     _createNewPost: (content, category) => {
       dispatch(createNewPost(content, category))
-      dispatch(getPostLists(category))
+      // dispatch(getPostLists(category))
     },
   }
 }
-//
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     updatePostVote: (id, option) => {
-//       dispatch(updateVote(id, option))
-//       dispatch(getPost(id))
-//     }
-//   }
-// }
+
 export default connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(NewPost))

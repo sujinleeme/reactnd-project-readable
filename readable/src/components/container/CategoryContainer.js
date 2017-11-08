@@ -41,7 +41,6 @@ class CategoryContainer extends React.Component {
   }
   
   render () {
-    
     const {classes, categories, currentCategory, currentTab} = this.props
     return (
       categories &&
@@ -51,7 +50,7 @@ class CategoryContainer extends React.Component {
             key={path}
             component={Link}
             to={{
-              pathname: `/category/${path}?=${currentTab}`,
+              pathname: `/category/${path}=${currentTab}`,
               state: {category: name, tab: currentTab},
             }}
             className={currentCategory === name ? classes.active : ''}

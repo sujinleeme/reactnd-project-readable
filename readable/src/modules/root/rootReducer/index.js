@@ -3,9 +3,6 @@ import { routerReducer } from 'react-router-redux'
 import {
   currentMenu, categories, tabs, setupMenuComplete} from '../../reducers/menu'
 import { posts } from '../../reducers/posts'
-// posts, postsHasErrored, postsIsLoading, voteIsUpdating, voteUpdateSuccess,
-
-import { comments } from '../../reducers/comments'
 
 export default combineReducers({
   currentMenu,
@@ -13,13 +10,5 @@ export default combineReducers({
   tabs,
   setupMenuComplete,
   posts,
-  // postsIsEditing,
-  // postsHasErrored,
-  // postsIsLoading,
-  
-  // comments,
-  
-  // voteIsUpdating,
-  // voteUpdateSuccess,
   routerReducer,
 })

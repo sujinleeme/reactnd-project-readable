@@ -2,14 +2,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 
 // actions
-// import { getComments } from '../../../modules/actions/comments'
-import {
-  getPost, updateVote, resetPost, getComments,
-} from '../../../modules/actions/posts'
+import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 // materialUI components
 import { withStyles } from 'material-ui/styles'
@@ -21,10 +17,8 @@ import Collapse from 'material-ui/transitions/Collapse'
 
 // components
 import PostContent from './PostContent'
-import PostDetail from './PostDetail'
 
 import UpDownVoter from '../buttons/UpDownVoter'
-import NewComment from '../create/NewComment'
 
 // styles
 import { styles } from '../../../styles/post/PostCardList'
@@ -37,13 +31,6 @@ class PostCardList extends React.Component {
     }
     
     this.handleRequestClose = this.handleRequestClose.bind(this)
-  }
-  
-  componentWillUnmount () {
-    // this.props.resetPost()
-  }
-  
-  componentDidMount = () => {
   }
   
   handleExpandClick = (e) => {
@@ -62,8 +49,7 @@ class PostCardList extends React.Component {
   
   render () {
     const {expanded} = this.state
-    const {classes, post, comments} = this.props
-    const currentPost = this.props.activePost.post
+    const {classes, post} = this.props
     
     return (
       <div className={classnames(classes.expand, {
@@ -72,20 +58,17 @@ class PostCardList extends React.Component {
            aria-expanded={expanded}
            aria-label="Show more"
       >
-        {post ? <Card className={classes.root}>
-          
+        <Card className={classes.root}>
           <PostContent
             content={post}
-            hideDetailView={true}
-          />
-          
+          ></PostContent>
           <div className={classes.footer}>
             <UpDownVoter
-              
               className={classes.postVote}
               content={post}
-            />
-            {!expanded ? <IconButton>
+            ></UpDownVoter>
+            {!expanded ?
+              <IconButton>
                 <ExpandMoreIcon/>
               </IconButton>
               
@@ -93,30 +76,31 @@ class PostCardList extends React.Component {
                 <ExpandLessIcon/>
               </IconButton>
             }
-          
           </div>
-        </Card> : null}
+        </Card>
       </div>
     )
   }
 }
 
-function mapStateToProps (globalState, ownProps) {
+
+const mapStateToProps = (globalState) => {
   return {
     activePost: globalState.posts.activePost,
-    postId: ownProps.id,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchComments: (id) => dispatch(getComments(id)),
+    updatePostBodyContent: (id, option) => {
+      dispatch(updatePostContent(id, option))
+      dispatch(getPost(id))
+    },
   }
 }
 
 PostCardList.propTypes = {
   classes: PropTypes.object.isRequired,
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(PostCardList)))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)
+(PostCardList))

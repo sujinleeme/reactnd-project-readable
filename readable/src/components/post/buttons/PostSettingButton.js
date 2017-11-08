@@ -4,7 +4,7 @@ import Menu, { MenuItem } from 'material-ui/Menu'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
-import { deletePost } from '../../../modules/actions/posts'
+import { deletePostContent, getPostLists } from '../../../modules/actions/posts'
 
 import PropTypes from 'prop-types'
 
@@ -47,17 +47,18 @@ class PostSettingButton extends React.Component {
   }
   
   selectMenuItem = (e, index) => {
-    const {showPostEditView, _deletePost, post} = this.props
+    const {location, showPostEditView, deletePost, content, currentCategory} = this.props
     this.setState({open: false, selectedIndex: index})
-    const {location} = this.props
+    console.log(content)
+  
     switch (index) {
       case 0:
         showPostEditView(true)
         break
       case 1:
         if (window.confirm("Do you really want to delete post?")) {
-          window.open(`${location.pathname}${location.search}`, "Delete!");
-          _deletePost(post.id)
+          deletePost(content.id, currentCategory, content.parentId)
+          break
         }
     }
   }
@@ -102,6 +103,8 @@ class PostSettingButton extends React.Component {
 const mapStateToProps = (state) => {
   return {
     location: state.routerReducer.location,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
     post: state.posts.activePost.post,
   
   }
@@ -109,9 +112,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _deletePost: (id) => {
-      dispatch(deletePost(id))
-    }
+ 
   }
 }
 

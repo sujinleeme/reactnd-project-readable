@@ -18,5 +18,8 @@ export const styles = theme => ({
       cursor: 'text !important'
     }
   },
+  error: {
+    color: 'red'
+  }
   
 })

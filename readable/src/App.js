@@ -32,12 +32,23 @@ class App extends Component {
       categoryName = props.location.state.category
       tabName = props.location.state.tab
     }
-    else {
-      categoryName = this.props.selectMenu.category
-      tabName = this.props.selectMenu.tab
+
+  else {
+      if (this.props.location.pathname === '/' ) {
+        categoryName = 'react'
+        tabName = 'hot'
+      }
+      else {
+        const baseQuery = this.props.location.pathname.split('/')[2]
+        const query = baseQuery.split('=')
+        categoryName = query[0]
+        tabName = query[1]
+      }
+      console.log(categoryName, tabName)
+
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
-      this.props.getPostLists(categoryName),
+      this.props.fetchPostLists(categoryName),
     )
   }
   
@@ -57,13 +68,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (globalState, ownProps) => {
-  if (!globalState.currentMenu.tabs || globalState.currentMenu.category) {
-    return {
-      selectMenu: {
-        category: 'react',
-        tab: 'hot',
-      },
-    }
+  return {
+  
   }
 }
 
@@ -71,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
-    getPostLists: (category) => new Promise(
+    fetchPostLists: (category) => new Promise(
       (res) => dispatch(getPostLists(category))),
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),

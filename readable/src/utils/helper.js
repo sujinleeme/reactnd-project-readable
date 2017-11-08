@@ -23,8 +23,18 @@ export const username = (str = '') => {
 }
 
 
-
-
 export const uuid = () => {
   return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+}
+
+
+export const sortArr = (sorting, posts) => {
+  return posts.sort((a, b) => {
+    if (sorting === 'new') {
+      return b.timestamp - a.timestamp;
+    }
+    if (sorting === 'rating') {
+      return b.voteScore - a.voteScore;
+    }
+  });
 }

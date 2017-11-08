@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Grid from 'material-ui/Grid'
 import PostContainer from '../container/PostContainer'
 import PostDetailContainer from '../container/PostDetailContainer'
+import NotFound from '../container/NotFound'
 
 import PaperSheet from '../assests/PaperSheet'
 import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
@@ -35,22 +36,16 @@ class MainLayout extends React.Component {
           <Grid item md={3}/>
           <Grid item md={6} container={true} direction="column">
             <TabContainer/>
-            {/*/category/${currentCategory}?=${currentTab}/posts/${post.id}*/}
             <Route path='/category/:categoryName/' component={PostContainer}/>
-            {/*<Route path='/category/:categoryName?=:tabName/posts/:id' component={PostDetailContainer}/>*/}
-  
-            <Route path='/posts/:id' component={PostDetailContainer}/>
+            <Route path='/category/:categoryName=:tabName/posts/:id' component={PostDetailContainer}/>
           </Grid>
           <Grid item md={3}>
-            <PaperSheet/>
-            <FloatingNewPostButton/>
           </Grid>
         </Grid>
       </div>
     )
   }
 }
-
 
 MainLayout.propTypes = {
   classes: PropTypes.object.isRequired,
