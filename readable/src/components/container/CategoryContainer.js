@@ -4,8 +4,6 @@ import { withStyles } from 'material-ui/styles'
 import { Button } from 'material-ui'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setupMenu } from '../../modules/actions/menu'
-import { getPostLists } from '../../modules/actions/posts'
 import { styles } from '../../styles/container/CategoryContainer'
 
 const CategoryContainer = (props) => {
@@ -43,15 +41,6 @@ const mapStateToProps = (globalState) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchPosts: (category) => new Promise(
-      (res) => dispatch(getPostLists(category))),
-    changeCurrentMenu: (category, tab) => new Promise(
-      (res) => dispatch(setupMenu(category, tab))),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
   withRouter(withStyles(styles)(CategoryContainer)))
 

@@ -1,27 +1,17 @@
-// react
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
-
-// actions
-import { updatePostContent, getPost } from '../../../modules/actions/posts'
-
-// materialUI components
 import { withStyles } from 'material-ui/styles'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
-import Card, { CardContent } from 'material-ui/Card'
+import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
-import Collapse from 'material-ui/transitions/Collapse'
-
-// components
 import PostContent from './PostContent'
-
 import UpDownVoter from '../buttons/UpDownVoter'
 
-// styles
 import { styles } from '../../../styles/post/PostCardList'
+import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 class PostCardList extends React.Component {
   constructor (props) {
@@ -29,8 +19,6 @@ class PostCardList extends React.Component {
     this.state = {
       expanded: false,
     }
-    
-    this.handleRequestClose = this.handleRequestClose.bind(this)
   }
   
   handleExpandClick = (e) => {
@@ -38,19 +26,9 @@ class PostCardList extends React.Component {
     this.setState({expanded: !this.state.expanded})
   }
   
-  handleCommentClick = (e) => {
-    e.stopPropagation()
-  }
-  
-  handleRequestClose = (e) => {
-    e.stopPropagation()
-    this.setState({expanded: false})
-  }
-  
   render () {
     const {expanded} = this.state
     const {classes, post} = this.props
-    
     return (
       <div className={classnames(classes.expand, {
         [classes.expandOpen]: expanded,
@@ -71,7 +49,6 @@ class PostCardList extends React.Component {
               <IconButton>
                 <ExpandMoreIcon/>
               </IconButton>
-              
               : <IconButton>
                 <ExpandLessIcon/>
               </IconButton>
@@ -82,7 +59,6 @@ class PostCardList extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = (globalState) => {
   return {

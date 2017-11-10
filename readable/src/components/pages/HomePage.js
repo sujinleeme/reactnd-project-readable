@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import MainLayout from '../layout/MainLayout'
 import CopyrightBar from '../footer/CopyrightBar'
 import HeaderBar from '../header/HeaderBar'

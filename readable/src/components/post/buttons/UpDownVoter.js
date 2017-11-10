@@ -2,57 +2,47 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { CardActions } from 'material-ui/Card'
-import { styles } from '../../../styles/post/PostVote'
-
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
 import classnames from 'classnames'
-
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-
-import { updateVote, getPost } from '../../../modules/actions/posts'
+import { styles } from '../../../styles/post/PostVote'
 
 class UpDownVoter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      upVote: false,
-      downVote: false,
-      voted: false,
+      upVote: false, downVote: false, voted: false,
       initVoteScore: this.props.content.voteScore,
     }
   }
   
-  handleClickUpVote = (e, type) => {
+  handleClickVote = (e, type) => {
     e.stopPropagation()
     const id = this.props.content.id
     const {upVote, downVote} = this.state
-  
     //Change UI
-    this.setState({upVote: !upVote})
-    if (downVote) {
-      this.setState({downVote: false})
+    switch (type) {
+      case 'upVote':
+        this.setState({upVote: !upVote})
+        if (downVote) {
+          this.setState({downVote: false})
+        }
+        // Update Data
+        this.updateUpDownVote(id, 'upVote')
+        break
+      case 'downVote':
+        this.setState({downVote: !downVote})
+        if (upVote) {
+          this.setState({upVote: false})
+        }
+        // Update Data
+        this.updateUpDownVote(id, 'downVote')
+        break
     }
-    
-    // Update Data
-    this.updateUpDownVote(id, 'upVote')
-  }
-  
-  handleClickDownVote = (e) => {
-    e.stopPropagation()
-    const id = this.props.content.id
-    const {upVote, downVote} = this.state
-    
-    //Change UI
-    this.setState({downVote: !downVote})
-    if (upVote) {
-      this.setState({upVote: false})
-    }
-    // Update Data
-    this.updateUpDownVote(id, 'downVote')
   }
   
   updateUpDownVote = (id, type) => {
@@ -77,8 +67,7 @@ class UpDownVoter extends React.Component {
       }
       this.setState({voted: true})
       return this.handleChange(id, type)
-    }
-    else {
+    } else {
       this.setState({voted: false})
       return this.handleChange(id, opposite)
     }
@@ -94,42 +83,31 @@ class UpDownVoter extends React.Component {
     return (
       <CardActions disableActionSpacing className={classes.root}>
         <IconButton aria-label="Add to favorites"
-                    onClick={this.handleClickUpVote}>
+                    onClick={(e) => this.handleClickVote(e, 'upVote')}>
           <ThumbUp className={classnames(classes.button, {
             [classes.clicked]: upVote,
           })}/>
-        
         </IconButton>
         <Typography className={classnames('', {
           [classes.clicked]: downVote || upVote,
         })}>
           {content.voteScore}
         </Typography>
-        
         <IconButton aria-label="Add to favorites"
-                    onClick={this.handleClickDownVote}>
+                    onClick={(e) => this.handleClickVote(e, 'downVote')}>
           <ThumbDown className={classnames(classes.button, {
             [classes.clicked]: downVote,
           })}/>
         </IconButton>
-        
         <div className={classes.flexGrow}/>
-      
       </CardActions>
     )
   }
 }
 
-function mapStateToProps (globalState, ownProps) {
+const mapStateToProps = (globalState, ownProps) => {
   return {
-    activePost: globalState.posts.activePost,
-    id: ownProps.id,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-
+    activePost: globalState.posts.activePost, id: ownProps.id,
   }
 }
 
@@ -137,5 +115,5 @@ UpDownVoter.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
   withRouter(withStyles(styles)(UpDownVoter)))

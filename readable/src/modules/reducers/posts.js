@@ -1,5 +1,5 @@
 import {
-  FETCH_POSTS, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE, RESET_POSTS,
+  FETCH_POSTS, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE,
   
   FETCH_POST, FETCH_POST_SUCCESS, FETCH_POST_FAILURE, RESET_ACTIVE_POST,
   
@@ -45,8 +45,8 @@ export function posts (state = INITIAL_STATE, action) {
       error = action.payload
       return {...state, postList: {posts: [], error: error, loading: false}}
     
-    case RESET_POSTS:
-      return {...state, postList: {posts: [], error: null, loading: false}}
+    // case RESET_POSTS:
+    //   return {...state, postList: {posts: [], error: null, loading: false}}
     
     case FETCH_POST:
       return {

@@ -3,21 +3,19 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import CloseIcon from 'material-ui-icons/Close'
-
-import UpDownVoter from '../buttons/UpDownVoter'
-import NewComment from '../create/NewComment'
-import PostContent from './PostContent'
-
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardContent } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Collapse from 'material-ui/transitions/Collapse'
+import UpDownVoter from '../buttons/UpDownVoter'
+import NewComment from '../create/NewComment'
+import PostContent from './PostContent'
 import { styles } from '../../../styles/post/PostCardList'
 
 import {
   updatePostContent, getPost, updateCommentContent, getComment, getComments,
-  deletePostContent, deleteCommentContent, getPostLists, updatePostVoter,
+  deletePostContent, deleteCommentContent, getPosts, updatePostVoter,
   updateCommentVoter,
 } from '../../../modules/actions/posts'
 
@@ -26,18 +24,15 @@ class PostDetail extends React.Component {
     open: true,
   }
   
-  handleClickOpen = () => {
-    this.setState({open: true})
-  }
-  
   handleRequestClose = () => {
     const {currentCategory, updatePostList} = this.props
     this.setState({open: false})
   }
   
   render () {
-    const {
-            classes, activePost, activeComment, comments, updatePostBodyContent, updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent, updatePostVoter, currentCategory, currentTab, updateCommentVoter,
+    const { classes, activePost, activeComment, comments, updatePostBodyContent,
+            updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent,
+            updatePostVoter, currentCategory, currentTab, updateCommentVoter,
           } = this.props
     
     return (
@@ -127,7 +122,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     
     updatePostList: (category) => {
-      dispatch(getPostLists(category))
+      dispatch(getPosts(category))
     },
     
     updatePostBodyContent: (id, content) => {
@@ -143,7 +138,7 @@ const mapDispatchToProps = (dispatch) => {
     
     deletePostBodyContent: (id, category) => {
       dispatch(deletePostContent(id))
-      dispatch(getPostLists(category))
+      dispatch(getPosts(category))
       return window.history.back()
     },
     

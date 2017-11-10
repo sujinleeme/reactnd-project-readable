@@ -1,19 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { withStyles } from 'material-ui/styles'
-
 import { CardHeader, CardContent } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
-
 import Typography from 'material-ui/Typography'
 import Input from 'material-ui/Input'
-
+import { withStyles } from 'material-ui/styles'
 import PostSettingButton from '../buttons/PostSettingButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
-
 import { date, username } from '../../../utils/helper'
-
 import { styles } from '../../../styles/post/PostContent'
 
 class PostContent extends React.Component {
@@ -77,7 +71,6 @@ class PostContent extends React.Component {
                       title={fullAuthorName}
                       subheader={this.state.date}
           />
-          
           {hideDetailView ? null :
             <PostSettingButton className={classes.postMenu}
                                showPostEditView={this.changeEditView}
@@ -85,7 +78,6 @@ class PostContent extends React.Component {
                                deletePost={deleteBodyContent}
             />}
         </div>
-        
         {!isEditing ? <CardContent>
             <Typography type="subheading" component="h6">
               {content.title}

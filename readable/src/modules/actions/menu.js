@@ -1,6 +1,5 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../../api-server/configurl'
-import { push } from 'react-router-redux'
 
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'

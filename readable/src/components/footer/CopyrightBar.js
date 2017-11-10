@@ -7,9 +7,6 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import { styles } from '../../styles/header/CopyrightBar'
 import GithubIcon from '../assests/GithubIcon'
-import {
-  Link,
-} from 'react-router-dom'
 
 const CopyrightBar = (props) => {
   const classes = props.classes
