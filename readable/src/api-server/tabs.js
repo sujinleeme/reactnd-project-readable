@@ -5,17 +5,13 @@ let db = {}
 const defaultData = {
   tabs: [
     {
-      name: 'hot',
-      path: 'hot',
-    },
-    {
-      name: 'comment',
-      path: 'comment',
-    },
-    {
       name: 'new',
       path: 'new',
     },
+    {
+      name: 'hot',
+      path: 'hot',
+    }
   ]
 }
 
