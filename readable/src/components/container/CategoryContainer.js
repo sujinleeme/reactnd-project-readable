@@ -6,52 +6,30 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setupMenu } from '../../modules/actions/menu'
 import { getPostLists } from '../../modules/actions/posts'
+import { styles } from '../../styles/container/CategoryContainer'
 
-const styles = theme => {
-  return ({
-      root: {
-        marginRight: '8px',
-        marginTop: '8px',
-        backgroundColor: theme.palette.background.A300,
-        fontWeight: 'bolder',
-      },
-      label: {
-        textTransform: 'capitalize',
-      },
-      active: {
-        background: '#4FC3F7 !important',
-      },
-    }
+const CategoryContainer = (props) => {
   
-  )
-}
-
-class CategoryContainer extends React.Component {
-  
-  render () {
-    const {classes, categories, currentCategory, currentTab} = this.props
-    return (
-      categories &&
-      <div className='category_grp'>
-        {categories.map(({name, path}) => (
-          <Button
-            key={path}
-            component={Link}
-            to={{
-              pathname: `/category/${path}=${currentTab}`,
-              state: {category: name, tab: currentTab},
-            }}
-            className={currentCategory === name ? classes.active : ''}
-            classes={{
-              root: classes.root,
-              label: classes.label,
-            }}
-            value={name}
-          >{name}
-          </Button>
-        ))}
-      </div>)
-  }
+  const {classes, categories, currentCategory, currentTab} = props
+  return (
+    categories && <div className='category_grp'>
+      {categories.map(({name, path}) => (
+        <Button
+          key={path}
+          component={Link}
+          to={{
+            pathname: `/category/${path}=${currentTab}`,
+            state: {category: name, tab: currentTab},
+          }}
+          className={currentCategory === name ? classes.active : ''}
+          classes={{
+            root: classes.root, label: classes.label,
+          }}
+          value={name}
+        >{name}
+        </Button>
+      ))}
+    </div>)
 }
 
 CategoryContainer.propTypes = {
@@ -61,8 +39,7 @@ CategoryContainer.propTypes = {
 const mapStateToProps = (globalState) => {
   return {
     currentCategory: globalState.currentMenu.category,
-    currentTab: globalState.currentMenu.tab,
-    categories: globalState.categories,
+    currentTab: globalState.currentMenu.tab, categories: globalState.categories,
   }
 }
 

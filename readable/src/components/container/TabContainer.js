@@ -10,10 +10,8 @@ import { setupMenu } from '../../modules/actions/menu'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.A300,
-    boxShadow: 'none',
-    paddingLeft: theme.spacing.unit * 3,
+    flexGrow: 1, backgroundColor: theme.palette.background.A300,
+    boxShadow: 'none', paddingLeft: theme.spacing.unit * 3,
     
   },
 })
@@ -22,14 +20,6 @@ class TabContainer extends React.Component {
   
   state = {
     value: 0,
-  }
-  
-  handleChange = (e, value) => {
-    e.stopPropagation()
-    const {selectMenu, tabs} = this.props
-    const categoryName = selectMenu.category
-    const tabName = (value < 0 ? tabs[0].name : tabs[value].name)
-    return this.props.changeCurrentMenu(tabName, categoryName)
   }
   
   getTabIndexNum (tabName) {
@@ -42,22 +32,18 @@ class TabContainer extends React.Component {
   }
   
   render () {
-    const {classes} = this.props
-    const props = this.props
-    const currentCategory = props.selectMenu.category
-    const tabItems = props.tabs
-    const currentTab = props.selectMenu.tab
+    const {classes, currentCategory, currentTab, tabs} = this.props
+    
     const tabIndex = this.getTabIndexNum(currentTab)
     
     return (
-      tabItems &&
+      tabs &&
       
       <Tabs className={classes.root} value={tabIndex}
-            onChange={this.handleChange}
             indicatorColor="primary"
             textColor="primary"
       >
-        {tabItems.map((({name, path}, index) => (
+        {tabs.map((({name, path}, index) => (
           <Tab
             key={name}
             label={name}
@@ -76,20 +62,17 @@ class TabContainer extends React.Component {
 
 TabContainer.propTypes = {}
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (globalState) => {
   return {
-    selectMenu: {
-      category: state.currentMenu.category,
-      tab: state.currentMenu.tab,
-    },
-    tabs: state.tabs,
+    currentCategory: globalState.currentMenu.category,
+    currentTab: globalState.currentMenu.tab, categories: globalState.categories,
+    tabs: globalState.tabs,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeCurrentMenu: (category, tab) => new Promise(
-      (res) => dispatch(setupMenu(category, tab))),
+
   }
 }
 
