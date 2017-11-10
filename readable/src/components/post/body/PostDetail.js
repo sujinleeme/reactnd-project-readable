@@ -25,7 +25,7 @@ class PostDetail extends React.Component {
   }
   
   handleRequestClose = () => {
-    const {currentCategory, updatePostList} = this.props
+    const {currentCategory} = this.props
     this.setState({open: false})
   }
   
@@ -138,8 +138,8 @@ const mapDispatchToProps = (dispatch) => {
     
     deletePostBodyContent: (id, category) => {
       dispatch(deletePostContent(id))
-      dispatch(getPosts(category))
-      return window.history.back()
+      window.history.back()
+      return dispatch(getPosts(category))
     },
     
     deleteCommentBodyContent: (id, category, parentId) => {

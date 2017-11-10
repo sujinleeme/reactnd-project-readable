@@ -3,7 +3,7 @@ import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Card from 'material-ui/Card'
-import { getPost, updateVote, resetPost, getComments } from '../../modules/actions/posts'
+import { getPost, resetPost, getComments } from '../../modules/actions/posts'
 import { styles } from '../../styles/post/PostCardList'
 import PostDetail from '../post/body/PostDetail'
 
