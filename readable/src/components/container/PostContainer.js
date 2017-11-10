@@ -69,7 +69,8 @@ PostContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    postList: state.posts.postList, currentCategory: state.currentMenu.category,
+    postList: state.posts.postList,
+    currentCategory: state.currentMenu.category,
     currentTab: state.currentMenu.tab,
   }
 }

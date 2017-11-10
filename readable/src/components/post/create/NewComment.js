@@ -1,19 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
 import { withStyles } from 'material-ui/styles'
-
 import { CardContent } from 'material-ui/Card'
-import { FormControl, FormHelperText } from 'material-ui/Form'
-
+import { FormHelperText } from 'material-ui/Form'
 import Avatar from 'material-ui/Avatar'
 import Input from 'material-ui/Input'
-
 import { styles } from '../../../styles/post/NewComment'
-
-import { date, username, uuid } from '../../../utils/helper'
-import { createNewComment, getComments } from '../../../modules/actions/posts'
+import { date, uuid } from '../../../utils/helper'
+import { createNewComment } from '../../../modules/actions/posts'
 
 class NewComment extends React.Component {
   constructor (props) {
@@ -37,11 +31,8 @@ class NewComment extends React.Component {
     const convertedTimestamp = date(today)
     this.setState({
       ...this.state, content: {
-        ...this.state.content,
-        author: postId, id: postId,
-        timestamp: today,
-        parentId: this.props.parentPostID,
-        body: '',
+        ...this.state.content, author: postId, id: postId, timestamp: today,
+        parentId: this.props.parentPostID, body: '',
       }, date: convertedTimestamp, checkValid: false, isValid: false,
     })
   }
@@ -52,13 +43,11 @@ class NewComment extends React.Component {
   
   submitForm = (e) => {
     const {content} = this.state
-    
     if (e.charCode === 13) {
       const isValid = this.checkEmptyFields()
       if (isValid) {
-        this.props._createNewComment(content, content.parentId).then(()=>
-          this.initForm()
-        )
+        this.props.createNewComment(content, content.parentId)
+        .then(() => this.initForm())
       }
     }
   }
@@ -103,7 +92,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _createNewComment: (content, id) => Promise.resolve()
+    createNewComment: (content, id) => Promise.resolve()
     .then((res) => dispatch(createNewComment(content, id))),
   }
 }

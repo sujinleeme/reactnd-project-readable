@@ -1,10 +1,18 @@
 import React from 'react'
+import { withStyles } from 'material-ui/styles'
+
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import { styles } from '../../styles/container/TabContainer'
+import { setupMenu } from '../../modules/actions/menu'
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1, backgroundColor: theme.palette.background.A300,
+    boxShadow: 'none', paddingLeft: theme.spacing.unit * 3,
+    
+  },
+})
 
 class TabContainer extends React.Component {
   state = {
@@ -24,9 +32,10 @@ class TabContainer extends React.Component {
     const {classes, currentCategory, currentTab, tabs} = this.props
     const tabIndex = this.getTabIndexNum(currentTab)
     return (
-      tabs && <Tabs className={classes.root} value={tabIndex}
-                    indicatorColor="primary"
-                    textColor="primary"
+      tabs &&
+      <Tabs className={classes.root} value={tabIndex}
+            indicatorColor="primary"
+            textColor="primary"
       >
         {tabs.map((({name, path}, index) => (
           <Tab
@@ -45,9 +54,7 @@ class TabContainer extends React.Component {
   }
 }
 
-TabContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+TabContainer.propTypes = {}
 
 const mapStateToProps = (globalState) => {
   return {
@@ -57,5 +64,11 @@ const mapStateToProps = (globalState) => {
   }
 }
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   withRouter(withStyles(styles)(TabContainer)))

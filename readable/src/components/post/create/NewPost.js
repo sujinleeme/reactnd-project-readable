@@ -1,21 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
 import { withStyles } from 'material-ui/styles'
 import classnames from 'classnames'
-
 import Avatar from 'material-ui/Avatar'
 import Input from 'material-ui/Input'
 import Card from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
-
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 import { styles } from '../../../styles/post/NewPost'
-
-import { date, username, uuid } from '../../../utils/helper'
-import { createNewPost, getPostLists } from '../../../modules/actions/posts'
+import { date, uuid } from '../../../utils/helper'
+import { createNewPost, getPosts } from '../../../modules/actions/posts'
 
 class NewPost extends React.Component {
   constructor (props) {
@@ -93,10 +88,9 @@ class NewPost extends React.Component {
   submitForm = () => {
     const isValid = this.checkEmptyFields()
     const content = this.state.content
-    
     if (isValid) {
-      const selectedCategory = this.state.content.category
-      this.props._createNewPost(content, selectedCategory)
+      const selectedCategory = content.category
+      this.props.createNewPost(content, selectedCategory, this.props.currentTab)
       return this.handleHideForm()
     }
   }
@@ -128,17 +122,13 @@ class NewPost extends React.Component {
           /> : <div className={classes.inputField}>
             <div className={classes.categorybuttons}>
               <div className={classes.row}>
-                
                 {categories ? categories.map(({name, path}) => (
                   <Chip key={name}
                         label={name}
                         className={classnames(classes.chip,
                           category === name ? classes.active : '')}
                         onClick={this.selectCategory}
-                  
                   />
-                
-                
                 )) : null} </div>
               {checkValid && !category ?
                 <FormHelperText className={classes.error}>Choose a
@@ -157,11 +147,8 @@ class NewPost extends React.Component {
               {checkValid && !title ?
                 <FormHelperText className={classes.error}>Title is
                   empty</FormHelperText>
-                
                 : null}
-            
             </FormControl>
-            
             <Input
               placeholder="Body"
               fullWidth="true"
@@ -175,16 +162,13 @@ class NewPost extends React.Component {
             {checkValid && !body ?
               <FormHelperText className={classes.error}>Body is
                 empty</FormHelperText>
-              
               : null}
-            
             <PostSaveCancelButton
               cancelPost={this.initForm}
               savePost={this.submitForm}
             />
           </div>
           }
-        
         </form>
       </Card>
     )
@@ -194,14 +178,16 @@ class NewPost extends React.Component {
 const mapStateToProps = (state) => {
   return {
     categories: state.categories,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _createNewPost: (content, category) => {
-      dispatch(createNewPost(content, category))
-      // dispatch(getPostLists(category))
+    createNewPost: (content, category, tab) => {
+      dispatch(createNewPost(content))
+      return dispatch(getPosts(category, tab))
     },
   }
 }

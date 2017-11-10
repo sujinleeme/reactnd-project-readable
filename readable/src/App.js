@@ -41,7 +41,7 @@ class App extends Component {
       }
     }
     return this.props.changeCurrentMenu(categoryName, tabName)
-    .then(this.props.fetchPosts(categoryName))
+    .then(this.props.fetchPosts(categoryName, tabName))
   }
   
   render () {
@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
-    fetchPosts: (category) => new Promise(
-      (res) => dispatch(getPosts(category))),
+    fetchPosts: (category, tab) => new Promise(
+      (res) => dispatch(getPosts(category, tab))),
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),
   }
