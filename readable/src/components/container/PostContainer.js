@@ -20,13 +20,10 @@ const styles = theme => ({
 })
 
 class PostContainer extends React.Component {
-  
-  componentDidMount () {
-  
-  }
+
   
   render () {
-    const {classes, postList, location, currentCategory, currentTab} = this.props
+    const {classes, postList, currentCategory, currentTab} = this.props
     const {loading} = postList
     const posts = postList.posts
     if (loading) {

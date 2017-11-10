@@ -22,7 +22,7 @@ class App extends Component {
     await Promise.all([
       this.props.fetchCategories(),
       this.props.fetchTabs()]).then(
-      this.changeMenu(hasLocationState, props),
+      this.changeMenu(hasLocationState, props)
     )
   }
   
@@ -44,8 +44,6 @@ class App extends Component {
         categoryName = query[0]
         tabName = query[1]
       }
-      console.log(categoryName, tabName)
-
     }
     return this.props.changeCurrentMenu(categoryName, tabName).then(
       this.props.fetchPostLists(categoryName),

@@ -28,18 +28,6 @@ const styles = theme => {
 
 class CategoryContainer extends React.Component {
   
-  handleChange = (e) => {
-    e.stopPropagation()
-    const tabName = this.props.currentTab
-    let categoryName = e.target.innerHTML
-    if (e.target.tagName !== 'SPAN') {
-      categoryName = e.target.childNodes[0].innerHTML
-    }
-    return this.props.changeCurrentMenu(categoryName, tabName).then(
-      this.props.fetchPosts(categoryName),
-    )
-  }
-  
   render () {
     const {classes, categories, currentCategory, currentTab} = this.props
     return (
@@ -59,7 +47,6 @@ class CategoryContainer extends React.Component {
               label: classes.label,
             }}
             value={name}
-            onClick={this.handleChange}
           >{name}
           </Button>
         ))}

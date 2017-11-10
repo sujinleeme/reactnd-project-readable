@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
-import classnames from 'classnames'
 
 import { CardHeader, CardContent } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
@@ -54,10 +53,6 @@ class PostContent extends React.Component {
   
   changeEditView = (bool) => {
     this.setState({isEditing: bool})
-  }
-  
-  deletePostItem = () => {
-  
   }
   
   handleTitleChange = (e) => {
