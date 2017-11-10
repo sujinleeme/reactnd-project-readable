@@ -19,4 +19,15 @@ html, body {
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
 	color: inherit;
+	fill: #4FC3F7
+	}
+
+
+.github {
+	align-items: center;
+	}
+
+
+a svg:hover #github{
+	fill: #4FC3F7
 	}

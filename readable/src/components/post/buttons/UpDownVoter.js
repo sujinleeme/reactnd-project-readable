@@ -85,7 +85,7 @@ class UpDownVoter extends React.Component {
   }
   
   handleChange = (id, type) => {
-    this.props.updatePostVote(id, type)
+    this.props.updateVoteCounter(id, type)
   }
   
   render () {
@@ -129,10 +129,7 @@ function mapStateToProps (globalState, ownProps) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePostVote: (id, option) => {
-      dispatch(updateVote(id, option))
-      dispatch(getPost(id))
-    }
+
   }
 }
 

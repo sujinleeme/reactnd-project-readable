@@ -45,7 +45,7 @@ const HeaderBar = (props) => {
                   
                   <Typography type="headline" color="accent"
                               className={classes.detailTypoLogo}>
-                    Udacity Nanodegree Student's Projects Showcase
+                    / Nanodegree Projects Showcase
                   </Typography>
                 </div>
                 <CategoryContainer/>

@@ -37,15 +37,6 @@ class PostDetailContainer extends React.Component {
     }
   }
   
-  handleClickOpen = () => {
-    this.setState({open: true})
-  }
-  
-  handleRequestClose = () => {
-    this.setState({open: false})
-    window.history.back()
-    
-  }
   componentWillUnmount () {
     this.props.resetPost()
   }
@@ -54,15 +45,6 @@ class PostDetailContainer extends React.Component {
     const postId = this.props.location.pathname.split('/')[4]
     this.props.fetchPost(postId)
     this.props.fetchComments(postId)
-  }
-  
-  handleExpandClick = (e) => {
-    e.stopPropagation()
-    this.setState({expanded: !this.state.expanded})
-  }
-  
-  handleCommentClick = (e) => {
-    e.stopPropagation()
   }
   
   render () {

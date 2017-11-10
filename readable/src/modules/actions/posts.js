@@ -355,7 +355,7 @@ export const resetPost = () => {
   }
 }
 
-export const updateVote = (id, type) => {
+export const updatePostVoter = (id, type) => {
   return (dispatch) => {
     fetch(`${baseurl}/posts/${id}`, {
       method: 'POST', headers: headers, body: JSON.stringify({option: type}),
@@ -479,5 +479,23 @@ export const deleteCommentContent = (id) => {
     })
     .then((response) => response.json())
     .catch(() => dispatch(deleteCommentFailure()))
+  }
+}
+
+
+export const updateCommentVoter = (id, type) => {
+  return (dispatch) => {
+    fetch(`${baseurl}/comments/${id}`, {
+      method: 'POST', headers: headers, body: JSON.stringify({option: type}),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(updateVoteScore(true))
+      return response
+    })
+    .then((response) => response.json())
+    .catch(() => dispatch(voteUpdateSuccess(false)))
   }
 }

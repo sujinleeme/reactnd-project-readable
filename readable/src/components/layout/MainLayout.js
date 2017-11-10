@@ -7,8 +7,9 @@ import NotFound from '../container/NotFound'
 
 import PaperSheet from '../assests/PaperSheet'
 import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
-import {  withRouter,
-  Switch, Route } from 'react-router-dom'
+import {
+  withRouter, Switch, Route,
+} from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import TabContainer from '../container/TabContainer'
@@ -16,12 +17,9 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    paddingTop: theme.spacing.unit * 3,
-    backgroundColor: theme.palette.background.A300,
-    boxShadow: 'none',
-    minHeight: '1000px',
-    paddingBottom: theme.spacing.unit,
+    flexGrow: 1, paddingTop: theme.spacing.unit * 3,
+    backgroundColor: theme.palette.background.A300, boxShadow: 'none',
+    minHeight: '1000px', paddingBottom: theme.spacing.unit * 3, margin: 0,
   },
   
 })
@@ -29,7 +27,7 @@ const styles = theme => ({
 class MainLayout extends React.Component {
   
   render () {
-    const {classes, currentCategory, currentTab} = this.props
+    const {classes} = this.props
     return (
       <div className={classes.root}>
         <Grid container spacing={0}>
@@ -37,7 +35,8 @@ class MainLayout extends React.Component {
           <Grid item md={6} container={true} direction="column">
             <TabContainer/>
             <Route path='/category/:categoryName/' component={PostContainer}/>
-            <Route path='/category/:categoryName=:tabName/posts/:id' component={PostDetailContainer}/>
+            <Route path='/category/:categoryName=:tabName/posts/:id'
+                   component={PostDetailContainer}/>
           </Grid>
           <Grid item md={3}>
           </Grid>

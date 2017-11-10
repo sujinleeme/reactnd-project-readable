@@ -5,9 +5,11 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
-import Copyright from 'material-ui-icons/Copyright'
-import { styles } from '../../styles/CopyrightBar'
-
+import { styles } from '../../styles/header/CopyrightBar'
+import GithubIcon from '../assests/GithubIcon'
+import {
+  Link,
+} from 'react-router-dom'
 
 const CopyrightBar = (props) => {
   const classes = props.classes
@@ -15,15 +17,20 @@ const CopyrightBar = (props) => {
     <div>
       <AppBar position="static" color="default">
         <Toolbar>
-          <Grid container spacing={24}>
-            <Grid item md={2}/>
-            <Grid item md={8} className={classes.root}>
-              <Copyright className={classes.copyright}/>
-              <Typography type="subheading" color="inherit">
-                Sujin Lee
-              </Typography>
+          <Grid container spacing={0}>
+            <Grid item md={3}/>
+            <Grid item md={6} className={classes.root}>
+              <div className={classes.group}>
+                <a target="_blank"
+                   href="https://github.com/sujinleeme/reactnd-project-readable"><GithubIcon
+                  className="github"/></a>
+                <Typography className={classes.copyright} type="subheading"
+                            color="inherit">
+                  Code by Sujin Lee
+                </Typography>
+              </div>
             </Grid>
-            <Grid item md={2}/>
+            <Grid item md={3}/>
           </Grid>
         </Toolbar>
       

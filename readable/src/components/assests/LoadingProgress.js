@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
-import purple from 'material-ui/colors/purple';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import { CircularProgress } from 'material-ui/Progress'
 
 const styles = theme => ({
   progress: {
-    margin: `0 ${theme.spacing.unit * 2}px`,
+    display: 'flex', justifyContent: 'center',
+    alignItems: 'center',
   },
-});
+})
 
-function CircularIndeterminate(props) {
-  const { classes } = props;
+const CircularIndeterminate = (props) => {
+  const {classes} = props
   return (
-    <div>
-      <CircularProgress className={classes.progress} size={50} />
+    <div className={classes.progress}>
+      <CircularProgress  size={50}/>
     </div>
-  );
+  )
 }
 
 CircularIndeterminate.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
-export default withStyles(styles)(CircularIndeterminate);
+export default withStyles(styles)(CircularIndeterminate)

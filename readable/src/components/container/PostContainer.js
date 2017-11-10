@@ -10,7 +10,6 @@ import {
 import PostCardList from '../post/body/PostCardList'
 
 import NewPost from '../post/create/NewPost'
-// import FloatingNewPostButton from '../post/buttons/FloatingNewPostButton'
 import LoadingProgress from '../assests/LoadingProgress'
 
 const styles = theme => ({
@@ -31,31 +30,36 @@ class PostContainer extends React.Component {
     const {loading} = postList
     const posts = postList.posts
     if (loading) {
-      return <LoadingProgress/>
+      
+      return (
+        <div className={classes.root}>
+          <NewPost/>
+          <LoadingProgress/>
+        </div>
+      )
     }
     return (
       
       <div className={classes.root}>
         <NewPost/>
         {posts ? posts.map((post) => (
-            <Link
+          <Link
+            key={post.id}
+            to={{
+              pathname: `${currentCategory}=${currentTab}/posts/${post.id}`,
+              state: {
+                category: currentCategory, tab: currentTab, id: post.id,
+              },
+            }}
+          >
+            <PostCardList
+              post={post}
+              id={post.id}
               key={post.id}
-              to={{
-                pathname: `${currentCategory}=${currentTab}/posts/${post.id}`,
-                state: {
-                  category: currentCategory, tab: currentTab, id: post.id,
-                },
-              }}
-            >
-              <PostCardList
-                post={post}
-                id={post.id}
-                key={post.id}
-              />
-            </Link>
-          
-          ))
-         : null}
+            />
+          </Link>
+        
+        )) : null}
       </div>
     
     )
