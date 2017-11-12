@@ -1,5 +1,5 @@
 {
-  "name": "readable",
+  "name": "reactnd-project-readable",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,9 +8,7 @@
     "material-ui": "^1.0.0-beta.11",
     "material-ui-icons": "^1.0.0-beta.10",
     "npm": "^5.5.1",
-    "path-to-regexp": "^2.0.0",
     "prop-types": "^15.5.10",
-    "qs": "^6.5.1",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
@@ -29,9 +27,23 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "firebase deploy"
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.2"
-  }
+  },
+  "description": "This is my second assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sujinleeme/reactnd-project-readable.git"
+  },
+  "author": "Sujin Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sujinleeme/reactnd-project-readable/issues"
+  },
+  "homepage": "https://sujinlee-reactnd-project.firebaseapp.com/"
 }

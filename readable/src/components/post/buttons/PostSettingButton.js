@@ -30,6 +30,7 @@ class PostSettingButton extends React.Component {
     const {showPostEditView, deletePost, content, currentCategory} = this.props
     this.setState({open: false, selectedIndex: index})
     switch (index) {
+      default:
       case 0:
         showPostEditView(true)
         break

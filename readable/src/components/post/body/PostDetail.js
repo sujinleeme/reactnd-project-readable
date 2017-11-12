@@ -25,14 +25,12 @@ class PostDetail extends React.Component {
   }
   
   handleRequestClose = () => {
-    const {currentCategory} = this.props
     this.setState({open: false})
   }
   
   render () {
-    const { classes, activePost, activeComment, comments, updatePostBodyContent,
-            updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent,
-            updatePostVoter, currentCategory, currentTab, updateCommentVoter,
+    const {
+            classes, activePost, activeComment, comments, updatePostBodyContent, updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent, updatePostVoter, currentCategory, currentTab, updateCommentVoter,
           } = this.props
     
     return (
@@ -143,8 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     
     deleteCommentBodyContent: (id, category, parentId) => {
-      dispatch(deleteCommentContent(id))
-      return dispatch(getComments(parentId))
+      dispatch(deleteCommentContent(id, parentId))
     },
     
     updatePostVoter: (id, option) => {
@@ -160,3 +157,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostDetail)))
+//
+
+
+

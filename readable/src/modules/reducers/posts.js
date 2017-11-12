@@ -9,7 +9,7 @@ import {
   
   DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE,
   
-  UPDATE_POST_VOTE_SCORE,
+  UPDATE_POST_VOTE_SCORE, UPDATE_POST_VOTE_SCORE_FAILURE,
 
   CREATE_COMMENT, CREATE_COMMENT_SUCCESS, CREATE_COMMENT_FAILURE,
   
@@ -17,10 +17,9 @@ import {
   
   DELETE_COMMENT, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE,
   
-  
   FETCH_COMMENTS, FETCH_COMMENTS_SUCCESS, FETCH_COMMENTS_FAILURE,
   
-  UPDATE_COMMENT_VOTE_SCORE,
+  UPDATE_COMMENT_VOTE_SCORE, UPDATE_COMMENT_VOTE_SCORE_FAILURE
   
 } from '../actions/posts'
 
@@ -191,6 +190,11 @@ export function posts (state = INITIAL_STATE, action) {
       return {
         ...state, activePost: {...state.activePost, voting: action.payload},
       }
+      
+    case UPDATE_POST_VOTE_SCORE_FAILURE:
+      return {
+        ...state, activePost: {...state.activePost, voting: false, error: action.payload},
+      }
     
     case EDIT_POST:
       return {
@@ -237,6 +241,11 @@ export function posts (state = INITIAL_STATE, action) {
     case UPDATE_COMMENT_VOTE_SCORE:
       return {
         ...state, activeComment: {...state.activeComment, voting: action.payload},
+      }
+  
+    case UPDATE_COMMENT_VOTE_SCORE_FAILURE:
+      return {
+        ...state, activePost: {...state.activePost, voting: false, error: action.payload},
       }
       
     default:

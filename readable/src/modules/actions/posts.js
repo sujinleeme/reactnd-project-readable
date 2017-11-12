@@ -1,70 +1,61 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../../api-server/configurl'
 
-// Posts List selected by category
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE'
 
-//Post
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
 export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
+
 export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
 export const RESET_DELETED_POST = 'RESET_DELETED_POST'
 
-//Create Post
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
 export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
-export const RESET_NEW_POST = 'RESET_NEW_POST'
 
-//Edit Post
 export const EDIT_POST = 'EDIT_POST'
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
 
-//Delete Post
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
 
-// Vote
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE'
+export const UPDATE_POST_VOTE_SCORE_FAILURE = 'UPDATE_POST_VOTE_SCORE_FAILURE'
 
-
-//COMMENT
 export const FETCH_COMMENT = 'FETCH_COMMENT'
 export const FETCH_COMMENT_SUCCESS = 'FETCH_COMMENT_SUCCESS'
 export const FETCH_COMMENT_FAILURE = 'FETCH_COMMENT_FAILURE'
 
-//Comments
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
 export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
 export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE'
 
-//Delete Post
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE'
 
-// New Comments
 export const CREATE_COMMENT = 'CREATE_COMMENT'
 export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS'
 export const CREATE_COMMENT_FAILURE = 'CREATE_COMMENT_FAILURE'
 
-
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE'
+export const UPDATE_COMMENT_VOTE_SCORE_FAILURE = 'UPDATE_COMMENT_VOTE_SCORE_FAILURE'
 
-
-function sortLists (sorting, posts) {
-  return posts.sort((a, b) => {
+const sortLists = (sorting, posts) => {
+  posts.sort((a, b) => {
+    let result
     if (sorting === 'new') {
-      return b.timestamp - a.timestamp
+      result = b.timestamp - a.timestamp
     }
     if (sorting === 'hot') {
-      return b.voteScore - a.voteScore
+      result = b.voteScore - a.voteScore
     }
+    return result
   })
 }
 
@@ -98,7 +89,6 @@ export function resetDeletedPost () {
   }
 }
 
-// POSTS
 export const fetchPosts = (request) => {
   return {
     type: 'FETCH_POSTS', payload: request,
@@ -118,9 +108,6 @@ export const fetchPostFailure = (error) => {
   }
 }
 
-
-
-// EDIT POST
 export const editPost = (request) => {
   return {
     type: 'EDIT_POST', payload: request,
@@ -139,10 +126,15 @@ export const editPostFailure = (error) => {
   }
 }
 
-// Vote
 export const updatePostVoteScore = (bool) => {
   return {
     type: 'UPDATE_POST_VOTE_SCORE', payload: bool,
+  }
+}
+
+export const updatePostVoteScoreFailure = (error) => {
+  return {
+    type: 'UPDATE_POST_VOTE_SCORE_FAILURE', payload: error,
   }
 }
 
@@ -239,7 +231,6 @@ export const fetchCommentFailure = (error) => {
   }
 }
 
-// EDIT COMMENT
 export const editComment = (request) => {
   return {
     type: 'EDIT_COMMENT', payload: request,
@@ -258,15 +249,18 @@ export const editCommentFailure = (error) => {
   }
 }
 
-
 export const updateCommentVoteScore = (bool) => {
   return {
     type: 'UPDATE_COMMENT_VOTE_SCORE', payload: bool,
   }
 }
 
+export const updateCommentVoteScoreFailure = (error) => {
+  return {
+    type: 'UPDATE_COMMENT_VOTE_SCORE_FAILURE', payload: error,
+  }
+}
 
-// DELETE POST
 export const deleteComment = (request) => {
   return {
     type: 'DELETE_COMMENT', payload: request,
@@ -285,7 +279,6 @@ export const deleteCommentFailure = (error) => {
   }
 }
 
-
 export const createNewPost = (content) => {
   return (dispatch) => {
     dispatch(createPost())
@@ -299,7 +292,7 @@ export const createNewPost = (content) => {
     })
     .then((response) => response.json())
     .then((post) => dispatch(createPostSuccess(post)))
-    .catch(() => dispatch(createPostFailure()))
+    .catch((err) => dispatch(createPostFailure(err)))
   }
 }
 
@@ -334,7 +327,7 @@ export const createNewComment = (content, id) => {
     .then((response) => response.json())
     .then((post) => dispatch(createCommentSuccess(post)))
     .then((post) => dispatch(getComments(id)))
-    .catch(() => dispatch(createCommentFailure()))
+    .catch((err) => dispatch(createCommentFailure(err)))
   }
 }
 
@@ -350,7 +343,7 @@ export const getPosts = (category, tab) => {
     })
     .then((response) => response.json())
     .then((posts) => dispatch(fetchPostsSuccess(tab, posts)))
-    .catch(() => dispatch(fetchPostsFailure()))
+    .catch((err) => dispatch(fetchPostsFailure(err)))
   }
 }
 
@@ -365,7 +358,7 @@ export const getPost = (id) => {
     })
     .then((response) => response.json())
     .then((post) => dispatch(fetchPostSuccess(post)))
-    .catch((response) => dispatch(fetchPostFailure()))
+    .catch((err) => dispatch(fetchPostFailure(err)))
   }
 }
 
@@ -380,7 +373,7 @@ export const getComment = (id) => {
     })
     .then((response) => response.json())
     .then((post) => dispatch(fetchCommentSuccess(post)))
-    .catch((response) => dispatch(fetchCommentFailure(response)))
+    .catch((err) => dispatch(fetchCommentFailure(err)))
   }
 }
 
@@ -395,7 +388,7 @@ export const getComments = (id) => {
     }).then((response) => response.json())
     
     .then((comments) => dispatch(fetchCommentsSuccess(comments)))
-    .catch((response) => dispatch(fetchCommentsFailure()))
+    .catch((err) => dispatch(fetchCommentsFailure(err)))
   }
 }
 
@@ -419,7 +412,7 @@ export const updatePostVoter = (id, type) => {
       return response
     })
     .then((response) => response.json())
-    .catch(() => dispatch(updatePostVoteScore(false)))
+    .catch((err) => dispatch(updatePostVoteScoreFailure(err)))
   }
 }
 
@@ -436,7 +429,7 @@ export const updatePostContent = (id, content) => {
       return response
     })
     .then((response) => response.json())
-    .catch(() => dispatch(editPostFailure()))
+    .catch((err) => dispatch(editPostFailure(err)))
   }
 }
 
@@ -453,24 +446,25 @@ export const deletePostContent = (id) => {
       return response
     })
     .then((response) => response.json())
-    .catch(() => dispatch(deletePostFailure()))
+    .catch((err) => dispatch(deletePostFailure(err)))
   }
 }
 
-export const deleteCommentContent = (id) => {
+export const deleteCommentContent = (id, parentId) => {
   return (dispatch) => {
     dispatch(deleteComment())
     fetch(`${baseurl}/comments/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify({deleted: true}),
     }).then((response) => {
       if (!response.ok) {
-        throw Error(response.statusText)
+        throw new Error(response.statusText)
       }
       dispatch(deleteCommentSuccess(true))
       return response
     })
     .then((response) => response.json())
-    .catch(() => dispatch(deleteCommentFailure()))
+    .catch((err) => dispatch(deleteCommentFailure(err)))
+    .then(() => dispatch(getComments(parentId)))
   }
 }
 
@@ -487,6 +481,6 @@ export const updateCommentVoter = (id, type) => {
       return response
     })
     .then((response) => response.json())
-    .catch(() => dispatch(updateCommentVoteScore(false)))
+    .catch((err) => dispatch(updateCommentVoteScoreFailure(err)))
   }
 }

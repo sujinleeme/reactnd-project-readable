@@ -6,15 +6,14 @@ export const capitalize = (str = '') => {
 
 export const date = (timestamp) => {
   let pubDate = new Date(timestamp)
-  var weekday = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
-  var monthname = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-    'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
-  var formattedDate = weekday[pubDate.getDay()] + ' '
+  let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  let monthname = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+    'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  let formattedDate = weekday[pubDate.getDay()] + ' '
     + monthname[pubDate.getMonth()] + ' '
     + pubDate.getDate() + ', ' + pubDate.getFullYear()
   return formattedDate
 }
-
 
 export const username = (str = '') => {
   return typeof str !== 'string'
@@ -22,19 +21,6 @@ export const username = (str = '') => {
     : str.substring(0, 2).toUpperCase();
 }
 
-
 export const uuid = () => {
   return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
-}
-
-
-export const sortArr = (sorting, posts) => {
-  return posts.sort((a, b) => {
-    if (sorting === 'new') {
-      return b.timestamp - a.timestamp;
-    }
-    if (sorting === 'rating') {
-      return b.voteScore - a.voteScore;
-    }
-  });
 }

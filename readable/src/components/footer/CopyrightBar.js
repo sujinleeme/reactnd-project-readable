@@ -19,7 +19,7 @@ const CopyrightBar = (props) => {
             <Grid item md={6} className={classes.root}>
               <div className={classes.group}>
                 <a target="_blank"
-                   href="https://github.com/sujinleeme/reactnd-project-readable"><GithubIcon
+                   rel='noopener noreferrer' href="https://github.com/sujinleeme/reactnd-project-readable"><GithubIcon
                   className="github"/></a>
                 <Typography className={classes.copyright} type="subheading"
                             color="inherit">

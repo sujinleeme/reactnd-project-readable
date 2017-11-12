@@ -15,7 +15,6 @@ class PostContent extends React.Component {
     super(props)
     
     this.state = {
-      
       date: this.props.content.timestamp,
       fullAuthorName: this.props.content.author, shortAuthorName: '',
       title: this.props.content.title, body: this.props.content.body,
@@ -24,8 +23,6 @@ class PostContent extends React.Component {
   }
   
   componentDidMount = () => {
-    const id = this.props.content.id
-    console.log()
     this.setState(prevState => ({
       shortAuthorName: username(prevState.fullAuthorName),
       date: date(prevState.date),

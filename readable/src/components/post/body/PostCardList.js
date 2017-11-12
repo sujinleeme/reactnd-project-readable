@@ -45,14 +45,11 @@ class PostCardList extends React.Component {
               className={classes.postVote}
               content={post}
             ></UpDownVoter>
-            {!expanded ?
-              <IconButton>
-                <ExpandMoreIcon/>
-              </IconButton>
-              : <IconButton>
-                <ExpandLessIcon/>
-              </IconButton>
-            }
+            {!expanded ? <IconButton>
+              <ExpandMoreIcon/>
+            </IconButton> : <IconButton>
+              <ExpandLessIcon/>
+            </IconButton>}
           </div>
         </Card>
       </div>
@@ -78,5 +75,4 @@ const mapDispatchToProps = (dispatch) => {
 PostCardList.propTypes = {
   classes: PropTypes.object.isRequired,
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)
-(PostCardList))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostCardList))

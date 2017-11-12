@@ -26,6 +26,7 @@ class UpDownVoter extends React.Component {
     const {upVote, downVote} = this.state
     //Change UI
     switch (type) {
+      default:
       case 'upVote':
         this.setState({upVote: !upVote})
         if (downVote) {
@@ -50,6 +51,7 @@ class UpDownVoter extends React.Component {
     let notActived
     let opposite
     switch (type) {
+      default:
       case 'downVote' :
         opposite = 'upVote'
         notActived = downVote
@@ -59,7 +61,6 @@ class UpDownVoter extends React.Component {
         notActived = upVote
         break
     }
-    
     if (!notActived) {
       if (this.state.voted) {
         // move to another thump button
