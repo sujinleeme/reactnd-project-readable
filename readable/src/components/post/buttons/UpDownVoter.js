@@ -17,6 +17,7 @@ class UpDownVoter extends React.Component {
     this.state = {
       upVote: false, downVote: false, voted: false,
       initVoteScore: this.props.content.voteScore,
+      parentId: this.props.content.parentId
     }
   }
   
@@ -47,7 +48,9 @@ class UpDownVoter extends React.Component {
   }
   
   updateUpDownVote = (id, type) => {
-    const {upVote, downVote} = this.state
+    
+    const {upVote, downVote, parentId} = this.state
+    
     let notActived
     let opposite
     switch (type) {
@@ -61,21 +64,18 @@ class UpDownVoter extends React.Component {
         notActived = upVote
         break
     }
+  
     if (!notActived) {
+      console.log(notActived, parentId)
       if (this.state.voted) {
-        // move to another thump button
-        this.handleChange(id, type)
+        this.props.updateVoteCounter(id, type, parentId)
       }
       this.setState({voted: true})
-      return this.handleChange(id, type)
+      return this.props.updateVoteCounter(id, type, parentId)
     } else {
       this.setState({voted: false})
-      return this.handleChange(id, opposite)
+      return this.props.updateVoteCounter(id, opposite, parentId)
     }
-  }
-  
-  handleChange = (id, type) => {
-    this.props.updateVoteCounter(id, type)
   }
   
   render () {

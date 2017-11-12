@@ -65,10 +65,6 @@ const mapStateToProps = (globalState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePostBodyContent: (id, option) => {
-      dispatch(updatePostContent(id, option))
-      dispatch(getPost(id))
-    },
   }
 }
 

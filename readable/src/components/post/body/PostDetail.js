@@ -30,7 +30,10 @@ class PostDetail extends React.Component {
   
   render () {
     const {
-            classes, activePost, activeComment, comments, updatePostBodyContent, updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent, updatePostVoter, currentCategory, currentTab, updateCommentVoter,
+            classes, activePost, activeComment, comments, updatePostBodyContent,
+            updateCommentBodyContent, deletePostBodyContent,
+            deleteCommentBodyContent, updatePostVoter, currentCategory,
+            currentTab, updateCommentVoter,
           } = this.props
     
     return (
@@ -72,28 +75,39 @@ class PostDetail extends React.Component {
                 {comments ? <div>
                   {comments.map((comment, index) => (
                     <div key={comment.id} className={classes.commentCard}>
-                      {activeComment && (activeComment.id === comment.id) ?
-                        <div>
-                          <PostContent
-                            content={activeComment}
-                            updateBodyContent={updateCommentBodyContent}
-                            deleteBodyContent={deleteCommentBodyContent}
-                          />
-                          <UpDownVoter
-                            content={activeComment}
-                            updateVoteCounter={updateCommentVoter}
-                          />
-                        </div> : <div>
-                          <PostContent
-                            content={comment}
-                            updateBodyContent={updateCommentBodyContent}
-                            deleteBodyContent={deleteCommentBodyContent}
-                          />
-                          <UpDownVoter
-                            content={comment}
-                            updateVoteCounter={updateCommentVoter}
-                          />
-                        </div>}
+                      <div>
+                        <PostContent
+                          content={comment}
+                          updateBodyContent={updateCommentBodyContent}
+                          deleteBodyContent={deleteCommentBodyContent}
+                        />
+                        <UpDownVoter
+                          content={comment}
+                          updateVoteCounter={updateCommentVoter}
+                        />
+                      </div>
+                      {/*{activeComment && (activeComment.id === comment.id) ?*/}
+                        {/*<div>*/}
+                          {/*<PostContent*/}
+                            {/*content={activeComment}*/}
+                            {/*updateBodyContent={updateCommentBodyContent}*/}
+                            {/*deleteBodyContent={deleteCommentBodyContent}*/}
+                          {/*/>*/}
+                          {/*<UpDownVoter*/}
+                            {/*content={activeComment}*/}
+                            {/*updateVoteCounter={updateCommentVoter}*/}
+                          {/*/>*/}
+                        {/*</div> : <div>*/}
+                          {/*<PostContent*/}
+                            {/*content={comment}*/}
+                            {/*updateBodyContent={updateCommentBodyContent}*/}
+                            {/*deleteBodyContent={deleteCommentBodyContent}*/}
+                          {/*/>*/}
+                          {/*<UpDownVoter*/}
+                            {/*content={comment}*/}
+                            {/*updateVoteCounter={updateCommentVoter}*/}
+                          {/*/>*/}
+                        {/*</div>}*/}
                     </div>
                   ))} </div> : null}
               </CardContent>
@@ -149,10 +163,10 @@ const mapDispatchToProps = (dispatch) => {
       return dispatch(getPost(id))
     },
     
-    updateCommentVoter: (id, option) => {
-      dispatch(updateCommentVoter(id, option))
-      return dispatch(getComment(id))
+    updateCommentVoter: (id, option, parentId) => {
+      dispatch(updateCommentVoter(id, option, parentId))
     },
+    
   }
 }
 export default withRouter(

@@ -10,16 +10,18 @@ import {
   DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE,
   
   UPDATE_POST_VOTE_SCORE, UPDATE_POST_VOTE_SCORE_FAILURE,
-
+  
   CREATE_COMMENT, CREATE_COMMENT_SUCCESS, CREATE_COMMENT_FAILURE,
   
   FETCH_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE,
   
   DELETE_COMMENT, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE,
   
+  EDIT_COMMENT, EDIT_COMMENT_SUCCESS, EDIT_COMMENT_FAILURE,
+  
   FETCH_COMMENTS, FETCH_COMMENTS_SUCCESS, FETCH_COMMENTS_FAILURE,
   
-  UPDATE_COMMENT_VOTE_SCORE, UPDATE_COMMENT_VOTE_SCORE_FAILURE
+  UPDATE_COMMENT_VOTE_SCORE_SUCCESS, UPDATE_COMMENT_VOTE_SCORE_FAILURE,
   
 } from '../actions/posts'
 
@@ -28,7 +30,7 @@ const INITIAL_STATE = {
   newPost: {post: null, error: null, loading: false},
   newComment: {comment: null, error: null, loading: false},
   activePost: {post: null, error: null, loading: false},
-  activeComment: {comment: null},
+  activeComment: {comment: null, error: null, loading: false},
   deletedPost: {post: null, error: null, loading: false},
   deletedComment: {comment: null, error: null, loading: false},
 }
@@ -70,26 +72,25 @@ export function posts (state = INITIAL_STATE, action) {
           loading: false,
         },
       }
-  
+    
     case CREATE_POST:
       return {
         ...state, newPost: {
           ...state.newPost, error: null, loading: true,
         },
       }
-  
+    
     case CREATE_POST_SUCCESS:
       return {
         ...state, newPost: {
           ...state.newPost, post: action.payload, loading: false,
         },
       }
-  
+    
     case CREATE_POST_FAILURE:
       return {
         ...state, newPost: {
-          ...state.newPost, post: '', error: action.payload,
-          loading: false,
+          ...state.newPost, post: '', error: action.payload, loading: false,
         },
       }
     
@@ -99,19 +100,18 @@ export function posts (state = INITIAL_STATE, action) {
           ...state.deletedPost, error: null, loading: true,
         },
       }
-  
+    
     case DELETE_POST_SUCCESS:
       return {
         ...state, deletedPost: {
           ...state.deletedPost, post: action.payload, loading: false,
         },
       }
-  
+    
     case DELETE_POST_FAILURE:
       return {
         ...state, deletedPost: {
-          ...state.deletedPost, post: '', error: action.payload,
-          loading: false,
+          ...state.deletedPost, post: '', error: action.payload, loading: false,
         },
       }
     
@@ -121,13 +121,44 @@ export function posts (state = INITIAL_STATE, action) {
           ...state.activePost, post: null, error: null, loading: false,
         },
       }
-  
+    
+    case UPDATE_POST_VOTE_SCORE:
+      return {
+        ...state, activePost: {...state.activePost, voting: action.payload},
+      }
+    
+    case UPDATE_POST_VOTE_SCORE_FAILURE:
+      return {
+        ...state,
+        activePost: {...state.activePost, voting: false, error: action.payload},
+      }
+    
+    case EDIT_POST:
+      return {
+        ...state,
+        activePost: {...state.activePost, editing: true, loading: true},
+      }
+    
+    case EDIT_POST_SUCCESS:
+      return {
+        ...state,
+        activePost: {...state.activePost, editing: false, loading: false},
+      }
+    
+    case EDIT_POST_FAILURE:
+      return {
+        ...state, activePost: {
+          ...state.activePost, editing: false, error: action.payload,
+          loading: false,
+        },
+      }
+    
     case FETCH_COMMENT:
       return {
         ...state,
         activeComment: {...state.activeComment, loading: true, voting: false},
       }
-  
+    
     case FETCH_COMMENT_SUCCESS:
       return {
         ...state, activeComment: {
@@ -135,6 +166,7 @@ export function posts (state = INITIAL_STATE, action) {
           loading: false,
         },
       }
+    
     case FETCH_COMMENT_FAILURE:
       return {
         ...state, activeComment: {
@@ -142,7 +174,7 @@ export function posts (state = INITIAL_STATE, action) {
           loading: false,
         },
       }
-  
+    
     case FETCH_COMMENTS:
       return {
         ...state, activePost: {...state.activePost, loading: true},
@@ -186,50 +218,20 @@ export function posts (state = INITIAL_STATE, action) {
         },
       }
     
-    case UPDATE_POST_VOTE_SCORE:
-      return {
-        ...state, activePost: {...state.activePost, voting: action.payload},
-      }
-      
-    case UPDATE_POST_VOTE_SCORE_FAILURE:
-      return {
-        ...state, activePost: {...state.activePost, voting: false, error: action.payload},
-      }
-    
-    case EDIT_POST:
-      return {
-        ...state,
-        activePost: {...state.activePost, editing: true, loading: true},
-      }
-    
-    case EDIT_POST_SUCCESS:
-      return {
-        ...state,
-        activePost: {...state.activePost, editing: false, loading: false},
-      }
-    
-    case EDIT_POST_FAILURE:
-      return {
-        ...state, activePost: {
-          ...state.activePost, editing: false, error: action.payload,
-          loading: false,
-        },
-      }
-  
     case DELETE_COMMENT:
       return {
         ...state, deletedComment: {
           ...state.deletedComment, error: null, loading: true,
         },
       }
-  
+    
     case DELETE_COMMENT_SUCCESS:
       return {
         ...state, deletedComment: {
           ...state.deletedComment, comment: action.payload, loading: false,
         },
       }
-  
+    
     case DELETE_COMMENT_FAILURE:
       return {
         ...state, deletedComment: {
@@ -237,17 +239,42 @@ export function posts (state = INITIAL_STATE, action) {
           loading: false,
         },
       }
-  
-    case UPDATE_COMMENT_VOTE_SCORE:
+    
+    case UPDATE_COMMENT_VOTE_SCORE_SUCCESS:
       return {
-        ...state, activeComment: {...state.activeComment, voting: action.payload},
+        ...state, activeComment: {
+          ...state.activePost, comment: action.comment, voting: action.payload,
+        },
       }
-  
+    
     case UPDATE_COMMENT_VOTE_SCORE_FAILURE:
       return {
-        ...state, activePost: {...state.activePost, voting: false, error: action.payload},
+        ...state,
+        activeComment: {comment: '', voting: false, error: action.payload},
       }
-      
+    
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        activeComment: {...state.activeComment, editing: true, loading: true},
+      }
+    
+    case EDIT_COMMENT_SUCCESS:
+      return {
+        ...state, activeComment: {
+          ...state.activeComment, comment: action.comment, editing: false,
+          loading: false,
+        },
+      }
+    
+    case EDIT_COMMENT_FAILURE:
+      return {
+        ...state, activeComment: {
+          ...state.activeComment, comment: '', editing: false,
+          error: action.payload, loading: false,
+        },
+      }
+    
     default:
       return state
   }

@@ -15,7 +15,7 @@ class App extends Component {
   }
   
   componentDidMount () {
-    const {location, fetchCategories, fetchTabs } = this.props
+    const {location, fetchCategories, fetchTabs} = this.props
     const hasLocationState = location.state
     fetchCategories()
     fetchTabs()
@@ -27,8 +27,7 @@ class App extends Component {
     if (bool && props.location.state) {
       categoryName = props.location.state.category
       tabName = props.location.state.tab
-    }
-    else {
+    } else {
       if (this.props.location.pathname === '/') {
         categoryName = 'react'
         tabName = 'hot'
@@ -44,7 +43,6 @@ class App extends Component {
   }
   
   render () {
-    console.log(this.props.currentMenu)
     return (
       <Switch>
         <Route
@@ -58,14 +56,11 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentMenu: state.currentMenu,
-    
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
     fetchPosts: (category, tab) => new Promise(

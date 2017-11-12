@@ -2,6 +2,8 @@
 
 This is a reddit style, content and comment web app for [Udacity’s React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) second project. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
+* Built with react, redux, react-router, redux-thunk, [material-ui](https://github.com/callemall/material-ui)
+
 ## Table of contents
 - [Demo](#demo)
 - [Quick Start](#quick-start)
@@ -103,7 +105,6 @@ Within the download you'll find the following `src/` directories and files:
 |       `-- PostVote.js
 `-- utils
     |-- helper.js
-    |-- urlconfig.js
     `-- urls.js
 ```
 ### Requirements
