@@ -22,6 +22,7 @@ export const styles = theme => ({
   },
   comments: {
     padding: '0',
+    marginLeft: theme.spacing.unit * 4,
   },
   commentCard: {
     borderBottom: '1px solid #ebebeb',

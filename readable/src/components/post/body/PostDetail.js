@@ -86,28 +86,6 @@ class PostDetail extends React.Component {
                           updateVoteCounter={updateCommentVoter}
                         />
                       </div>
-                      {/*{activeComment && (activeComment.id === comment.id) ?*/}
-                        {/*<div>*/}
-                          {/*<PostContent*/}
-                            {/*content={activeComment}*/}
-                            {/*updateBodyContent={updateCommentBodyContent}*/}
-                            {/*deleteBodyContent={deleteCommentBodyContent}*/}
-                          {/*/>*/}
-                          {/*<UpDownVoter*/}
-                            {/*content={activeComment}*/}
-                            {/*updateVoteCounter={updateCommentVoter}*/}
-                          {/*/>*/}
-                        {/*</div> : <div>*/}
-                          {/*<PostContent*/}
-                            {/*content={comment}*/}
-                            {/*updateBodyContent={updateCommentBodyContent}*/}
-                            {/*deleteBodyContent={deleteCommentBodyContent}*/}
-                          {/*/>*/}
-                          {/*<UpDownVoter*/}
-                            {/*content={comment}*/}
-                            {/*updateVoteCounter={updateCommentVoter}*/}
-                          {/*/>*/}
-                        {/*</div>}*/}
                     </div>
                   ))} </div> : null}
               </CardContent>
