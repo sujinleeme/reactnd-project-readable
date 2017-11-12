@@ -14,13 +14,12 @@ class App extends Component {
     }
   }
   
-  async componentDidMount () {
-    const hasLocationState = this.props.location.state
-    const props = this.props
-    
-    await Promise.all([
-      this.props.fetchCategories(), this.props.fetchTabs(),
-    ]).then(this.changeMenu(hasLocationState, props))
+  componentDidMount () {
+    const {location, fetchCategories, fetchTabs } = this.props
+    const hasLocationState = location.state
+    fetchCategories()
+    fetchTabs()
+    return this.changeMenu(hasLocationState, this.props)
   }
   
   changeMenu (bool, props) {
@@ -45,6 +44,7 @@ class App extends Component {
   }
   
   render () {
+    console.log(this.props.currentMenu)
     return (
       <Switch>
         <Route
@@ -56,12 +56,16 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    currentMenu: state.currentMenu,
+    
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
     fetchPosts: (category, tab) => new Promise(

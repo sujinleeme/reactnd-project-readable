@@ -42,8 +42,10 @@ class PostDetailContainer extends React.Component {
 const mapStateToProps = (globalState, ownProps) => {
   const {activePost, activeComment} = globalState.posts
   return {
-    activePost: activePost.post, comments: activePost.comments,
-    activeComment: activeComment.comment, postId: ownProps.id,
+    activePost: activePost.post,
+    comments: activePost.comments,
+    activeComment: activeComment.comment,
+    postId: ownProps.id,
     currentMenu: globalState.currentMenu,
     loading: globalState.posts.postList.loading,
   }

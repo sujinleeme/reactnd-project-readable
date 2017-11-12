@@ -9,9 +9,6 @@ export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
 export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
 
-export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
-export const RESET_DELETED_POST = 'RESET_DELETED_POST'
-
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
 export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
@@ -20,6 +17,9 @@ export const EDIT_POST = 'EDIT_POST'
 export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
 export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
 
+export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
+export const RESET_DELETED_POST = 'RESET_DELETED_POST'
+
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
@@ -27,13 +27,14 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE'
 export const UPDATE_POST_VOTE_SCORE_FAILURE = 'UPDATE_POST_VOTE_SCORE_FAILURE'
 
+export const FETCH_COMMENTS = 'FETCH_COMMENTS'
+export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
+export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE'
+
 export const FETCH_COMMENT = 'FETCH_COMMENT'
 export const FETCH_COMMENT_SUCCESS = 'FETCH_COMMENT_SUCCESS'
 export const FETCH_COMMENT_FAILURE = 'FETCH_COMMENT_FAILURE'
 
-export const FETCH_COMMENTS = 'FETCH_COMMENTS'
-export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
-export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE'
 
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
@@ -47,15 +48,13 @@ export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE'
 export const UPDATE_COMMENT_VOTE_SCORE_FAILURE = 'UPDATE_COMMENT_VOTE_SCORE_FAILURE'
 
 const sortLists = (sorting, posts) => {
-  posts.sort((a, b) => {
-    let result
+  return posts.sort((a, b) => {
     if (sorting === 'new') {
-      result = b.timestamp - a.timestamp
+      return b.timestamp - a.timestamp
     }
     if (sorting === 'hot') {
-      result = b.voteScore - a.voteScore
+      return b.voteScore - a.voteScore
     }
-    return result
   })
 }
 
@@ -156,7 +155,6 @@ export const createPostFailure = (error) => {
   }
 }
 
-// DELETE POST
 export const deletePost = (request) => {
   return {
     type: 'DELETE_POST', payload: request,
@@ -194,7 +192,6 @@ export const fetchCommentsSuccess = (comments) => {
   }
 }
 
-//createComment
 export function createComment (request) {
   return {
     type: 'CREATE_COMMENT', payload: request,
@@ -343,7 +340,7 @@ export const getPosts = (category, tab) => {
     })
     .then((response) => response.json())
     .then((posts) => dispatch(fetchPostsSuccess(tab, posts)))
-    .catch((err) => dispatch(fetchPostsFailure(err)))
+    .catch(() => dispatch(fetchPostsFailure()))
   }
 }
 

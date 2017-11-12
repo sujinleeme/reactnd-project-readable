@@ -4,7 +4,6 @@ This is a reddit style, content and comment web app for [Udacity’s React Nanod
 
 ## Table of contents
 - [Demo](#demo)
-- [Download](#download)
 - [Quick Start](#quick-start)
 - [Documentation](#documentation)
 - [Copyright and License](#copyright-and-license)
@@ -18,6 +17,7 @@ For a demo, check out [https://reactnd-readable.firebaseapp.com/](https://reactn
 * Go to react app `cd readable`
 * Install all project dependencies with `npm install`
 * Run server with `npm start`
+* Check console or browser if server runs on [http://localhost:3000/](http://localhost:3000/)
 
 
 #### Run local backend development server (Node)
@@ -26,7 +26,8 @@ To install and start the API server, run the following commands in  `api-server`
 * Go to Server Directory `cd readable/src/api-server`
 * Install all server dependenices with `npm install`
 * Run backend server with `node server.js`
-* Check console or browser if server runs on `http://localhost:3001/`
+* Check console or browser if server runs on [http://localhost:3001/](http://localhost:3001/)
+
 ### To build & deploy on firebase:
 ```
 npm run build && npm run deploy
