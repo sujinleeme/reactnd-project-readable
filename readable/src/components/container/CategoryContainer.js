@@ -9,6 +9,7 @@ import { styles } from '../../styles/container/CategoryContainer'
 const CategoryContainer = (props) => {
   
   const {classes, categories, currentCategory, currentTab} = props
+  
   return (
     categories && <div className='category_grp'>
       {categories.map(({name, path}) => (
@@ -37,7 +38,8 @@ CategoryContainer.propTypes = {
 const mapStateToProps = (globalState) => {
   return {
     currentCategory: globalState.currentMenu.category,
-    currentTab: globalState.currentMenu.tab, categories: globalState.categories,
+    currentTab: globalState.currentMenu.tab,
+    categories: globalState.categories,
   }
 }
 

@@ -1,4 +1,5 @@
 import {
+  
   FETCH_POSTS, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE,
   
   FETCH_POST, FETCH_POST_SUCCESS, FETCH_POST_FAILURE, RESET_ACTIVE_POST,
@@ -38,8 +39,21 @@ const INITIAL_STATE = {
 export function posts (state = INITIAL_STATE, action) {
   let error
   switch (action.type) {
-    
+  
     case FETCH_POSTS:// start fetching posts and set loading = true
+      return {...state, postList: {posts: [], error: null, loading: true}}
+  
+    case FETCH_POSTS_SUCCESS:
+      return {
+        ...state,
+        postList: {posts: action.payload, error: null, loading: false},
+      }
+  
+    case FETCH_POSTS_FAILURE:
+      error = action.payload
+      return {...state, postList: {posts: [], error: error, loading: false}}
+      
+    case FETCH_POSTS:
       return {...state, postList: {posts: [], error: null, loading: true}}
     
     case FETCH_POSTS_SUCCESS:

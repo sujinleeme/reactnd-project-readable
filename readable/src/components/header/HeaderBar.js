@@ -40,12 +40,12 @@ const HeaderBar = (props) => {
                 <div className={classes.typoLogo}>
                   <Typography type="headline" color="inherit"
                               className="main">
-                    <Link to={`/`}>#MakewithUdacity</Link>
+                    <Link to={`/`}>#TalkAboutReact</Link>
                   </Typography>
                   
                   <Typography type="headline" color="accent"
                               className={classes.detailTypoLogo}>
-                    / Nanodegree Projects Showcase
+                    / Discussion Board
                   </Typography>
                 </div>
                 <CategoryContainer/>

@@ -20,7 +20,9 @@ const styles = theme => ({
 })
 
 class PostContainer extends React.Component {
-
+  componentUnMount() {
+  
+  }
   
   render () {
     const {classes, postList, currentCategory, currentTab} = this.props
@@ -76,7 +78,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+  
+  }
   
 }
 

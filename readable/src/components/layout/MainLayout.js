@@ -24,6 +24,8 @@ const MainLayout = (props) => {
         <Grid item md={3}/>
         <Grid item md={6} container={true} direction="column">
           <TabContainer/>
+          <Route exact path='/' component={PostContainer}/>
+  
           <Route path='/category/:categoryName/' component={PostContainer}/>
           <Route path='/category/:categoryName=:tabName/posts/:id'
                  component={PostDetailContainer}/>
@@ -41,7 +43,8 @@ MainLayout.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    postList: state.posts.postList, currentCategory: state.currentMenu.category,
+    postList: state.posts.postList,
+    currentCategory: state.currentMenu.category,
     currentTab: state.currentMenu.tab,
   }
 }

@@ -61,6 +61,8 @@ const sortLists = (sorting, posts) => {
   })
 }
 
+
+
 export const fetchPost = (post) => {
   return {
     type: 'FETCH_POST', payload: post,
@@ -314,11 +316,33 @@ export const createNewComment = (content, id) => {
   }
 }
 
-// combine actions
-export const getPosts = (category, tab) => {
+export const getAllPosts = (tab) => {
   return (dispatch) => {
     dispatch(fetchPosts())
-    fetch(`${baseurl}/${category}/posts`, {headers}).then(response => {
+    fetch(`${baseurl}/posts`, {headers}).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response
+    })
+    .then((response) => response.json())
+    .then((posts) => dispatch(fetchPostsSuccess(tab, posts)))
+    .catch(() => dispatch(fetchPostsFailure()))
+  }
+}
+
+export const getPosts = (category, tab) => {
+  return (dispatch) => {
+    let url;
+    dispatch(fetchPosts())
+    if (category === 'all') {
+      url =  `${baseurl}/posts`
+    }
+    else {
+      url =  `${baseurl}/${category}/posts`
+    }
+    
+    fetch(url, {headers}).then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
       }

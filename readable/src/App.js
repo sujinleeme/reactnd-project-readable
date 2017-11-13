@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCategories, getTabs, setupMenu } from './modules/actions/menu'
-import { getPosts } from './modules/actions/posts'
+import { getCategories, getTabs, setupMenu,  } from './modules/actions/menu'
+import { getPosts, getAllPosts } from './modules/actions/posts'
 import { withRouter } from 'react-router-dom'
 import HomePage from './components/pages/HomePage'
 
@@ -28,16 +28,21 @@ class App extends Component {
       categoryName = props.location.state.category
       tabName = props.location.state.tab
     } else {
-      if (this.props.location.pathname === '/') {
-        categoryName = 'react'
-        tabName = 'hot'
+      if (props.location.pathname === '/') {
+        //init
+        categoryName = 'all'
+        tabName = 'new'
+        
       } else {
         const baseQuery = this.props.location.pathname.split('/')[2]
         const query = baseQuery.split('=')
         categoryName = query[0]
         tabName = query[1]
+        
       }
     }
+    console.log(bool, props.location.state)
+  
     return this.props.changeCurrentMenu(categoryName, tabName)
     .then(this.props.fetchPosts(categoryName, tabName))
   }
@@ -56,11 +61,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    path: state.routerReducer.location.pathname
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+  
+  
+    fetchAllPosts: (tab) => new Promise(
+      (res) => dispatch(getAllPosts(tab))),
+  
     fetchCategories: () => new Promise((res) => dispatch(getCategories())),
     fetchTabs: () => new Promise((res) => dispatch(getTabs())),
     fetchPosts: (category, tab) => new Promise(
