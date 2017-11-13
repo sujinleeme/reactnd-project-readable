@@ -10,7 +10,7 @@ class App extends Component {
   componentWillReceiveProps (nextProps) {
     const locationChanged = nextProps.location !== this.props.location
     if (locationChanged) {
-      return this.changeMenu(locationChanged, nextProps)
+      return this.readPostClickbyMenu(locationChanged, nextProps)
     }
   }
   
@@ -19,10 +19,10 @@ class App extends Component {
     const hasLocationState = location.state
     fetchCategories()
     fetchTabs()
-    return this.changeMenu(hasLocationState, this.props)
+    return this.readPostClickbyMenu(hasLocationState, this.props)
   }
   
-  changeMenu (bool, props) {
+  readPostClickbyMenu (bool, props) {
     let categoryName, tabName
     if (bool && props.location.state) {
       categoryName = props.location.state.category
@@ -32,17 +32,13 @@ class App extends Component {
         //init
         categoryName = 'all'
         tabName = 'new'
-        
       } else {
         const baseQuery = this.props.location.pathname.split('/')[2]
         const query = baseQuery.split('=')
         categoryName = query[0]
         tabName = query[1]
-        
       }
     }
-    console.log(bool, props.location.state)
-  
     return this.props.changeCurrentMenu(categoryName, tabName)
     .then(this.props.fetchPosts(categoryName, tabName))
   }

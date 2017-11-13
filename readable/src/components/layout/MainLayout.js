@@ -26,8 +26,8 @@ const MainLayout = (props) => {
           <TabContainer/>
           <Route exact path='/' component={PostContainer}/>
   
-          <Route path='/category/:categoryName/' component={PostContainer}/>
-          <Route path='/category/:categoryName=:tabName/posts/:id'
+          <Route exact path='/category/:categoryName/' component={PostContainer}/>
+          <Route exact path='/category/:categoryName=:tabName/posts/:id'
                  component={PostDetailContainer}/>
         </Grid>
         <Grid item md={3}>
