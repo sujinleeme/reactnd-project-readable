@@ -1,8 +1,8 @@
 # Talk About React 
 
-"TalkAboutReact - Student Discussion Board)" is a reddit style, discussion forum web app, for [Udacity’s React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) second project assignment (Readable). Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+"TalkAboutReact - Student Discussion Board" is a reddit style discussion forum web app, for [Udacity’s React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) second project assignment (Readable). Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Also, users will also be able to edit and delete posts and comments.
 
-* This app was built with react, redux, react-redux-router, react-routerredux-thunk, [material-ui](https://github.com/callemall/material-ui)
+* This app was built with react, redux, react-redux-router, react-routerredux-thunk, [material-ui](https://github.com/callemall/material-ui).
 
 * Most application state(Create, Read, Edit, Delete, Voting posts/comments) is managed by the Redux store. Updates are triggered by dispatching actions to reducers.
 
@@ -116,7 +116,7 @@ Within the download you'll find the following `src/` directories and files:
     `-- utils.js
 ```
 
-## TBD
+### TBD
 * Use Firebase for backend
 
 ## Copyright and License 
