@@ -1,8 +1,8 @@
 # Talk About React 
 
-"TalkAboutReact - Student Discussion Board" is a reddit style discussion forum web app, for [Udacity’s React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) second project assignment (Readable). Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Also, users will also be able to edit and delete posts and comments.
+"Talk About React - Student Discussion Board" is a [reddit](https://www.reddit.com/) style discussion forum web app, for [Udacity’s React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019) second project assignment, "Readable". Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Also, users will also be able to edit and delete posts and comments.
 
-* This app was built with react, redux, react-redux-router, react-routerredux-thunk, [material-ui](https://github.com/callemall/material-ui).
+* This app was built with react, redux, [react-redux-router](https://github.com/reactjs/react-router-redux), [redux-thunk](https://github.com/gaearon/redux-thunk), [material-ui](https://github.com/callemall/material-ui).
 
 * Most application state(Create, Read, Edit, Delete, Voting posts/comments) is managed by the Redux store. Updates are triggered by dispatching actions to reducers.
 
@@ -17,7 +17,7 @@
 ![screencast](screencast.gif)
 
 
-### TBD 
+### Live Demo : TBD 
 For a demo, check out [https://reactnd-readable.firebaseapp.com/](https://reactnd-readable.firebaseapp.com/)
 
 ## Quick Start
@@ -120,4 +120,5 @@ Within the download you'll find the following `src/` directories and files:
 * Use Firebase for backend
 
 ## Copyright and License 
-A Project [starter server repository](https://github.com/udacity/reactnd-project-readable-starter) contributed by Udacity.
+* A project [starter server repository](https://github.com/udacity/reactnd-project-readable-starter) contributed by Udacity
+* The MIT License
