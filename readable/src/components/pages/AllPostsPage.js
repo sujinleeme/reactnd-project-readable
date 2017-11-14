@@ -28,9 +28,7 @@ class AllPostsPage extends React.Component {
     if (loading) {
       return (
         <div>
-          <NewPost
-            submitNewPost={submitNewPost}
-          />
+          <NewPost />
           <LoadingProgress/>
         </div>
       )
