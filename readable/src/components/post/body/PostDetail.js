@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
 import CloseIcon from 'material-ui-icons/Close'
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog'
 import { withStyles } from 'material-ui/styles'
@@ -12,6 +13,7 @@ import UpDownVoter from '../buttons/UpDownVoter'
 import NewComment from '../create/NewComment'
 import PostContent from './PostContent'
 import { styles } from '../../../styles/post/PostCardList'
+import classnames from 'classnames'
 
 import {
   updatePostContent, getPost, updateCommentContent, getComment, getComments,
@@ -30,68 +32,38 @@ class PostDetail extends React.Component {
   
   render () {
     const {
-            classes, activePost, activeComment, comments, updatePostBodyContent,
-            updateCommentBodyContent, deletePostBodyContent,
-            deleteCommentBodyContent, updatePostVoter, currentCategory,
-            currentTab, updateCommentVoter,
+            classes, activePost, activeComment, comments, updatePostBodyContent, updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent, updatePostVoter, currentCategory, currentTab, updateCommentVoter,
           } = this.props
     
     return (
       <Card>
-        {activePost ? <Dialog fullWidth={true} open={this.state.open}>
-          <DialogActions>
-            <Link
-              to={{
-                pathname: `/category/${currentCategory}=${currentTab}`, state: {
-                  category: currentCategory, tab: currentTab,
-                },
-              }}
-            >
-              <IconButton className={classes.close}
-                          onClick={this.handleRequestClose} aria-label="Delete">
-                <CloseIcon/>
-              </IconButton>
-            </Link>
-          </DialogActions>
-          <DialogContent>
-            <div>
-              <PostContent
-                content={activePost}
-                updateBodyContent={updatePostBodyContent}
-                deleteBodyContent={deletePostBodyContent}
-              />
-              <UpDownVoter
-                content={activePost}
-                updateVoteCounter={updatePostVoter}
-              />
-              <NewComment/>
-            </div>
-            
-            <Collapse in={this.state.open} transitionDuration="auto"
-                      unmountOnExit
-            >
-              <CardContent className={classes.comments}
-                           onClick={this.handleCommentClick}>
-                {comments ? <div>
-                  {comments.map((comment, index) => (
-                    <div key={comment.id} className={classes.commentCard}>
-                      <div>
-                        <PostContent
-                          content={comment}
-                          updateBodyContent={updateCommentBodyContent}
-                          deleteBodyContent={deleteCommentBodyContent}
-                        />
-                        <UpDownVoter
-                          content={comment}
-                          updateVoteCounter={updateCommentVoter}
-                        />
-                      </div>
-                    </div>
-                  ))} </div> : null}
-              </CardContent>
-            </Collapse>
-          </DialogContent>
-        </Dialog> : null}
+        {activePost ?
+          
+          <div fullWidth={true} open={this.state.open}>
+          {/*<DialogActions>*/}
+          {/*<Link*/}
+          {/*to={{*/}
+          {/*pathname: `/category/${currentCategory}=${currentTab}`, state: {*/}
+          {/*category: currentCategory, tab: currentTab,*/}
+          {/*},*/}
+          {/*}}*/}
+          {/*>*/}
+          {/*<IconButton className={classes.close}*/}
+          {/*onClick={this.handleRequestClose} aria-label="Delete">*/}
+          {/*<CloseIcon/>*/}
+          {/*</IconButton>*/}
+          {/*</Link>*/}
+          {/*</DialogActions>*/}
+          
+          
+          
+          
+          <Collapse in={this.state.open} transitionDuration="auto"
+                    unmountOnExit
+          >
+
+          </Collapse>
+        </div> : null}
       </Card>
     )
   }
@@ -101,10 +73,13 @@ PostDetail.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (globalState, ownProps) => {
+  const {activePost, activeComment} = globalState.posts
   return {
-    currentCategory: state.currentMenu.category,
-    currentTab: state.currentMenu.tab,
+    activePost: activePost.post, comments: activePost.comments,
+    activeComment: activeComment.comment, postId: ownProps.id,
+    currentMenu: globalState.currentMenu,
+    loading: globalState.posts.postList.loading,
   }
 }
 

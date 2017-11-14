@@ -48,9 +48,7 @@ class UpDownVoter extends React.Component {
   }
   
   updateUpDownVote = (id, type) => {
-    
     const {upVote, downVote, parentId} = this.state
-    
     let notActived
     let opposite
     switch (type) {
@@ -100,7 +98,6 @@ class UpDownVoter extends React.Component {
             [classes.clicked]: downVote,
           })}/>
         </IconButton>
-        <div className={classes.flexGrow}/>
       </CardActions>
     )
   }

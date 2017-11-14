@@ -4,23 +4,18 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import CategoryContainer from '../container/CategoryContainer'
+import CategoryContainer from '../menu/CategoryContainer'
 import Grid from 'material-ui/Grid'
 import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
     minHeight: '150px',
-  },
-  header: {
-    display: 'block',
-    padding: theme.spacing.unit * 2,
-  },
-  typoLogo: {
-    display: 'flex',
-    marginBottom: theme.spacing.unit * 2,
-  },
-  detailTypoLogo: {
+  }, header: {
+    display: 'block', padding: theme.spacing.unit * 2,
+  }, typoLogo: {
+    display: 'flex', marginBottom: theme.spacing.unit * 2,
+  }, detailTypoLogo: {
     marginLeft: theme.spacing.unit * 2,
   },
 })
@@ -40,12 +35,18 @@ const HeaderBar = (props) => {
                 <div className={classes.typoLogo}>
                   <Typography type="headline" color="inherit"
                               className="main">
-                    <Link to={`/`}>#TalkAboutReact</Link>
+                    <Link to={{
+                      pathname: `/`, state: {
+                        category: 'all',
+                      },
+                    }}>
+                      #TalkAboutReact
+                    </Link>
                   </Typography>
                   
                   <Typography type="headline" color="accent"
                               className={classes.detailTypoLogo}>
-                    / Discussion Board
+                    / Student Discussion Board
                   </Typography>
                 </div>
                 <CategoryContainer/>

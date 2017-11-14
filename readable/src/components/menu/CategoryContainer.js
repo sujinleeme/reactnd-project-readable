@@ -7,9 +7,7 @@ import { connect } from 'react-redux'
 import { styles } from '../../styles/container/CategoryContainer'
 
 const CategoryContainer = (props) => {
-  
   const {classes, categories, currentCategory, currentTab} = props
-  
   return (
     categories && <div className='category_grp'>
       {categories.map(({name, path}) => (
@@ -17,7 +15,7 @@ const CategoryContainer = (props) => {
           key={path}
           component={Link}
           to={{
-            pathname: `/category/${path}=${currentTab}`,
+            pathname: `/category/${path}/${currentTab}`,
             state: {category: name, tab: currentTab},
           }}
           className={currentCategory === name ? classes.active : ''}
@@ -35,11 +33,12 @@ CategoryContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (globalState) => {
+const mapStateToProps = (state) => {
   return {
-    currentCategory: globalState.currentMenu.category,
-    currentTab: globalState.currentMenu.tab,
-    categories: globalState.categories,
+    
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
+    categories: state.categories,
   }
 }
 

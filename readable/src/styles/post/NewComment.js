@@ -1,7 +1,6 @@
 export const styles = theme => ({
   root: {
     borderBottom: '1px solid #ebebeb',
-    borderTop: '1px solid #ebebeb',
     background: '#fafafa',
     display: 'flex',
     alignItems: 'center',
@@ -20,5 +19,8 @@ export const styles = theme => ({
   },
   error: {
     color: 'red',
+    margin: '0',
+    padding: '0',
+    width: '30%'
   }
 })

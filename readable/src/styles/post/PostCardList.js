@@ -1,5 +1,4 @@
 export const styles = theme => ({
- 
   root: {
     maxWidth: '100%',
     padding: '0px',

@@ -1,9 +1,14 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../../api-server/configurl'
+import { sortLists } from '../../utils/utils'
+
+export const RESET_FETCH_POSTS = 'RESET_FETCH_POSTS'
 
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE'
+
+export const FETCH_COMMENTS_COUNTER = 'FETCH_COMMENTS_COUNTER'
 
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
@@ -50,18 +55,11 @@ export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE'
 export const UPDATE_COMMENT_VOTE_SCORE_SUCCESS = 'UPDATE_COMMENT_VOTE_SCORE_SUCCESS'
 export const UPDATE_COMMENT_VOTE_SCORE_FAILURE = 'UPDATE_COMMENT_VOTE_SCORE_FAILURE'
 
-const sortLists = (sorting, posts) => {
-  return posts.sort((a, b) => {
-    if (sorting === 'new') {
-      return b.timestamp - a.timestamp
-    }
-    if (sorting === 'hot') {
-      return b.voteScore - a.voteScore
-    }
-  })
+export const resetFetchPost = (init) => {
+  return {
+    type: 'RESET_FETCH_POSTS', payload: init,
+  }
 }
-
-
 
 export const fetchPost = (post) => {
   return {
@@ -178,6 +176,12 @@ export const deletePostFailure = (error) => {
   }
 }
 
+export const fetchCommentsCounter = (comments, id) => {
+  return {
+    type: 'FETCH_COMMENTS_COUNTER', payload: comments, id: id,
+  }
+}
+
 export const fetchComments = (request) => {
   return {
     type: 'FETCH_COMMENTS', payload: request,
@@ -281,7 +285,7 @@ export const deleteCommentFailure = (error) => {
   }
 }
 
-export const createNewPost = (content) => {
+export const createNewPost = (content, category, tab) => {
   return (dispatch) => {
     dispatch(createPost())
     fetch(`${baseurl}/posts/`, {
@@ -294,6 +298,7 @@ export const createNewPost = (content) => {
     })
     .then((response) => response.json())
     .then((post) => dispatch(createPostSuccess(post)))
+    .then((post) => dispatch(getPosts(category, tab)))
     .catch((err) => dispatch(createPostFailure(err)))
   }
 }
@@ -316,6 +321,12 @@ export const createNewComment = (content, id) => {
   }
 }
 
+export const resetPosts = () => {
+  return (dispatch) => {
+    dispatch(resetFetchPost())
+  }
+}
+
 export const getAllPosts = (tab) => {
   return (dispatch) => {
     dispatch(fetchPosts())
@@ -333,15 +344,13 @@ export const getAllPosts = (tab) => {
 
 export const getPosts = (category, tab) => {
   return (dispatch) => {
-    let url;
     dispatch(fetchPosts())
+    let url
     if (category === 'all') {
-      url =  `${baseurl}/posts`
+      url = `${baseurl}/posts`
+    } else {
+      url = `${baseurl}/${category}/posts`
     }
-    else {
-      url =  `${baseurl}/${category}/posts`
-    }
-    
     fetch(url, {headers}).then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -393,9 +402,9 @@ export const getComments = (id) => {
       }
       return response
     }).then((response) => response.json())
-    
     .then((comments) => dispatch(fetchCommentsSuccess(comments)))
     .catch((err) => dispatch(fetchCommentsFailure(err)))
+    .then((comments) => dispatch(fetchCommentsCounter(comments, id)))
   }
 }
 
@@ -488,6 +497,7 @@ export const updateCommentContent = (id, content) => {
       return response
     })
     .then((response) => response.json())
+    .then((response) => dispatch(getComment(id)))
     .catch((err) => dispatch(editCommentFailure(err)))
   }
 }

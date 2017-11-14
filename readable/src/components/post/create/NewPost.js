@@ -9,39 +9,20 @@ import Chip from 'material-ui/Chip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 import { styles } from '../../../styles/post/NewPost'
-import { date, uuid } from '../../../utils/helper'
-import { createNewPost, getPosts } from '../../../modules/actions/posts'
+import { date, uuid } from '../../../utils/utils'
 
 class NewPost extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isWriting: false,
-      content: {
-        id: '',
-        timestamp: '',
-        title: '',
-        body: '',
-        author: '',
-        category: '',
-      },
-      date: '',
-      checkValid: false,
-      isValid: false,
+      isWriting: false, content: {
+        id: '', timestamp: '', title: '', body: '', author: '', category: '',
+      }, date: '', checkValid: false, isValid: false,
     }
   }
   
   componentDidMount = () => {
-    const postId = uuid()
-    const today = Date.now()
-    const convertedTimestamp = date(today)
-    this.setState(
-      {
-        content: {
-          ...this.state.content, author: postId, id: postId, timestamp: today,
-        },
-        date : convertedTimestamp
-      })
+    this.updateDateTime()
   }
   
   handleTitleChange = (e) => {
@@ -55,25 +36,13 @@ class NewPost extends React.Component {
   handleExpandForm = () => {
     this.setState({isWriting: true})
   }
-  
-  handleHideForm = () => {
-    this.setState({isWriting: false})
-  }
-  
+  //
   initForm = () => {
     this.setState({
-        ...this.state,
-        isWriting: false,
-        content: {
-          ...this.state.content,
-          id: '',
-          title: '',
-          body: '',
-          category: '',
-        },
-        checkValid: false,
-      },
-    )
+      ...this.state, isWriting: false, content: {
+        id: '', timestamp: '', title: '', body: '', author: '', category: '',
+      }, date: '', checkValid: false,
+    })
   }
   
   selectCategory = (e) => {
@@ -85,14 +54,32 @@ class NewPost extends React.Component {
     this.setState({content: {...this.state.content, category: categoryName}})
   }
   
-  submitForm = () => {
+  updateDateTime = () => {
+    const postId = uuid()
+    const today = Date.now()
+    const convertedTimestamp = date(today)
+    this.setState({
+      content: {
+        ...this.state.content, author: postId, id: postId, timestamp: today,
+      }, date: convertedTimestamp,
+    })
+    
+  }
+  
+  requestForm = () => {
+    this.updateDateTime()
     const isValid = this.checkEmptyFields()
-    const content = this.state.content
     if (isValid) {
-      const selectedCategory = content.category
-      this.props.createNewPost(content, selectedCategory, this.props.currentTab)
-      return this.handleHideForm()
+      return Promise.resolve()
+      .then(() => this.submitPost())
+      .then(() => this.initForm())
     }
+  }
+  
+  submitPost = () => {
+    const content = this.state.content
+    const selectedCategory = content.category
+    this.props.submitNewPost(content, selectedCategory, this.props.currentTab)
   }
   
   checkEmptyFields = () => {
@@ -132,8 +119,7 @@ class NewPost extends React.Component {
                 )) : null} </div>
               {checkValid && !category ?
                 <FormHelperText className={classes.error}>Choose a
-                  category</FormHelperText>
-                : null}</div>
+                  category</FormHelperText> : null}</div>
             <FormControl className={classes.inputTitle}>
               <Input
                 placeholder="Title"
@@ -146,8 +132,7 @@ class NewPost extends React.Component {
               />
               {checkValid && !title ?
                 <FormHelperText className={classes.error}>Title is
-                  empty</FormHelperText>
-                : null}
+                  empty</FormHelperText> : null}
             </FormControl>
             <Input
               placeholder="Body"
@@ -161,14 +146,12 @@ class NewPost extends React.Component {
             />
             {checkValid && !body ?
               <FormHelperText className={classes.error}>Body is
-                empty</FormHelperText>
-              : null}
+                empty</FormHelperText> : null}
             <PostSaveCancelButton
               cancelPost={this.initForm}
-              savePost={this.submitForm}
+              savePost={this.requestForm}
             />
-          </div>
-          }
+          </div>}
         </form>
       </Card>
     )
@@ -184,12 +167,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    createNewPost: (content, category, tab) => {
-      dispatch(createNewPost(content))
-      return dispatch(getPosts(category, tab))
-    },
-  }
+  return { }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(

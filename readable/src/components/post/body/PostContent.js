@@ -7,7 +7,7 @@ import Input from 'material-ui/Input'
 import { withStyles } from 'material-ui/styles'
 import PostSettingButton from '../buttons/PostSettingButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
-import { date, username } from '../../../utils/helper'
+import { date, username } from '../../../utils/utils'
 import { styles } from '../../../styles/post/PostContent'
 
 class PostContent extends React.Component {
@@ -55,7 +55,7 @@ class PostContent extends React.Component {
   }
   
   render () {
-    const {content, classes, hideDetailView, deleteBodyContent} = this.props
+    const {content, classes, hideDetailView, deleteBodyContent, hideBody, hideSetting} = this.props
     const {fullAuthorName, shortAuthorName, isEditing} = this.state
     return (
       <div>
@@ -68,7 +68,7 @@ class PostContent extends React.Component {
                       title={fullAuthorName}
                       subheader={this.state.date}
           />
-          {hideDetailView ? null :
+          {hideDetailView || hideSetting ? null :
             <PostSettingButton className={classes.postMenu}
                                showPostEditView={this.changeEditView}
                                content={content}
@@ -79,9 +79,11 @@ class PostContent extends React.Component {
             <Typography type="subheading" component="h6">
               {content.title}
             </Typography>
+          {hideBody? null:
+  
             <Typography component="p">
               {content.body}
-            </Typography>
+            </Typography>}
           </CardContent>
           
           : <CardContent>

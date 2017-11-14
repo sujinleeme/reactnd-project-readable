@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
@@ -9,16 +9,20 @@ import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import PostContent from './PostContent'
 import UpDownVoter from '../buttons/UpDownVoter'
-
+import CommentButton from '../buttons/CommentButton'
+import { getComments } from '../../../modules/actions/posts'
 import { styles } from '../../../styles/post/PostCardList'
-import { updatePostContent, getPost } from '../../../modules/actions/posts'
 
 class PostCardList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      expanded: false,
+      expanded: false, comments: [],
     }
+  }
+  
+  componentDidMount () {
+    this.props.getComments(this.props.post.id)
   }
   
   handleExpandClick = (e) => {
@@ -39,12 +43,17 @@ class PostCardList extends React.Component {
         <Card className={classes.root}>
           <PostContent
             content={post}
-          ></PostContent>
+            hideBody={true}
+            hideSetting={true}
+          />
           <div className={classes.footer}>
             <UpDownVoter
               className={classes.postVote}
               content={post}
             ></UpDownVoter>
+            {post.comments ? <CommentButton
+              comment={post.comments}
+            /> : null}
             {!expanded ? <IconButton>
               <ExpandMoreIcon/>
             </IconButton> : <IconButton>
@@ -57,18 +66,20 @@ class PostCardList extends React.Component {
   }
 }
 
-const mapStateToProps = (globalState) => {
+PostCardList.propTypes = {
+  classes: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => {
   return {
-    activePost: globalState.posts.activePost,
+    comments: state.posts.activePost.comments,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getComments: (id) => new Promise((res) => dispatch(getComments(id))),
   }
 }
-
-PostCardList.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(PostCardList))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(PostCardList))

@@ -40,37 +40,38 @@ npm run build && npm run deploy
 Within the download you'll find the following `src/` directories and files:
 ```
 |-- components
+|   |-- CategoryPostsPage
 |   |-- assests
 |   |   |-- GithubIcon.js
 |   |   `-- LoadingProgress.js
-|   |-- container
-|   |   |-- CategoryContainer.js
-|   |   |-- NotFound.js
-|   |   |-- PostContainer.js
-|   |   |-- PostDetailContainer.js
-|   |   `-- TabContainer.js
 |   |-- footer
 |   |   `-- CopyrightBar.js
 |   |-- header
 |   |   `-- HeaderBar.js
-|   |-- layout
-|   |   `-- MainLayout.js
+|   |-- menu
+|   |   |-- CategoryContainer.js
+|   |   `-- TabContainer.js
 |   |-- pages
-|   |   |-- HomePage.js
-|   |   `-- NotFound.js
+|   |   |-- AllPostsPage.js
+|   |   |-- CategoryPostsPage.js
+|   |   |-- MainRouterSettingLayoutPage.js
+|   |   `-- PostDetailPage.js
 |   `-- post
 |       |-- body
 |       |   |-- PostCardList.js
 |       |   |-- PostContent.js
 |       |   `-- PostDetail.js
 |       |-- buttons
+|       |   |-- CommentButton.js
 |       |   |-- FloatingNewPostButton.js
 |       |   |-- PostSaveCancelButton.js
 |       |   |-- PostSettingButton.js
 |       |   `-- UpDownVoter.js
-|       `-- create
-|           |-- NewComment.js
-|           `-- NewPost.js
+|       |-- create
+|       |   |-- NewComment.js
+|       |   `-- NewPost.js
+|       `-- list
+|           `-- PostListContainer.js
 |-- history.js
 |-- index.css
 |-- index.js
@@ -100,12 +101,12 @@ Within the download you'll find the following `src/` directories and files:
 |       |-- NewPost.js
 |       |-- PostCardList.js
 |       |-- PostContent.js
+|       |-- PostListContainer.js
 |       |-- PostSaveCancelButton.js
 |       |-- PostStyle.js
 |       `-- PostVote.js
 `-- utils
-    |-- helper.js
-    `-- urls.js
+    `-- utils.js
 ```
 ### Requirements
 * Most application state(Create, Read, Edit, Delete, Voting posts/comments) is managed by the Redux store. Updates are triggered by dispatching actions to reducers.

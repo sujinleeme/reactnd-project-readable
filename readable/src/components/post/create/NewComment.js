@@ -6,7 +6,7 @@ import { FormHelperText } from 'material-ui/Form'
 import Avatar from 'material-ui/Avatar'
 import Input from 'material-ui/Input'
 import { styles } from '../../../styles/post/NewComment'
-import { date, uuid } from '../../../utils/helper'
+import { date, uuid } from '../../../utils/utils'
 import { createNewComment } from '../../../modules/actions/posts'
 
 class NewComment extends React.Component {
@@ -77,7 +77,9 @@ class NewComment extends React.Component {
           }}
           value={body || ''}
           onKeyPress={this.submitForm}
-          onChange={this.handleBodyChange}/>
+          onChange={this.handleBodyChange}
+          onClick={(e) => e.stopPropagation()}
+        />
         {checkValid && !body ? <FormHelperText className={classes.error}>Body is
           empty</FormHelperText> : null}</CardContent>
     )

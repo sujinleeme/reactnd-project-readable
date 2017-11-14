@@ -5,13 +5,15 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import thunk from 'redux-thunk'
 import reducers from './modules/root/rootReducer'
-const middleware = routerMiddleware(history)
+const middlewareHistory = routerMiddleware(history)
 const composeEnhancers = composeWithDevTools({
 
 })
-export default createStore(
+const store = createStore(
   reducers,
   composeEnhancers(
-    applyMiddleware(middleware, thunk),
+    applyMiddleware(middlewareHistory, thunk),
   ),
 )
+
+export default store

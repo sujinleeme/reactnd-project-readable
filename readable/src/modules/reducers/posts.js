@@ -2,6 +2,10 @@ import {
   
   FETCH_POSTS, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE,
   
+  FETCH_COMMENTS_COUNTER,
+  
+  RESET_FETCH_POSTS,
+  
   FETCH_POST, FETCH_POST_SUCCESS, FETCH_POST_FAILURE, RESET_ACTIVE_POST,
   
   EDIT_POST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE,
@@ -39,6 +43,21 @@ const INITIAL_STATE = {
 export function posts (state = INITIAL_STATE, action) {
   let error
   switch (action.type) {
+    
+    case FETCH_COMMENTS_COUNTER:
+      return {
+        ...state,
+        postList: {
+          ...state.postList,
+          posts: state.postList.posts.map(
+            (post, i) => post.id === action.id ? {
+              ...post, comments: action.payload.payload,
+            } : post),
+        }
+      }
+    
+    case RESET_FETCH_POSTS:
+      return {...state, postList: {posts: [], error: null, loading: false}}
   
     case FETCH_POSTS:// start fetching posts and set loading = true
       return {...state, postList: {posts: [], error: null, loading: true}}
@@ -52,19 +71,6 @@ export function posts (state = INITIAL_STATE, action) {
     case FETCH_POSTS_FAILURE:
       error = action.payload
       return {...state, postList: {posts: [], error: error, loading: false}}
-      
-    case FETCH_POSTS:
-      return {...state, postList: {posts: [], error: null, loading: true}}
-    
-    case FETCH_POSTS_SUCCESS:
-      return {
-        ...state,
-        postList: {posts: action.payload, error: null, loading: false},
-      }
-    
-    case FETCH_POSTS_FAILURE:
-      error = action.payload
-      return {...state, postList: {posts: [], error: error, loading: false}}
     
     case FETCH_POST:
       return {
@@ -75,7 +81,7 @@ export function posts (state = INITIAL_STATE, action) {
     case FETCH_POST_SUCCESS:
       return {
         ...state, activePost: {
-          ...state.activePost, post: action.payload, error: null,
+          ...state.activePost, post: action.payload, error: null, sortType: action.sortType,
           loading: false,
         },
       }
@@ -201,6 +207,8 @@ export function posts (state = INITIAL_STATE, action) {
           loading: false,
         },
       }
+      
+      
     
     case FETCH_COMMENTS_FAILURE:
       return {
