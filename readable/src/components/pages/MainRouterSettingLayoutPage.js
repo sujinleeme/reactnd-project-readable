@@ -1,5 +1,8 @@
-import React from 'react'
-import { withRouter, Route } from 'react-router-dom'
+import React, { Component } from 'react'
+import { withRouter, Route, Switch } from 'react-router-dom'
+import { withStyles } from 'material-ui/styles'
+import { push } from 'react-router-redux'
+
 import PropTypes from 'prop-types'
 import CategoryPostsPage from '../pages/CategoryPostsPage'
 import PostDetailPage from '../pages/PostDetailPage'
@@ -8,7 +11,9 @@ import TabContainer from '../menu/TabContainer'
 import CopyrightBar from '../footer/CopyrightBar'
 import HeaderBar from '../header/HeaderBar'
 import Grid from 'material-ui/Grid'
-import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
+import { getCategories, getTabs, setupMenu } from '../../modules/actions/menu'
+import { resetPosts, getPosts, createNewPost } from '../../modules/actions/posts'
 
 const styles = theme => ({
   root: {
@@ -18,33 +23,76 @@ const styles = theme => ({
   },
 })
 
-const MainRouterSettingLayoutPage = (props) => {
-  const {classes} = props
-  return (
-    <div>
-      <HeaderBar/>
-      <div className={classes.root}>
-        <Grid container spacing={0}>
-          <Grid item md={3}/>
-          <Grid item md={6} container={true} direction="column">
-            <TabContainer/>
-            <Route exact path='/' component={AllPostsPage}/>
-            <Route exact path='/category/:category/'
-                   component={CategoryPostsPage}/>
-            <Route path='/posts/:id'
-                   component={PostDetailPage}/>
+class MainRouterSettingLayoutPage extends React.Component {
+  componentWillMount () {
+    this.props.fetchCategories()
+    this.props.fetchTabs().then(
+      this.props.changeCurrentMenu('all', 'new')
+    )  
+  }
+  
+  componentWillReceiveProps (nextProps) {
+    const {location, changeCurrentMenu, fetchPosts} = this.props
+    const locationChanged = nextProps.location !== location    
+    if (locationChanged) {
+      const {category, tab} = nextProps.location.state
+      return changeCurrentMenu(category, tab).then(
+        fetchPosts(category, tab)
+      )
+    }
+  }
+
+  render() {
+    const {classes} = this.props
+    return (
+      <div>
+        <HeaderBar/>
+        <div className={classes.root}>
+          <Grid container spacing={0}>
+            <Grid item md={3}/>
+            <Grid item md={6} container={true} direction="column">
+              
+              <Route exact path='/'component={AllPostsPage}/>
+              <Route exact path='/category/:category/'
+                     component={CategoryPostsPage}
+                     requestNewPost={this.requestNewPost}
+                     
+                     
+                     />
+              <Route path='/posts/:id'
+                     component={PostDetailPage}/>
+            </Grid>
+            <Grid item md={3}>
+            </Grid>
           </Grid>
-          <Grid item md={3}>
-          </Grid>
-        </Grid>
+        </div>
+        <CopyrightBar/>
       </div>
-      <CopyrightBar/>
-    </div>
-  )
+    )
+  }
+}  
+
+const mapStateToProps = (state) => {
+  return {
+    postList: state.posts.postList,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
+  }
 }
 
-MainRouterSettingLayoutPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCategories: () => new Promise((res) => dispatch(getCategories())),
+    fetchTabs: () => new Promise((res) => dispatch(getTabs())),
+    changeCurrentMenu: (category, tab) => new Promise(
+      (res) => dispatch(setupMenu(category, tab))),
+    fetchPosts: (category, tab) => new Promise(
+      (res) => dispatch(getPosts(category, tab))),
+    createNewPost: (content, category, tab) => 
+      dispatch(createNewPost(content, category, tab)),
+    goBack: (category) => dispatch(push(`/category/${category}`))
+  }
 }
 
-export default withRouter(withStyles(styles)(MainRouterSettingLayoutPage))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(MainRouterSettingLayoutPage, CategoryPostsPage))

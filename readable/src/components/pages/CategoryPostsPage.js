@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import NewPost from '../post/create/NewPost'
 import PostListContainer from '../post/list/PostListContainer'
 import LoadingProgress from '../assests/LoadingProgress'
+import TabContainer from '../menu/TabContainer'
 import { resetPosts, getPosts, createNewPost } from '../../modules/actions/posts'
 import { setupMenu } from '../../modules/actions/menu'
 import { withStyles } from 'material-ui/styles'
+import { push } from 'react-router-redux'
+
 
 class CategoryPostsPage extends React.Component {
   componentDidMount () {
@@ -18,19 +20,18 @@ class CategoryPostsPage extends React.Component {
   }
   
   componentWillUnmount () {
-    this.props.resetAllPosts()
+    this.props.resetPosts()
   }
   
   render () {
-    const {postList, currentTab, submitNewPost} = this.props
+    const {postList, currentTab} = this.props
     const {loading} = postList
     const posts = postList.posts
     if (loading) {
       return (
         <div>
-          <NewPost
-            submitNewPost={submitNewPost}
-          />
+          <TabContainer/>
+          <NewPost/>
           <LoadingProgress/>
         </div>
       )
@@ -38,9 +39,8 @@ class CategoryPostsPage extends React.Component {
     
     return (
       <div>
-        <NewPost
-          submitNewPost={submitNewPost}
-        />
+        <TabContainer/>
+        <NewPost/>
         <PostListContainer
           posts={posts}
           tab={currentTab}
@@ -66,14 +66,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),
-    resetAllPosts: () => dispatch(resetPosts()),
     fetchPosts: (category, tab) => new Promise(
       (res) => dispatch(getPosts(category, tab))),
-    submitNewPost: (content, category, tab) => {
-      dispatch(push(`/category/${category}/${tab}`))
-      dispatch(setupMenu(category, tab))
-      return dispatch(createNewPost(content, category, tab))
-    },
+      resetPosts: () => dispatch(resetPosts()),
   }
 }
 

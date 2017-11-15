@@ -37,7 +37,7 @@ class PostDetailPage extends React.Component {
     const {category, tab, id} = this.props.match.params
     this.props.fetchPost(id)
     this.props.fetchComments(id)
-    this.props.changeCurrentMenu(category, tab)
+    return this.props.changeCurrentMenu(category, tab)
   }
   
   handleExpandClick = (e) => {
@@ -94,8 +94,6 @@ class PostDetailPage extends React.Component {
                 
                 </div>
                 <NewComment/>
-                
-                
                 <Collapse in={this.state.expanded} transitionDuration="auto"
                           unmountOnExit>
                   <CardContent className={classes.comments}

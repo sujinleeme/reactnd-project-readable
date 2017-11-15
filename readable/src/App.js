@@ -7,21 +7,6 @@ import { withRouter } from 'react-router-dom'
 import MainRouterSettingLayoutPage from './components/pages/MainRouterSettingLayoutPage'
 
 class App extends Component {
-  componentWillMount () {
-    this.props.fetchCategories()
-    this.props.fetchTabs()
-  }
-  
-  componentWillReceiveProps (nextProps) {
-    const {location, changeCurrentMenu, fetchPosts} = this.props
-    const locationChanged = nextProps.location !== location
-    if (locationChanged) {
-      const {category, tab} = nextProps.location.state
-      return changeCurrentMenu(category, tab)
-      .then(fetchPosts(category, tab))
-    }
-  }
-  
   render () {
     return (
       <Switch>

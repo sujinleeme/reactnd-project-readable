@@ -73,7 +73,7 @@ class NewComment extends React.Component {
           fullWidth="true"
           disableUnderline="true"
           inputProps={{
-            'aria-label': 'Description',
+            'aria-label': 'comment',
           }}
           value={body || ''}
           onKeyPress={this.submitForm}

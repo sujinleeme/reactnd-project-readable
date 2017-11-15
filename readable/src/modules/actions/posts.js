@@ -1,6 +1,7 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../../api-server/configurl'
 import { sortLists } from '../../utils/utils'
+import { push } from 'react-router-redux'
 
 export const RESET_FETCH_POSTS = 'RESET_FETCH_POSTS'
 
@@ -298,10 +299,13 @@ export const createNewPost = (content, category, tab) => {
     })
     .then((response) => response.json())
     .then((post) => dispatch(createPostSuccess(post)))
-    .then((post) => dispatch(getPosts(category, tab)))
+    .then(() => dispatch(getPosts(category, tab)))
     .catch((err) => dispatch(createPostFailure(err)))
   }
 }
+
+
+
 
 export const createNewComment = (content, id) => {
   return (dispatch) => {

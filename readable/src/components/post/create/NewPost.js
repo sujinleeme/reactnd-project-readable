@@ -10,6 +10,9 @@ import { FormControl, FormHelperText } from 'material-ui/Form'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 import { styles } from '../../../styles/post/NewPost'
 import { date, uuid } from '../../../utils/utils'
+import { resetPosts, getPosts, createNewPost } from '../../../modules/actions/posts'
+import { setupMenu } from '../../../modules/actions/menu'
+import { push } from 'react-router-redux'
 
 class NewPost extends React.Component {
   constructor (props) {
@@ -36,7 +39,7 @@ class NewPost extends React.Component {
   handleExpandForm = () => {
     this.setState({isWriting: true})
   }
-  //
+  
   initForm = () => {
     this.setState({
       ...this.state, isWriting: false, content: {
@@ -78,9 +81,17 @@ class NewPost extends React.Component {
   
   submitPost = () => {
     const content = this.state.content
-    const selectedCategory = content.category
-    this.props.submitNewPost(content, selectedCategory, this.props.currentTab)
-  }
+    const category = content.category
+    const tab = this.props.currentTab
+    this.props.changeCurrentMenu(category, tab)
+    this.props.createNewPost(content, category, tab)
+    return this.props.goBack(category)
+    }
+
+
+
+
+
   
   checkEmptyFields = () => {
     const {title, body, category} = this.state.content
@@ -167,7 +178,16 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return { }
+  return {
+    changeCurrentMenu: (category, tab) => new Promise(
+      (res) => dispatch(setupMenu(category, tab))),
+    resetAllPosts: () => dispatch(resetPosts()),
+    fetchPosts: (category, tab) => new Promise(
+      (res) => dispatch(getPosts(category, tab))),
+    createNewPost: (content, category, tab) => 
+      dispatch(createNewPost(content, category, tab)),
+    goBack: (category) => dispatch(push(`/category/${category}`))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(

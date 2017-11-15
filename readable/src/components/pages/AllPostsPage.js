@@ -8,17 +8,18 @@ import {
 } from '../../modules/actions/posts'
 import { setupMenu } from '../../modules/actions/menu'
 import PostListContainer from '../post/list/PostListContainer'
+import TabContainer from '../menu/TabContainer'
 import NewPost from '../post/create/NewPost'
 import LoadingProgress from '../assests/LoadingProgress'
+import MainRouterSettingLayoutPage from './MainRouterSettingLayoutPage'
 
 class AllPostsPage extends React.Component {
   componentDidMount () {
-    this.props.changeCurrentMenu('all', 'new')
-    return this.props.fetchAllPosts('new')
+    this.props.fetchAllPosts(this.props.currentTab)
   }
   
   componentWillUnmount () {
-    this.props.resetAllPosts()
+    this.props.resetPosts()
   }
   
   render () {
@@ -28,6 +29,7 @@ class AllPostsPage extends React.Component {
     if (loading) {
       return (
         <div>
+          <TabContainer/>
           <NewPost />
           <LoadingProgress/>
         </div>
@@ -35,9 +37,8 @@ class AllPostsPage extends React.Component {
     }
     return (
       <div>
-        <NewPost
-          submitNewPost={submitNewPost}
-        />
+        <TabContainer/>
+        <NewPost />
         <PostListContainer
           posts={posts}
           tab={currentTab}
@@ -62,13 +63,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllPosts: (tab) => new Promise((res) => dispatch(getAllPosts(tab))),
-    resetAllPosts: () => dispatch(resetPosts()),
-    changeCurrentMenu: (category, tab) => new Promise(
-      (res) => dispatch(setupMenu(category, tab))),
-    submitNewPost: (content, category, tab) => {
-      dispatch(push(`/category/${category}`))
-      dispatch(createNewPost(content, category, tab))
-    }
+    resetPosts: () => dispatch(resetPosts()),
+   
   }
 }
 
