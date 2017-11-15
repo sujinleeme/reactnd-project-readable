@@ -1,6 +1,7 @@
 import React from 'react'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import { goBack } from 'react-router-redux'
 import classnames from 'classnames'
 import Card, { CardContent } from 'material-ui/Card'
 import { getPost, resetPost } from '../../modules/actions/posts'
@@ -8,7 +9,6 @@ import { styles } from '../../styles/post/PostCardList'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import IconButton from 'material-ui/IconButton'
 import Collapse from 'material-ui/transitions/Collapse'
-
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
 import PostContent from '../post/body/PostContent'
 import UpDownVoter from '../post/buttons/UpDownVoter'
@@ -169,7 +169,7 @@ const mapDispatchToProps = (dispatch) => {
     
     deletePostBodyContent: (id, category) => {
       dispatch(deletePostContent(id))
-      window.history.back()
+      dispatch(goBack())
       return dispatch(getPosts(category))
     },
     
