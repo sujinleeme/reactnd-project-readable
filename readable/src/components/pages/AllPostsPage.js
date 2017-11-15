@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => {
     changeCurrentMenu: (category, tab) => new Promise(
       (res) => dispatch(setupMenu(category, tab))),
     submitNewPost: (content, category, tab) => {
-      dispatch(push(`/category/${category}/${tab}`))
+      dispatch(push(`/category/${category}`))
       dispatch(createNewPost(content, category, tab))
     }
   }

@@ -15,7 +15,7 @@ const CategoryContainer = (props) => {
           key={path}
           component={Link}
           to={{
-            pathname: `/category/${path}/${currentTab}`,
+            pathname: `/category/${path}`,
             state: {category: name, tab: currentTab},
           }}
           className={currentCategory === name ? classes.active : ''}
@@ -35,7 +35,6 @@ CategoryContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    
     currentCategory: state.currentMenu.category,
     currentTab: state.currentMenu.tab,
     categories: state.categories,

@@ -13,7 +13,7 @@ const PostListContainer = (props) => {
         <Link
           key={post.id}
           to={{
-            pathname: `/category/${post.category}=${tab}/posts/${post.id}`,
+            pathname: `/posts/${post.id}`,
             state: {
               category: post.category, tab: tab, id: post.id,
             },

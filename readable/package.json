@@ -1,6 +1,6 @@
 {
   "name": "reactnd-project-readable",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "history": "^4.7.2",
@@ -34,7 +34,6 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "description": "This is my second assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com)",
-  "version": "1.0.0",
   "main": "index.js",
   "repository": {
     "type": "git",

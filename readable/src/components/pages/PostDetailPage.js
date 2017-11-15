@@ -46,8 +46,8 @@ class PostDetailPage extends React.Component {
   }
   
   render () {
+    console.log('ddd')
     const {expanded} = this.state
-    
     const {
             classes, loading, post, comments, updatePostBodyContent, updateCommentBodyContent, deletePostBodyContent, deleteCommentBodyContent, updatePostVoter, updateCommentVoter,
           } = this.props

@@ -40,7 +40,6 @@ class TabContainer extends React.Component {
             component={Link}
             value={index}
             to={{
-              pathname: `/category/${currentCategory}/${path}`,
               state: {category: currentCategory, tab: name},
             }}
           />

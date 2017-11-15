@@ -29,9 +29,9 @@ const MainRouterSettingLayoutPage = (props) => {
           <Grid item md={6} container={true} direction="column">
             <TabContainer/>
             <Route exact path='/' component={AllPostsPage}/>
-            <Route exact path='/category/:category/:tab'
+            <Route exact path='/category/:category/'
                    component={CategoryPostsPage}/>
-            <Route path='/category/:category=:tab/posts/:id'
+            <Route path='/posts/:id'
                    component={PostDetailPage}/>
           </Grid>
           <Grid item md={3}>
