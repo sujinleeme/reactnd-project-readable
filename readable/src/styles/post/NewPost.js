@@ -1,5 +1,5 @@
 export const styles = theme => ({
-  
+
   root: {
     maxWidth: '100%',
     margin: theme.spacing.unit * 3,
@@ -8,47 +8,47 @@ export const styles = theme => ({
     '&:hover': {
       background: '#f9f9f9',
       transition: '.5s all',
-      cursor: 'pointer',
-    },
+      cursor: 'pointer'
+    }
   },
-  
+
   form: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    
+    width: '100%'
+
   },
-  
+
   inputField: {
     alignItems: 'right',
-    width: '100%',
+    width: '100%'
   },
-  
+
   inputTitle: {
     width: '100%'
   },
-  
+
   avatar: {
-    marginRight: '16px',
+    marginRight: '16px'
   },
-  
+
   input: {
     borderBottom: '1px solid #ebebeb',
     marginLeft: theme.spacing.unit * 4,
     padding: '6px 15px 7px',
     '&:hover': {
-      cursor: 'text !important',
-    },
+      cursor: 'text !important'
+    }
   },
-  
+
   categorybuttons: {
     float: 'right'
-  
-},
-  
+
+  },
+
   chip: {
-    margin: 4,
+    margin: 4
   },
   row: {
     display: 'flex',
@@ -59,8 +59,8 @@ export const styles = theme => ({
     color: 'red'
   },
   active: {
-    background: '#4FC3F7 !important',
-  
+    background: '#4FC3F7 !important'
+
   }
-  
+
 })

@@ -1,5 +1,5 @@
-import { headers } from '../root/headers'
-import { baseurl } from '../../api-server/configurl'
+import {headers} from '../root/headers'
+import {baseurl} from '../../api-server/configurl'
 
 export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
 export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
@@ -10,67 +10,81 @@ export const CHANGE_EDIT_MENU = 'CHANGE_EDIT_MENU'
 
 export const setupMenuSuccess = (bool) => {
   return {
-    type: SETUP_MENU_SUCCESS, hasloaded: bool,
+    type: SETUP_MENU_SUCCESS, hasloaded: bool
   }
 }
 
 export const selectCategory = ({category}) => {
   return {
-    type: SELECT_CATEGORY, category,
+    type: SELECT_CATEGORY, category
   }
 }
 
 export const selectTab = ({tab}) => {
   return {
-    type: SELECT_TAB, tab,
+    type: SELECT_TAB, tab
   }
 }
 
 export const fetchCategoryDataSuccess = (categories) => {
   return {
-    type: FETCH_CATEGORY_DATA_SUCCESS, categories,
+    type: FETCH_CATEGORY_DATA_SUCCESS, categories
   }
 }
 
 export const fetchTabDataSuccess = (tabs) => {
   return {
-    type: FETCH_TAB_DATA_SUCCESS, tabs,
+    type: FETCH_TAB_DATA_SUCCESS, tabs
   }
 }
 
 export const getCategories = () => {
   return (dispatch) => {
-    fetch(`${baseurl}/categories`, {headers}).then((response) => {
+    fetch(`${baseurl}/categories`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    }).then((response) => response.json())
-    .then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
   }
 }
 
-export const setupMenu = (categoryName, tabName) => {
+export const changeCategory = (category) => {
   return (dispatch) => {
-    Promise.all([
-      dispatch(selectCategory({category: categoryName})),
-      dispatch(selectTab({tab: tabName}),),
-    ]).then((response) => {
-      dispatch(setupMenuSuccess(true))
-    }).catch((failure) => dispatch(setupMenuSuccess(false)))
+    dispatch(selectCategory({category: category}))
   }
 }
+
+export const changeTab = (tab) => {
+  return (dispatch) => {
+    dispatch(selectTab({tab: tab}))
+  }
+}
+
+// export const setupMenu = (categoryName, tabName) => {
+//   return (dispatch) => {
+//     Promise.all([
+//       dispatch(selectCategory({category: categoryName})),
+//       dispatch(selectTab({tab: tabName}),),
+//     ]).then((response) => {
+//       dispatch(setupMenuSuccess(true))
+//     }).catch((failure) => dispatch(setupMenuSuccess(false)))
+//   }
+// }
 
 export const getTabs = () => {
   return (dispatch) => {
-    fetch(`${baseurl}/tabs`, {headers})
-    .then((response) => {
+    fetch(`${baseurl}/tabs`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
   }
 }

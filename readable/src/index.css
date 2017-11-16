@@ -1,6 +1,5 @@
 body {
-  margin: 0;
-  padding: 0;
+
   font-family: sans-serif;
 }
 
@@ -13,24 +12,36 @@ html, body {
 	-moz-osx-font-smoothing: grayscale;
 	max-width: 100%;
 	overflow-x: hidden;
-	height:100%;
+	min-height:100vh;
+	margin: 0;
+  padding: 0;
 	color: #616161;
 	}
 
-.brandLogo{
-	display: inherit;
-	padding: 15px 0;
-	}
-
-
-.brandLogo .main {
-	margin-right: 10px;
-	}
-
-.brandLogo h2:link{
-	text-decoration: none;
-	}
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
 	color: inherit;
 	}
+
+	
+	a:hover, a:visited, a:link, a:active {
+		text-decoration: none;
+		fill: #4FC3F7
+		}
+	
+	
+	a svg {
+		fill: black;
+	
+		}
+
+
+		svg:hover {
+			fill: #4FC3F7
+			
+		}
+			
+/* 	
+	a svg:hover #github{
+		fill: #4FC3F7
+		} */

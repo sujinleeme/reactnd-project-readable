@@ -4,18 +4,18 @@ export const styles = theme => ({
     background: '#fafafa',
     display: 'flex',
     alignItems: 'center',
-    marginLeft: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 4
   },
   avatar: {
-    marginRight: '16px',
+    marginRight: '16px'
   },
   input: {
     borderBottom: '1px solid #ebebeb',
     padding: '6px 15px 7px',
     marginLeft: theme.spacing.unit * 4,
     '&:hover': {
-      cursor: 'text !important',
-    },
+      cursor: 'text !important'
+    }
   },
   error: {
     color: 'red',

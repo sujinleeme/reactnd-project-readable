@@ -51,6 +51,7 @@ class UpDownVoter extends React.Component {
     const {upVote, downVote, parentId} = this.state
     let notActived
     let opposite
+    
     switch (type) {
       default:
       case 'downVote' :
@@ -64,7 +65,6 @@ class UpDownVoter extends React.Component {
     }
   
     if (!notActived) {
-      console.log(notActived, parentId)
       if (this.state.voted) {
         this.props.updateVoteCounter(id, type, parentId)
       }

@@ -1,67 +1,71 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
-import { withRouter, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import Tabs, { Tab } from 'material-ui/Tabs'
+import {withStyles} from 'material-ui/styles'
+import {connect} from 'react-redux'
+import Tabs, {Tab} from 'material-ui/Tabs'
+import {sortPosts} from '../../modules/actions/posts'
+import {changeTab} from '../../modules/actions/menu'
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1, backgroundColor: theme.palette.background.A300,
-    boxShadow: 'none', paddingLeft: theme.spacing.unit * 3,
-  },
-})
+const styles = theme => (
+    {
+      root: {
+        flexGrow: 1, backgroundColor: theme.palette.background.A300,
+        boxShadow: 'none', paddingLeft: theme.spacing.unit * 3
+      }
+    }
+)
 
 class TabContainer extends React.Component {
   state = {
-    value: 0,
+    value: 0
   }
-  
-  getTabIndexNum (tabName) {
-    if (this.props.location.state) {
-      tabName = this.props.location.state.tab
-    }
-    let num = this.props.tabs.findIndex(x => x.name === tabName)
-    let checkNum = (num < 0 ? num = 0 : num)
-    return checkNum
+
+  handleClick(e, index, name) {
+    e.stopPropagation()
+    this.setState({value: index})
+    this.props.changeTab(name)
+    return this.props.sortOrderPost(name, this.props.postList)
   }
-  
-  render () {
+
+  render() {
     const {classes, currentCategory, currentTab, tabs} = this.props
-    const tabIndex = this.getTabIndexNum(currentTab)
     return (
-      tabs && <Tabs className={classes.root} value={tabIndex}
-                    indicatorColor="primary"
-                    textColor="primary"
-      >
-        {tabs.map((({name, path}, index) => (
-          <Tab
-            key={name}
-            label={name}
-            component={Link}
-            value={index}
-            to={{
-              state: {category: currentCategory, tab: name},
-            }}
-          />
-        )))}
-      </Tabs>
+        tabs && <Tabs className={ classes.root } value={ this.state.value }
+                      indicatorColor="primary"
+                      textColor="primary"
+        >
+          { tabs.map((
+              ({name, path}, index) => (
+                  <Tab
+                      key={ name }
+                      label={ name }
+                      value={ index }
+                      onClick={ (e) => this.handleClick(e, index, name) }
+                  />
+              )
+          )) }
+        </Tabs>
     )
   }
 }
 
 TabContainer.propTypes = {}
 
-const mapStateToProps = (globalState) => {
+const mapStateToProps = (state) => {
   return {
-    currentCategory: globalState.currentMenu.category,
-    currentTab: globalState.currentMenu.tab, categories: globalState.categories,
-    tabs: globalState.tabs,
+    postList: state.posts.postList.posts,
+    currentCategory: state.currentMenu.category,
+    currentTab: state.currentMenu.tab,
+    categories: state.categories,
+    tabs: state.tabs
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    sortOrderPost: (option, posts) => dispatch(sortPosts(option, posts)),
+    changeTab: (tab) => dispatch(changeTab(tab))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(TabContainer)))
+    withStyles(styles)(TabContainer))

@@ -6,6 +6,6 @@ if (!token)
 export const headers = {
   'Accept': 'application/json',
   'Authorization': token,
-  'Content-Type':'application/json'
+  'Content-Type': 'application/json'
 }
 

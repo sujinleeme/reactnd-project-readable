@@ -1,10 +1,10 @@
 import {
   SELECT_CATEGORY, SELECT_TAB, FETCH_CATEGORY_DATA_SUCCESS,
-  FETCH_TAB_DATA_SUCCESS, SETUP_MENU_SUCCESS, CHANGE_EDIT_MENU,
+  FETCH_TAB_DATA_SUCCESS, SETUP_MENU_SUCCESS, CHANGE_EDIT_MENU
 } from '../actions/menu'
 
 const initSelectState = {
-  tab: null, category: null,
+  tab: null, category: null
 }
 
 export const currentMenu = (state = initSelectState, action) => {
@@ -12,11 +12,11 @@ export const currentMenu = (state = initSelectState, action) => {
   switch (action.type) {
     case SELECT_CATEGORY:
       return {
-        ...state, category: category,
+        ...state, category: category
       }
     case SELECT_TAB:
       return {
-        ...state, tab: tab,
+        ...state, tab: tab
       }
     default :
       return state

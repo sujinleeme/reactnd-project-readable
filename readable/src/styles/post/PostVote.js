@@ -4,10 +4,10 @@ export const styles = theme => ({
   },
   button: {
     '&:hover': {
-      color: theme.palette.primary.A100,
-    },
+      color: theme.palette.primary.A100
+    }
   },
   clicked: {
-    color: theme.palette.primary.A300,
+    color: theme.palette.primary.A300
   }
 })

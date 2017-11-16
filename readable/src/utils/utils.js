@@ -17,11 +17,11 @@ export const date = (timestamp) => {
     'Sep',
     'Oct',
     'Nov',
-    'Dec',
+    'Dec'
   ]
   let formattedDate = weekday[pubDate.getDay()] + ' ' +
-    monthname[pubDate.getMonth()] + ' ' + pubDate.getDate() + ', ' +
-    pubDate.getFullYear()
+      monthname[pubDate.getMonth()] + ' ' + pubDate.getDate() + ', ' +
+      pubDate.getFullYear()
   return formattedDate
 }
 
@@ -31,7 +31,7 @@ export const username = (str = '') => {
 
 export const uuid = () => {
   return Math.random().toString(36).substring(2) +
-    (new Date()).getTime().toString(36)
+      (new Date()).getTime().toString(36)
 }
 
 export const sortLists = (sorting, posts) => {

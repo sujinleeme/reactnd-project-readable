@@ -1,33 +1,34 @@
 import React from 'react'
 import IconButton from 'material-ui/IconButton'
-import Menu, { MenuItem } from 'material-ui/Menu'
+import Menu, {MenuItem} from 'material-ui/Menu'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 const options = [
-  'EDIT', 'DELETE',
+  'EDIT', 'DELETE'
 ]
 
 const ITEM_HEIGHT = 48
 
 class PostSettingButton extends React.Component {
   state = {
-    anchorEl: null, open: false, selectedIndex: null, showDeleteModal: false,
+    anchorEl: null, open: false, selectedIndex: null, showDeleteModal: false
   }
-  
+
   handleClick = (e) => {
     e.stopPropagation()
     this.setState({open: true, anchorEl: e.currentTarget})
   }
-  
+
   handleRequestClose = (e) => {
     e.stopPropagation()
     this.setState({open: false})
     this.props.showPostEditView(false)
   }
-  
+
   selectMenuItem = (e, index) => {
-    const {showPostEditView, deletePost, content, currentCategory} = this.props
+    const {showPostEditView, deletePost, content} = this.props
+    const currentCategory = this.props.post.category
     this.setState({open: false, selectedIndex: index})
     switch (index) {
       default:
@@ -41,37 +42,37 @@ class PostSettingButton extends React.Component {
         }
     }
   }
-  
-  render () {
+
+  render() {
     return (
-      <div>
-        <IconButton
-          aria-label="More"
-          aria-owns={this.state.open ? 'long-utils' : null}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
-          <MoreVertIcon/>
-        </IconButton>
-        <Menu
-          id="long-menu"
-          anchorEl={this.state.anchorEl}
-          open={this.state.open}
-          onRequestClose={this.handleRequestClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4, width: 100,
-            },
-          }}
-        >
-          {options.map((option, index) => (
-            <MenuItem key={option}
-                      onClick={e => this.selectMenuItem(e, index)}>
-              {option}
-            </MenuItem>
-          ))}
-        </Menu>
-      </div>
+        <div>
+          <IconButton
+              aria-label="More"
+              aria-owns={ this.state.open ? 'long-utils' : null }
+              aria-haspopup="true"
+              onClick={ this.handleClick }
+          >
+            <MoreVertIcon/>
+          </IconButton>
+          <Menu
+              id="long-menu"
+              anchorEl={ this.state.anchorEl }
+              open={ this.state.open }
+              onRequestClose={ this.handleRequestClose }
+              PaperProps={ {
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4, width: 100
+                }
+              } }
+          >
+            { options.map((option, index) => (
+                <MenuItem key={ option }
+                          onClick={ e => this.selectMenuItem(e, index) }>
+                  { option }
+                </MenuItem>
+            )) }
+          </Menu>
+        </div>
     )
   }
 }
@@ -79,7 +80,7 @@ class PostSettingButton extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentCategory: state.currentMenu.category,
-    currentTab: state.currentMenu.tab, post: state.posts.activePost.post,
+    currentTab: state.currentMenu.tab, post: state.posts.activePost.post
   }
 }
 
