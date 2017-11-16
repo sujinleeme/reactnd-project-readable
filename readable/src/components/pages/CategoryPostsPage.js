@@ -21,8 +21,7 @@ class CategoryPostsPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('deee')
-    const {location, changeCategory, fetchPosts} = this.props
+    const {location} = this.props
     const locationChanged = nextProps.location !== location
     if (locationChanged && nextProps.location.state) {
       const category = nextProps.location.state.category

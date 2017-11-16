@@ -12,8 +12,9 @@ import LoadingProgress from '../assests/LoadingProgress'
 class AllPostsPage extends React.Component {
   componentDidMount() {
     this.props.changeTab('new')
-    return this.props.changeCategory('all').
-    then(this.props.fetchPosts('all', 'new'))
+    return this.props.changeCategory('all').then(
+        this.props.fetchPosts('all', 'new')
+    )
   }
 
   componentWillUnmount() {

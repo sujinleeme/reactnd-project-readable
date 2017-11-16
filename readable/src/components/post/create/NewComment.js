@@ -1,16 +1,16 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {withStyles} from 'material-ui/styles'
-import {CardContent} from 'material-ui/Card'
-import {FormHelperText} from 'material-ui/Form'
+import { connect } from 'react-redux'
+import { withStyles } from 'material-ui/styles'
+import { CardContent } from 'material-ui/Card'
+import { FormHelperText } from 'material-ui/Form'
 import Avatar from 'material-ui/Avatar'
 import Input from 'material-ui/Input'
-import {styles} from '../../../styles/post/NewComment'
-import {date, uuid} from '../../../utils/utils'
-import {createNewComment} from '../../../modules/actions/posts'
+import { styles } from '../../../styles/post/NewComment'
+import { date, uuid } from '../../../utils/utils'
+import { createNewComment } from '../../../modules/actions/posts'
 
 class NewComment extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       content: {
@@ -25,7 +25,7 @@ class NewComment extends React.Component {
     this.initForm()
   }
 
-  initForm() {
+  initForm () {
     const postId = uuid()
     const today = Date.now()
     const convertedTimestamp = date(today)
@@ -46,8 +46,8 @@ class NewComment extends React.Component {
     if (e.charCode === 13) {
       const isValid = this.checkEmptyFields()
       if (isValid) {
-        this.props.createNewComment(content, content.parentId).
-        then(() => this.initForm())
+        this.props.createNewComment(content, content.parentId)
+        .then(() => this.initForm())
       }
     }
   }
@@ -61,32 +61,28 @@ class NewComment extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const {classes} = this.props
     const {content, checkValid} = this.state
     const body = content.body
     return (
-        <CardContent className={ classes.root }
-                     onClick={ (e) => e.stopPropagation() }
-
-
-        >
-          <Avatar className={ classes.avatar }>GU</Avatar>
-          <Input
-              placeholder="Write a comment..."
-              fullWidth="true"
-              disableUnderline="true"
-              inputProps={ {
-                'aria-label': 'comment'
-              } }
-              value={ body || '' }
-              onKeyPress={ this.submitForm }
-              onChange={ this.handleBodyChange }
-          />
-          { checkValid && !body ?
-              <FormHelperText className={ classes.error }>
-                Body is empty</FormHelperText> :
-              null }</CardContent>
+      <CardContent className={ classes.root }
+                   onClick={ (e) => e.stopPropagation() }
+      >
+        <Avatar className={ classes.avatar }>GU</Avatar>
+        <Input
+          placeholder="Write a comment..."
+          fullWidth="true"
+          disableUnderline="true"
+          inputProps={ {
+            'aria-label': 'comment'
+          } }
+          value={ body || '' }
+          onKeyPress={ this.submitForm }
+          onChange={ this.handleBodyChange }
+        />
+        { checkValid && !body ? <FormHelperText className={ classes.error }>
+          Body is empty</FormHelperText> : null }</CardContent>
     )
   }
 }
@@ -99,10 +95,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewComment: (content, id) => Promise.resolve().
-    then((res) => dispatch(createNewComment(content, id)))
+    createNewComment: (content, id) => Promise.resolve()
+    .then((res) => dispatch(createNewComment(content, id)))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    withStyles(styles)(NewComment))
+  withStyles(styles)(NewComment))

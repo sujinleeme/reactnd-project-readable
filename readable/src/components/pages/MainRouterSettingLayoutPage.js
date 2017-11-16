@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import {withStyles} from 'material-ui/styles'
 import CategoryPostsPage from '../pages/CategoryPostsPage'

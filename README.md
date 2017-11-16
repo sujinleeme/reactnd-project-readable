@@ -22,20 +22,20 @@ For a demo, check out [https://reactnd-readable.firebaseapp.com/](https://reactn
 
 ## Quick Start
 #### Run React App (Frontend)
-* Clone project locally `git clone https://github.com/sujinleeme/reactnd-project-readable.git`
-* Go to react app `cd readable`
-* Install all project dependencies with `npm install`
-* Run server with `npm start`
-* Check console or browser if server runs on [http://localhost:3000/](http://localhost:3000/)
+* Clone project locally `git clone https://github.com/sujinleeme/reactnd-project-readable.git`.
+* Go to react app `cd reactnd-project-readable/readable`.
+* Install all project dependencies with `npm install` in `readable` folder.
+* Run server with `npm start` in `readable` folder.
+* Check console or browser if server runs on [http://localhost:3000/](http://localhost:3000/).
 
 
 #### Run local backend development server (Node)
 To install and start the API server, run the following commands in  `api-server` directory:
 
-* Go to Server Directory `cd readable/src/api-server`
-* Install all server dependenices with `npm install`
-* Run backend server with `node server.js`
-* Check console or browser if server runs on [http://localhost:3001/](http://localhost:3001/)
+* Go to Server Directory `cd readable/src/api-server`.
+* Install all server dependenices with `npm install` in   `api-server` in `api-server`.
+* Run backend server with `node server.js`.
+* Check console or browser if server runs on [http://localhost:3001/](http://localhost:3001/).
 
 ### To build & deploy on firebase:
 ```
@@ -44,10 +44,20 @@ npm run build && npm run deploy
 
 ## Documentation
 ### What's included
-Within the download you'll find the following `src/` directories and files:
+Within the download you'll find the following directories and files:
+
 ```
+|-- api-server
+|   |-- README.md
+|   |-- categories.js
+|   |-- comments.js
+|   |-- config.js
+|   |-- configurl.js
+|   |-- package.json
+|   |-- posts.js
+|   |-- server.js
+|   `-- tabs.js
 |-- components
-|   |-- CategoryPostsPage
 |   |-- assests
 |   |   |-- GithubIcon.js
 |   |   `-- LoadingProgress.js
@@ -62,12 +72,12 @@ Within the download you'll find the following `src/` directories and files:
 |   |   |-- AllPostsPage.js
 |   |   |-- CategoryPostsPage.js
 |   |   |-- MainRouterSettingLayoutPage.js
+|   |   |-- NotFound.js
 |   |   `-- PostDetailPage.js
 |   `-- post
 |       |-- body
 |       |   |-- PostCardList.js
-|       |   |-- PostContent.js
-|       |   `-- PostDetail.js
+|       |   `-- PostContent.js
 |       |-- buttons
 |       |   |-- CommentButton.js
 |       |   |-- FloatingNewPostButton.js
@@ -98,6 +108,7 @@ Within the download you'll find the following `src/` directories and files:
 |-- registerServiceWorker.js
 |-- store.js
 |-- styles
+|   |-- CustomTheme.js
 |   |-- container
 |   |   |-- CategoryContainer.js
 |   |   `-- TabContainer.js
@@ -117,8 +128,8 @@ Within the download you'll find the following `src/` directories and files:
 ```
 
 ### TBD
-* Use Firebase for backend
+* Use Firebase for backend.
 
 ## Copyright and License 
-* A project [starter server repository](https://github.com/udacity/reactnd-project-readable-starter) contributed by Udacity
-* The MIT License
+* A project [starter server repository](https://github.com/udacity/reactnd-project-readable-starter) contributed by Udacity.
+* The MIT License.

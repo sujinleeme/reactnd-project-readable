@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
 
 import './index.css'
 import history from './history'
@@ -12,7 +11,7 @@ import {ConnectedRouter} from 'react-router-redux'
 
 import registerServiceWorker from './registerServiceWorker'
 
-import CustomTheme from './CustomTheme'
+import CustomTheme from './styles/CustomTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MainRouterSettingLayoutPage from './components/pages/MainRouterSettingLayoutPage'
 

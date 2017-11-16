@@ -27,7 +27,7 @@ class TabContainer extends React.Component {
   }
 
   render() {
-    const {classes, currentCategory, currentTab, tabs} = this.props
+    const {classes, tabs} = this.props
     return (
         tabs && <Tabs className={ classes.root } value={ this.state.value }
                       indicatorColor="primary"
