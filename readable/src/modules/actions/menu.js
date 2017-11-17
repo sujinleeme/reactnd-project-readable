@@ -1,12 +1,11 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../root/configurl'
 
-export const FETCH_CATEGORY_DATA_SUCCESS = 'FETCH_CATEGORY_DATA_SUCCESS'
-export const FETCH_TAB_DATA_SUCCESS = 'FETCH_TAB_DATA_SUCCESS'
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-export const SELECT_TAB = 'SELECT_TAB'
-export const SETUP_MENU_SUCCESS = 'SETUP_MENU_SUCCESS'
-export const CHANGE_EDIT_MENU = 'CHANGE_EDIT_MENU'
+import { FETCH_CATEGORY_DATA_SUCCESS,
+  FETCH_TAB_DATA_SUCCESS,
+  SELECT_CATEGORY,
+  SELECT_TAB,
+} from '../actionTypes/menuTypes'
 
 export const selectCategory = ({category}) => {
   return {

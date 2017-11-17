@@ -21,7 +21,6 @@ const NotFound = (props) => {
         </Typography>
       </div>
   )
-
 }
 
 export default withStyles(styles)(NotFound)

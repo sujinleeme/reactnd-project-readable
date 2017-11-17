@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { withRouter, Link } from 'react-router-dom'
-import PostCardList from '../body/PostCardList'
+import PostCard from './PostCard'
 import { styles } from '../../../styles/post/PostListContainer'
-
 
 const PostListContainer = (props) => {
   const {tab, posts, classes} = props
@@ -16,14 +15,15 @@ const PostListContainer = (props) => {
           to={ {
             pathname: `/posts/${post.id}`,
             state: {
-              category: post.category, tab: tab, id: post.id,
-            },
+              category: post.category, tab: tab, id: post.id
+            }
           } }
         >
-          <PostCardList
+          <PostCard
             post={ post }
             id={ post.id }
             key={ post.id }
+            renderCategory={ props.category }
           />
         </Link>
       )) : null }
@@ -32,7 +32,7 @@ const PostListContainer = (props) => {
 }
 
 PostListContainer.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withRouter(withStyles(styles)(PostListContainer))

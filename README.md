@@ -52,7 +52,6 @@ Within the download you'll find the following directories and files in `src`:
 |   |-- categories.js
 |   |-- comments.js
 |   |-- config.js
-|   |-- configurl.js
 |   |-- package.json
 |   |-- posts.js
 |   |-- server.js
@@ -73,14 +72,13 @@ Within the download you'll find the following directories and files in `src`:
 |   |   |-- CategoryPostsPage.js
 |   |   |-- MainRouterSettingLayoutPage.js
 |   |   |-- NotFound.js
+|   |   |-- PostDetailComments.js
 |   |   `-- PostDetailPage.js
 |   `-- post
 |       |-- body
-|       |   |-- PostCardList.js
 |       |   `-- PostContent.js
 |       |-- buttons
 |       |   |-- CommentButton.js
-|       |   |-- FloatingNewPostButton.js
 |       |   |-- PostSaveCancelButton.js
 |       |   |-- PostSettingButton.js
 |       |   `-- UpDownVoter.js
@@ -88,11 +86,15 @@ Within the download you'll find the following directories and files in `src`:
 |       |   |-- NewComment.js
 |       |   `-- NewPost.js
 |       `-- list
+|           |-- PostCard.js
 |           `-- PostListContainer.js
 |-- history.js
 |-- index.css
 |-- index.js
 |-- modules
+|   |-- actionTypes
+|   |   |-- menuTypes.js
+|   |   `-- postsTypes.js
 |   |-- actions
 |   |   |-- menu.js
 |   |   `-- posts.js
@@ -102,6 +104,7 @@ Within the download you'll find the following directories and files in `src`:
 |   `-- root
 |       |-- configStore
 |       |   `-- index.js
+|       |-- configurl.js
 |       |-- headers.js
 |       `-- rootReducer
 |           `-- index.js
@@ -117,8 +120,8 @@ Within the download you'll find the following directories and files in `src`:
 |   `-- post
 |       |-- NewComment.js
 |       |-- NewPost.js
-|       |-- PostCardList.js
 |       |-- PostContent.js
+|       |-- PostListCard.js
 |       |-- PostListContainer.js
 |       |-- PostSaveCancelButton.js
 |       |-- PostStyle.js

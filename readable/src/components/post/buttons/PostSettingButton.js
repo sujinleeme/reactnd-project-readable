@@ -2,7 +2,6 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import MoreVertIcon from 'material-ui-icons/MoreVert'
-import { connect } from 'react-redux'
 
 const options = [
   'EDIT', 'DELETE'
@@ -16,7 +15,8 @@ class PostSettingButton extends React.Component {
   }
 
   handleClick = (e) => {
-    e.stopPropagation()
+    e.preventDefault()
+    e.nativeEvent.stopImmediatePropagation()
     this.setState({open: true, anchorEl: e.currentTarget})
   }
 
@@ -28,7 +28,7 @@ class PostSettingButton extends React.Component {
 
   selectMenuItem = (e, index) => {
     const {showPostEditView, deletePost, content} = this.props
-    const currentCategory = this.props.post.category
+    const currentCategory = content.category
     this.setState({open: false, selectedIndex: index})
     switch (index) {
       default:
@@ -77,13 +77,6 @@ class PostSettingButton extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentCategory: state.currentMenu.category,
-    currentTab: state.currentMenu.tab, post: state.posts.activePost.post
-  }
-}
-
-export default connect(mapStateToProps)(PostSettingButton)
+export default PostSettingButton
 
 

@@ -1,5 +1,4 @@
 export const styles = theme => ({
-
   root: {
     maxWidth: '100%',
     margin: theme.spacing.unit * 3,
@@ -11,24 +10,19 @@ export const styles = theme => ({
       cursor: 'pointer'
     }
   },
-
   form: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%'
-
   },
-
   inputField: {
     alignItems: 'right',
     width: '100%'
   },
-
   inputTitle: {
     width: '100%'
   },
-
   avatar: {
     marginRight: '16px'
   },
@@ -41,12 +35,9 @@ export const styles = theme => ({
       cursor: 'text !important'
     }
   },
-
   categorybuttons: {
     float: 'right'
-
   },
-
   chip: {
     margin: 4
   },
@@ -60,7 +51,5 @@ export const styles = theme => ({
   },
   active: {
     background: '#4FC3F7 !important'
-
   }
-
 })

@@ -28,7 +28,7 @@ import {
 
   UPDATE_COMMENT_VOTE_SCORE_SUCCESS, UPDATE_COMMENT_VOTE_SCORE_FAILURE
 
-} from '../actions/posts'
+} from '../actionTypes/postsTypes'
 
 const INITIAL_STATE = {
   postList: {posts: [], error: null, loading: false},
@@ -40,7 +40,8 @@ const INITIAL_STATE = {
   deletedComment: {comment: null, error: null, loading: false}
 }
 
-export function posts(state = INITIAL_STATE, action) {
+
+export function posts (state = INITIAL_STATE, action) {
   let error
   switch (action.type) {
 
@@ -50,9 +51,9 @@ export function posts(state = INITIAL_STATE, action) {
         postList: {
           ...state.postList,
           posts: state.postList.posts.map(
-              (post, i) => post.id === action.id ? {
-                ...post, comments: action.payload.payload
-              } : post)
+            (post, i) => post.id === action.id ? {
+              ...post, comments: action.payload.payload
+            } : post)
         }
       }
 

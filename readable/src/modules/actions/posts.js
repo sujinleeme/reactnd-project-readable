@@ -3,294 +3,271 @@ import { baseurl } from '../root/configurl'
 
 import { sortLists } from '../../utils/utils'
 
-export const RESET_FETCH_POSTS = 'RESET_FETCH_POSTS'
+import {
 
-export const FETCH_POSTS = 'FETCH_POSTS'
-export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
-export const FETCH_POSTS_FAILURE = 'FETCH_POSTS_FAILURE'
+  FETCH_POSTS, FETCH_POSTS_SUCCESS, FETCH_POSTS_FAILURE,
 
-export const FETCH_COMMENTS_COUNTER = 'FETCH_COMMENTS_COUNTER'
+  FETCH_COMMENTS_COUNTER, SORT_POSTS_SUCCESS,
 
-export const SORT_POSTS_SUCCESS = 'SORT_POSTS_SUCCESS'
+  RESET_FETCH_POSTS,
 
-export const FETCH_POST = 'FETCH_POST'
-export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
-export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
+  FETCH_POST, FETCH_POST_SUCCESS, FETCH_POST_FAILURE, RESET_ACTIVE_POST,
 
-export const CREATE_POST = 'CREATE_POST'
-export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
-export const CREATE_POST_FAILURE = 'CREATE_POST_FAILURE'
+  EDIT_POST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE,
 
-export const EDIT_POST = 'EDIT_POST'
-export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
-export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
+  CREATE_POST, CREATE_POST_SUCCESS, CREATE_POST_FAILURE,
 
-export const RESET_ACTIVE_POST = 'RESET_ACTIVE_POST'
-export const RESET_DELETED_POST = 'RESET_DELETED_POST'
+  DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE, RESET_DELETED_POST,
 
-export const DELETE_POST = 'DELETE_POST'
-export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
-export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
+  UPDATE_POST_VOTE_SCORE, UPDATE_POST_VOTE_SCORE_FAILURE,
 
-export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE'
-export const UPDATE_POST_VOTE_SCORE_FAILURE = 'UPDATE_POST_VOTE_SCORE_FAILURE'
+  CREATE_COMMENT, CREATE_COMMENT_SUCCESS, CREATE_COMMENT_FAILURE,
 
-export const FETCH_COMMENTS = 'FETCH_COMMENTS'
-export const FETCH_COMMENTS_SUCCESS = 'FETCH_COMMENTS_SUCCESS'
-export const FETCH_COMMENTS_FAILURE = 'FETCH_COMMENTS_FAILURE'
+  FETCH_COMMENT, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE,
 
-export const FETCH_COMMENT = 'FETCH_COMMENT'
-export const FETCH_COMMENT_SUCCESS = 'FETCH_COMMENT_SUCCESS'
-export const FETCH_COMMENT_FAILURE = 'FETCH_COMMENT_FAILURE'
+  DELETE_COMMENT, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE,
 
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
-export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE'
+  EDIT_COMMENT, EDIT_COMMENT_SUCCESS, EDIT_COMMENT_FAILURE,
 
-export const CREATE_COMMENT = 'CREATE_COMMENT'
-export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS'
-export const CREATE_COMMENT_FAILURE = 'CREATE_COMMENT_FAILURE'
+  FETCH_COMMENTS, FETCH_COMMENTS_SUCCESS, FETCH_COMMENTS_FAILURE,
 
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS'
-export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE'
+  UPDATE_COMMENT_VOTE_SCORE_SUCCESS, UPDATE_COMMENT_VOTE_SCORE_FAILURE
 
-export const UPDATE_COMMENT_VOTE_SCORE_SUCCESS = 'UPDATE_COMMENT_VOTE_SCORE_SUCCESS'
-export const UPDATE_COMMENT_VOTE_SCORE_FAILURE = 'UPDATE_COMMENT_VOTE_SCORE_FAILURE'
+} from '../actionTypes/postsTypes'
 
 export const resetFetchPost = (init) => {
   return {
-    type: 'RESET_FETCH_POSTS', payload: init
+    type: RESET_FETCH_POSTS, payload: init
   }
 }
 
 export const fetchPost = (post) => {
   return {
-    type: 'FETCH_POST', payload: post
+    type: FETCH_POST, payload: post
   }
 }
 
 export const fetchPostSuccess = (activePost) => {
   return {
-    type: 'FETCH_POST_SUCCESS', payload: activePost
+    type: FETCH_POST_SUCCESS, payload: activePost
   }
 }
 
 export const fetchPostsFailure = (error) => {
   return {
-    type: 'FETCH_POSTS_FAILURE', payload: error
+    type: FETCH_POSTS_FAILURE, payload: error
   }
 }
 
 export const resetActivePost = () => {
   return {
-    type: 'RESET_ACTIVE_POST'
+    type: RESET_ACTIVE_POST
   }
 }
 
 export function resetDeletedPost () {
   return {
-    type: 'RESET_DELETED_POST'
+    type: RESET_DELETED_POST
   }
 }
 
 export const fetchPosts = (request) => {
   return {
-    type: 'FETCH_POSTS', payload: request
+    type: FETCH_POSTS, payload: request
   }
 }
 
 export const fetchPostsSuccess = (post) => {
   return {
-    type: 'FETCH_POSTS_SUCCESS', payload: post
+    type: FETCH_POSTS_SUCCESS, payload: post
   }
 }
 
 export const sortPosts = (option, posts) => {
   const sortedPost = sortLists(option, posts)
   return {
-    type: 'SORT_POSTS_SUCCESS', payload: sortedPost, sortType: option
+    type: SORT_POSTS_SUCCESS, payload: sortedPost, sortType: option
   }
 }
 
 export const fetchPostFailure = (error) => {
   return {
-    type: 'FETCH_POST_FAILURE', payload: error
+    type: FETCH_POST_FAILURE, payload: error
   }
 }
 
 export const editPost = (request) => {
   return {
-    type: 'EDIT_POST', payload: request
+    type: EDIT_POST, payload: request
   }
 }
 
 export const editPostSuccess = (bool) => {
   return {
-    type: 'EDIT_POST_SUCCESS', payload: bool
+    type: EDIT_POST_SUCCESS, payload: bool
   }
 }
 
 export const editPostFailure = (error) => {
   return {
-    type: 'EDIT_POST_FAILURE', payload: error
+    type: EDIT_POST_FAILURE, payload: error
   }
 }
 
 export const updatePostVoteScore = (bool) => {
   return {
-    type: 'UPDATE_POST_VOTE_SCORE', payload: bool
+    type: UPDATE_POST_VOTE_SCORE, payload: bool
   }
 }
 
 export const updatePostVoteScoreFailure = (error) => {
   return {
-    type: 'UPDATE_POST_VOTE_SCORE_FAILURE', payload: error
+    type: UPDATE_POST_VOTE_SCORE_FAILURE, payload: error
   }
 }
 
 export function createPost (request) {
   return {
-    type: 'CREATE_POST', payload: request
+    type: CREATE_POST, payload: request
   }
 }
 
 export const createPostSuccess = (newPost) => {
   return {
-    type: 'CREATE_POST_SUCCESS', payload: newPost
+    type: CREATE_POST_SUCCESS, payload: newPost
   }
 }
 
 export const createPostFailure = (error) => {
   return {
-    type: 'CREATE_POST_FAILURE', payload: error
+    type: CREATE_POST_FAILURE, payload: error
   }
 }
 
 export const deletePost = (request) => {
   return {
-    type: 'DELETE_POST', payload: request
+    type: DELETE_POST, payload: request
   }
 }
 
 export const deletePostSuccess = (post) => {
   return {
-    type: 'DELETE_POST_SUCCESS', payload: post
+    type: DELETE_POST_SUCCESS, payload: post
   }
 }
 
 export const deletePostFailure = (error) => {
   return {
-    type: 'DELETE_POST_FAILURE', payload: error
+    type: DELETE_POST_FAILURE, payload: error
   }
 }
 
 export const fetchCommentsCounter = (comments, id) => {
   return {
-    type: 'FETCH_COMMENTS_COUNTER', payload: comments, id: id
+    type: FETCH_COMMENTS_COUNTER, payload: comments, id: id
   }
 }
 
 export const fetchComments = (request) => {
   return {
-    type: 'FETCH_COMMENTS', payload: request
+    type: FETCH_COMMENTS, payload: request
   }
 }
 
 export const fetchCommentsFailure = (error) => {
   return {
-    type: 'FETCH_COMMENTS_FAILURE', payload: error
+    type: FETCH_COMMENTS_FAILURE, payload: error
   }
 }
 
 export const fetchCommentsSuccess = (comments) => {
   const sortedComments = sortLists('new', comments)
   return {
-    type: 'FETCH_COMMENTS_SUCCESS', payload: sortedComments
+    type: FETCH_COMMENTS_SUCCESS, payload: sortedComments
   }
 }
 
 export function createComment (request) {
   return {
-    type: 'CREATE_COMMENT', payload: request
+    type: CREATE_COMMENT, payload: request
   }
 }
 
 export const createCommentSuccess = (newComment) => {
   return {
-    type: 'CREATE_COMMENT_SUCCESS', payload: newComment
+    type: CREATE_COMMENT_SUCCESS, payload: newComment
   }
 }
 
 export const createCommentFailure = (error) => {
   return {
-    type: 'CREATE_COMMENT_FAILURE', payload: error
+    type: CREATE_COMMENT_FAILURE, payload: error
   }
 }
 
 export const fetchComment = (post) => {
   return {
-    type: 'FETCH_COMMENT', payload: post
+    type: FETCH_COMMENT, payload: post
   }
 }
 
 export const fetchCommentSuccess = (activePost) => {
   return {
-    type: 'FETCH_COMMENT_SUCCESS', payload: activePost
+    type: FETCH_COMMENT_SUCCESS, payload: activePost
   }
 }
 
 export const fetchCommentFailure = (error) => {
   return {
-    type: 'FETCH_COMMENT_FAILURE', payload: error
+    type: FETCH_COMMENT_FAILURE, payload: error
   }
 }
 
 export const editComment = (request) => {
   return {
-    type: 'EDIT_COMMENT', payload: request
+    type: EDIT_COMMENT, payload: request
   }
 }
 
 export const editCommentSuccess = (bool) => {
   return {
-    type: 'EDIT_COMMENT_SUCCESS', payload: bool
+    type: EDIT_COMMENT_SUCCESS, payload: bool
   }
 }
 
 export const editCommentFailure = (error) => {
   return {
-    type: 'EDIT_COMMENT_FAILURE', payload: error
+    type: EDIT_COMMENT_FAILURE, payload: error
   }
 }
 
 export const updateCommentVoteScoreSuccess = (bool, comment) => {
   return {
-    type: 'UPDATE_COMMENT_VOTE_SCORE_SUCCESS', payload: bool, comment: comment
+    type: UPDATE_COMMENT_VOTE_SCORE_SUCCESS, payload: bool, comment: comment
   }
 }
 
 export const updateCommentVoteScoreFailure = (error) => {
   return {
-    type: 'UPDATE_COMMENT_VOTE_SCORE_FAILURE', payload: error
+    type: UPDATE_COMMENT_VOTE_SCORE_FAILURE, payload: error
   }
 }
 
 export const deleteComment = (request) => {
   return {
-    type: 'DELETE_COMMENT', payload: request
+    type: DELETE_COMMENT, payload: request
   }
 }
 
 export const deleteCommentSuccess = (comment) => {
   return {
-    type: 'DELETE_COMMENT_SUCCESS', payload: comment
+    type: DELETE_COMMENT_SUCCESS, payload: comment
   }
 }
 
 export const deleteCommentFailure = (error) => {
   return {
-    type: 'DELETE_COMMENT_FAILURE', payload: error
+    type: DELETE_COMMENT_FAILURE, payload: error
   }
 }
 
@@ -470,7 +447,46 @@ export const updatePostContent = (id, content) => {
   }
 }
 
-export const deletePostContent = (id, category, tab) => {
+export const updateAllPostContent = (id, content, category, tab) => {
+  return (dispatch) => {
+    dispatch(editPost())
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'PUT', headers: headers, body: JSON.stringify(content)
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(editPostSuccess(true))
+      return response
+    })
+    .then((response) => response.json())
+    .then((post) => dispatch(getPosts(category, tab)))
+    .catch((err) => dispatch(editPostFailure(err)))
+  }
+}
+
+export const deletePostsAllUpdate = (id, category, tab) => {
+  return (dispatch) => {
+    dispatch(deletePost())
+    fetch(`${baseurl}/posts/${id}`, {
+      method: 'PUT', headers: headers, body: JSON.stringify({deleted: true})
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      dispatch(deletePostSuccess(true))
+      return response
+    })
+    .then((response) => response.json())
+    .then((post) => dispatch(getPosts(category, tab)))
+    .catch((err) => dispatch(deletePostFailure(err)))
+
+  }
+}
+
+export const deletePostContent = (id) => {
   return (dispatch) => {
     dispatch(deletePost())
     fetch(`${baseurl}/posts/${id}`, {
@@ -488,7 +504,7 @@ export const deletePostContent = (id, category, tab) => {
   }
 }
 
-export const deleteCommentContent = (id, parentId) => {
+export const deleteCommentContent = (id, category, parentId) => {
   return (dispatch) => {
     dispatch(deleteComment())
     fetch(`${baseurl}/comments/${id}`, {
@@ -502,8 +518,8 @@ export const deleteCommentContent = (id, parentId) => {
       return response
     })
     .then((response) => response.json())
-    .catch((err) => dispatch(deleteCommentFailure(err)))
     .then(() => dispatch(getComments(parentId)))
+    .catch((err) => dispatch(deleteCommentFailure(err)))
   }
 }
 

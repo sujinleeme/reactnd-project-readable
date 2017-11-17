@@ -1,7 +1,7 @@
 import {
   SELECT_CATEGORY, SELECT_TAB, FETCH_CATEGORY_DATA_SUCCESS,
-  FETCH_TAB_DATA_SUCCESS, SETUP_MENU_SUCCESS, CHANGE_EDIT_MENU
-} from '../actions/menu'
+  FETCH_TAB_DATA_SUCCESS
+} from '../actionTypes/menuTypes'
 
 const initSelectState = {
   tab: null, category: null
@@ -40,23 +40,3 @@ export const tabs = (state = [], action) => {
       return state
   }
 }
-
-export const setupMenuComplete = (state = false, action) => {
-  switch (action.type) {
-    case SETUP_MENU_SUCCESS:
-      return action.hasloaded
-    default:
-      return state
-  }
-}
-
-export const postsIsEditing = (state = false, action) => {
-  switch (action.type) {
-    case CHANGE_EDIT_MENU:
-      return action.isEditing
-    default:
-      return state
-  }
-}
-
-

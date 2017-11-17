@@ -1,20 +1,12 @@
-body {
-
-  font-family: sans-serif;
-}
-
-.App {
-	text-align: center;
-	}
-
 html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	max-width: 100%;
 	overflow-x: hidden;
-	min-height:100vh;
+	min-height: 100vh;
+	font-family: sans-serif;
 	margin: 0;
-  padding: 0;
+	padding: 0;
 	color: #616161;
 	}
 
@@ -23,25 +15,19 @@ a:hover, a:visited, a:link, a:active {
 	color: inherit;
 	}
 
-	
-	a:hover, a:visited, a:link, a:active {
-		text-decoration: none;
-		fill: #4FC3F7
-		}
-	
-	
-	a svg {
-		fill: black;
-	
-		}
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none;
+	fill: #4FC3F7
+	}
 
+a svg {
+	fill: black;
+	}
 
-		svg:hover {
-			fill: #4FC3F7
-			
-		}
-			
-/* 	
-	a svg:hover #github{
-		fill: #4FC3F7
-		} */
+svg:hover {
+	fill: #4FC3F7
+	}
+
+div#root {
+	width: 100vw;
+	}

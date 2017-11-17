@@ -35,5 +35,4 @@ export const styles = theme => ({
     color: '#fff',
     marginLeft: theme.spacing.unit * 3
   }
-
 })

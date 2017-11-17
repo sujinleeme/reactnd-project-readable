@@ -1,48 +1,49 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {withStyles} from 'material-ui/styles'
-import {connect} from 'react-redux'
-import {resetPosts, getPosts} from '../../modules/actions/posts'
-import {changeTab, changeCategory} from '../../modules/actions/menu'
+import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
+import { resetPosts, getPosts } from '../../modules/actions/posts'
+import { changeTab, changeCategory } from '../../modules/actions/menu'
 import PostListContainer from '../post/list/PostListContainer'
 import TabContainer from '../menu/TabContainer'
 import NewPost from '../post/create/NewPost'
 import LoadingProgress from '../assests/LoadingProgress'
 
 class AllPostsPage extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.changeTab('new')
     return this.props.changeCategory('all').then(
-        this.props.fetchPosts('all', 'new')
+      this.props.fetchPosts('all', 'new')
     )
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.resetPosts()
   }
 
-  render() {
-    const {postList, currentTab} = this.props
+  render () {
+    const {postList, currentCategory, currentTab} = this.props
     const {loading} = postList
     const posts = postList.posts
     if (loading) {
       return (
-          <div>
-            <TabContainer/>
-            <NewPost/>
-            <LoadingProgress/>
-          </div>
-      )
-    }
-    return (
         <div>
           <TabContainer/>
           <NewPost/>
-          <PostListContainer
-              posts={ posts }
-              tab={ currentTab }
-          />
+          <LoadingProgress/>
         </div>
+      )
+    }
+    return (
+      <div>
+        <TabContainer/>
+        <NewPost/>
+        <PostListContainer
+          posts={ posts }
+          category={ 'all' }
+          tab={ currentTab }
+        />
+      </div>
     )
   }
 }
@@ -63,12 +64,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeTab: (tab) => dispatch(changeTab(tab)),
     changeCategory: (category) => new Promise(
-        (res) => dispatch(changeCategory(category))),
+      (res) => dispatch(changeCategory(category))),
     fetchPosts: (category, tab) => new Promise(
-        (res) => dispatch(getPosts(category, tab))),
+      (res) => dispatch(getPosts(category, tab))),
     resetPosts: () => dispatch(resetPosts())
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    withStyles()(AllPostsPage))
+  withStyles()(AllPostsPage))

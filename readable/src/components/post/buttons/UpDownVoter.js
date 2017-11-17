@@ -7,20 +7,20 @@ import Typography from 'material-ui/Typography'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
 import classnames from 'classnames'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { styles } from '../../../styles/post/PostVote'
 
 class UpDownVoter extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      upVote: false, downVote: false, voted: false,
+      upVote: false,
+      downVote: false,
+      voted: false,
       initVoteScore: this.props.content.voteScore,
       parentId: this.props.content.parentId
     }
   }
-  
+
   handleClickVote = (e, type) => {
     e.stopPropagation()
     const id = this.props.content.id
@@ -46,12 +46,12 @@ class UpDownVoter extends React.Component {
         break
     }
   }
-  
+
   updateUpDownVote = (id, type) => {
     const {upVote, downVote, parentId} = this.state
     let notActived
     let opposite
-    
+
     switch (type) {
       default:
       case 'downVote' :
@@ -63,55 +63,50 @@ class UpDownVoter extends React.Component {
         notActived = upVote
         break
     }
-  
+
     if (!notActived) {
       if (this.state.voted) {
         this.props.updateVoteCounter(id, type, parentId)
       }
       this.setState({voted: true})
       return this.props.updateVoteCounter(id, type, parentId)
-    } else {
+    }
+    else {
       this.setState({voted: false})
       return this.props.updateVoteCounter(id, opposite, parentId)
     }
   }
-  
+
   render () {
     const {classes, content} = this.props
     const {upVote, downVote} = this.state
     return (
-      <CardActions disableActionSpacing className={classes.root}>
+      <CardActions disableActionSpacing className={ classes.root }>
         <IconButton aria-label="Add to favorites"
-                    onClick={(e) => this.handleClickVote(e, 'upVote')}>
-          <ThumbUp className={classnames(classes.button, {
-            [classes.clicked]: upVote,
-          })}/>
+                    onClick={ (e) => this.handleClickVote(e, 'upVote') }
+        >
+          <ThumbUp className={ classnames(classes.button, {
+            [classes.clicked]: upVote
+          }) }/>
         </IconButton>
-        <Typography className={classnames('', {
-          [classes.clicked]: downVote || upVote,
-        })}>
-          {content.voteScore}
+        <Typography className={ classnames('', {
+          [classes.clicked]: downVote || upVote
+        }) }>
+          { content.voteScore }
         </Typography>
         <IconButton aria-label="Add to favorites"
-                    onClick={(e) => this.handleClickVote(e, 'downVote')}>
-          <ThumbDown className={classnames(classes.button, {
-            [classes.clicked]: downVote,
-          })}/>
+                    onClick={ (e) => this.handleClickVote(e, 'downVote') }>
+          <ThumbDown className={ classnames(classes.button, {
+            [classes.clicked]: downVote
+          }) }/>
         </IconButton>
       </CardActions>
     )
   }
 }
 
-const mapStateToProps = (globalState, ownProps) => {
-  return {
-    activePost: globalState.posts.activePost, id: ownProps.id,
-  }
-}
-
 UpDownVoter.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps)(
-  withRouter(withStyles(styles)(UpDownVoter)))
+export default withStyles(styles)(UpDownVoter)
