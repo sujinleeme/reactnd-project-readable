@@ -1,5 +1,6 @@
 import { headers } from '../root/headers'
-import { baseurl } from '../../api-server/configurl'
+import { baseurl } from '../root/configurl'
+
 import { sortLists } from '../../utils/utils'
 
 export const RESET_FETCH_POSTS = 'RESET_FETCH_POSTS'

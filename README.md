@@ -23,9 +23,9 @@ For a demo, check out [https://reactnd-readable.firebaseapp.com/](https://reactn
 ## Quick Start
 #### Run React App (Frontend)
 * Clone project locally `git clone https://github.com/sujinleeme/reactnd-project-readable.git`.
-* Go to react app `cd reactnd-project-readable/readable`.
+* Go to react app `cd readable`.
 * Install all project dependencies with `npm install` in `readable` folder.
-* Run server with `npm start` in `readable` folder.
+* Run server with `npm start`.
 * Check console or browser if server runs on [http://localhost:3000/](http://localhost:3000/).
 
 
@@ -33,7 +33,7 @@ For a demo, check out [https://reactnd-readable.firebaseapp.com/](https://reactn
 To install and start the API server, run the following commands in  `api-server` directory:
 
 * Go to Server Directory `cd readable/src/api-server`.
-* Install all server dependenices with `npm install` in   `api-server` in `api-server`.
+* Install all server dependencies with `npm install`.
 * Run backend server with `node server.js`.
 * Check console or browser if server runs on [http://localhost:3001/](http://localhost:3001/).
 
@@ -44,7 +44,7 @@ npm run build && npm run deploy
 
 ## Documentation
 ### What's included
-Within the download you'll find the following directories and files:
+Within the download you'll find the following directories and files in `src`:
 
 ```
 |-- api-server
