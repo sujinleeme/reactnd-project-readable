@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
 import { CardContent } from 'material-ui/Card'
 import { FormHelperText } from 'material-ui/Form'
 import Avatar from 'material-ui/Avatar'
 import Input from 'material-ui/Input'
-import { styles } from '../../../styles/post/NewComment'
+import { styles } from '../../../styles/form/NewComment'
 import { date, uuid } from '../../../utils/utils'
 import { createNewComment } from '../../../modules/actions/posts'
 
@@ -100,5 +99,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(NewComment))
+export default connect(mapStateToProps, mapDispatchToProps)(styles(NewComment))

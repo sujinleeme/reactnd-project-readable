@@ -1,10 +1,8 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
-import { styles } from '../../styles/post/PostListCard'
+import { styles } from '../../styles/post/PostCard'
 import PostContent from '../post/body/PostContent'
 import UpDownVoter from '../post/buttons/UpDownVoter'
-import { withRouter } from 'react-router-dom'
 import * as actions from '../../modules/actions/posts'
 
 const PostDetailComments = (props) => {
@@ -33,4 +31,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, actions)(
-  withRouter(withStyles(styles)(PostDetailComments)))
+  styles(PostDetailComments))

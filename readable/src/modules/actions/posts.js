@@ -276,17 +276,17 @@ export const createNewPost = (content, category, tab) => {
     dispatch(createPost())
     fetch(`${baseurl}/posts/`, {
       method: 'POST', headers: headers, body: JSON.stringify(content)
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(createPostSuccess(post)))
-    .then((post) => dispatch(getPosts(category, tab)))
-    .catch((err) => dispatch(createPostFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(createPostSuccess(post))).
+    then((post) => dispatch(getPosts(category, tab))).
+    catch((err) => dispatch(createPostFailure(err)))
   }
 }
 
@@ -295,17 +295,17 @@ export const createNewComment = (content, id) => {
     dispatch(createComment())
     fetch(`${baseurl}/comments/`, {
       method: 'POST', headers: headers, body: JSON.stringify(content)
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(createCommentSuccess(post)))
-    .then((post) => dispatch(getComments(id)))
-    .catch((err) => dispatch(createCommentFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(createCommentSuccess(post))).
+    then((post) => dispatch(getComments(id))).
+    catch((err) => dispatch(createCommentFailure(err)))
   }
 }
 
@@ -318,16 +318,16 @@ export const resetPosts = () => {
 export const getAllPosts = (tab) => {
   return (dispatch) => {
     dispatch(fetchPosts())
-    fetch(`${baseurl}/posts`, {headers})
-    .then(response => {
+    fetch(`${baseurl}/posts`, {headers}).
+    then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((posts) => dispatch(fetchPostsSuccess(tab, posts)))
-    .catch(() => dispatch(fetchPostsFailure()))
+    }).
+    then((response) => response.json()).
+    then((posts) => dispatch(fetchPostsSuccess(tab, posts))).
+    catch(() => dispatch(fetchPostsFailure()))
   }
 }
 
@@ -341,65 +341,65 @@ export const getPosts = (category, sortType) => {
     else {
       url = `${baseurl}/${category}/posts`
     }
-    fetch(url, {headers})
-    .then(response => {
+    fetch(url, {headers}).
+    then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((posts) => dispatch(sortPosts(sortType, posts)))
-    .catch((err) => dispatch(fetchPostsFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((posts) => dispatch(sortPosts(sortType, posts))).
+    catch((err) => dispatch(fetchPostsFailure(err)))
   }
 }
 
 export const getPost = (id) => {
   return (dispatch) => {
     dispatch(fetchPost())
-    fetch(`${baseurl}/posts/${id}`, {headers})
-    .then(response => {
+    fetch(`${baseurl}/posts/${id}`, {headers}).
+    then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(fetchPostSuccess(post)))
-    .catch((err) => dispatch(fetchPostFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(fetchPostSuccess(post))).
+    catch((err) => dispatch(fetchPostFailure(err)))
   }
 }
 
 export const getComment = (id) => {
   return (dispatch) => {
     dispatch(fetchComment())
-    fetch(`${baseurl}/comments/${id}`, {headers})
-    .then(response => {
+    fetch(`${baseurl}/comments/${id}`, {headers}).
+    then(response => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(fetchCommentSuccess(post)))
-    .catch((err) => dispatch(fetchCommentFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(fetchCommentSuccess(post))).
+    catch((err) => dispatch(fetchCommentFailure(err)))
   }
 }
 
 export const getComments = (id) => {
   return (dispatch) => {
     dispatch(fetchComments())
-    fetch(`${baseurl}/posts/${id}/comments`, {headers})
-    .then((response) => {
+    fetch(`${baseurl}/posts/${id}/comments`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((comments) => dispatch(fetchCommentsSuccess(comments)))
-    .catch((err) => dispatch(fetchCommentsFailure(err)))
-    .then((comments) => dispatch(fetchCommentsCounter(comments, id)))
+    }).
+    then((response) => response.json()).
+    then((comments) => dispatch(fetchCommentsSuccess(comments))).
+    catch((err) => dispatch(fetchCommentsFailure(err))).
+    then((comments) => dispatch(fetchCommentsCounter(comments, id)))
   }
 }
 
@@ -414,17 +414,17 @@ export const updatePostVoter = (id, type) => {
   return (dispatch) => {
     fetch(`${baseurl}/posts/${id}`, {
       method: 'POST', headers: headers, body: JSON.stringify({option: type})
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(updatePostVoteScore(true))
       return response
-    })
-    .then((response) => response.json())
-    .then((response) => dispatch(getPost(id)))
-    .catch((err) => dispatch(updatePostVoteScoreFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((response) => dispatch(getPost(id))).
+    catch((err) => dispatch(updatePostVoteScoreFailure(err)))
   }
 }
 
@@ -433,17 +433,17 @@ export const updatePostContent = (id, content) => {
     dispatch(editPost())
     fetch(`${baseurl}/posts/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify(content)
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(editPostSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(getPost(id)))
-    .catch((err) => dispatch(editPostFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(getPost(id))).
+    catch((err) => dispatch(editPostFailure(err)))
   }
 }
 
@@ -452,17 +452,17 @@ export const updateAllPostContent = (id, content, category, tab) => {
     dispatch(editPost())
     fetch(`${baseurl}/posts/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify(content)
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(editPostSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(getPosts(category, tab)))
-    .catch((err) => dispatch(editPostFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(getPosts(category, tab))).
+    catch((err) => dispatch(editPostFailure(err)))
   }
 }
 
@@ -471,17 +471,17 @@ export const deletePostsAllUpdate = (id, category, tab) => {
     dispatch(deletePost())
     fetch(`${baseurl}/posts/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify({deleted: true})
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(deletePostSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(getPosts(category, tab)))
-    .catch((err) => dispatch(deletePostFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(getPosts(category, tab))).
+    catch((err) => dispatch(deletePostFailure(err)))
 
   }
 }
@@ -491,16 +491,16 @@ export const deletePostContent = (id) => {
     dispatch(deletePost())
     fetch(`${baseurl}/posts/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify({deleted: true})
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(deletePostSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .catch((err) => dispatch(deletePostFailure(err)))
+    }).
+    then((response) => response.json()).
+    catch((err) => dispatch(deletePostFailure(err)))
   }
 }
 
@@ -509,17 +509,17 @@ export const deleteCommentContent = (id, category, parentId) => {
     dispatch(deleteComment())
     fetch(`${baseurl}/comments/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify({deleted: true})
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw new Error(response.statusText)
       }
       dispatch(deleteCommentSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .then(() => dispatch(getComments(parentId)))
-    .catch((err) => dispatch(deleteCommentFailure(err)))
+    }).
+    then((response) => response.json()).
+    then(() => dispatch(getComments(parentId))).
+    catch((err) => dispatch(deleteCommentFailure(err)))
   }
 }
 
@@ -528,18 +528,18 @@ export const updateCommentContent = (id, content, parentId) => {
     dispatch(editComment())
     fetch(`${baseurl}/comments/${id}`, {
       method: 'PUT', headers: headers, body: JSON.stringify(content)
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       dispatch(editCommentSuccess(true))
       return response
-    })
-    .then((response) => response.json())
-    .then((response) => dispatch(getComment(id)))
-    .then((response) => dispatch(getComments(parentId)))
-    .catch((err) => dispatch(editCommentFailure(err)))
+    }).
+    then((response) => response.json()).
+    then((response) => dispatch(getComment(id))).
+    then((response) => dispatch(getComments(parentId))).
+    catch((err) => dispatch(editCommentFailure(err)))
   }
 }
 
@@ -547,16 +547,16 @@ export const updateCommentVoter = (id, type, parentId) => {
   return (dispatch) => {
     fetch(`${baseurl}/comments/${id}`, {
       method: 'POST', headers: headers, body: JSON.stringify({option: type})
-    })
-    .then((response) => {
+    }).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((post) => dispatch(updateCommentVoteScoreSuccess(true, post)))
-    .catch((err) => dispatch(updateCommentVoteScoreFailure(err)))
-    .then(() => dispatch(getComments(parentId)))
+    }).
+    then((response) => response.json()).
+    then((post) => dispatch(updateCommentVoteScoreSuccess(true, post))).
+    catch((err) => dispatch(updateCommentVoteScoreFailure(err))).
+    then(() => dispatch(getComments(parentId)))
   }
 }

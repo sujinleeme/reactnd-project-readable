@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import NewPost from '../post/create/NewPost'
 import PostListContainer from '../post/list/PostListContainer'
-import LoadingProgress from '../assests/LoadingProgress'
+import LoadingProgress from '../assets/LoadingProgress'
 import TabContainer from '../menu/TabContainer'
 import { resetPosts, getPosts } from '../../modules/actions/posts'
 import { changeCategory, changeTab } from '../../modules/actions/menu'
-import { withStyles } from 'material-ui/styles'
 
 class CategoryPostsPage extends React.Component {
   componentDidMount () {
@@ -93,5 +92,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles()(CategoryPostsPage))
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryPostsPage)

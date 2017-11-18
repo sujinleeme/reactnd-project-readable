@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { CardActions } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import ThumbUp from 'material-ui-icons/ThumbUp'
 import ThumbDown from 'material-ui-icons/ThumbDown'
 import classnames from 'classnames'
-import { styles } from '../../../styles/post/PostVote'
+import { styles } from '../../../styles/buttons/UpDownVoter'
 
 class UpDownVoter extends React.Component {
   constructor (props) {
@@ -109,4 +108,4 @@ UpDownVoter.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(UpDownVoter)
+export default styles(UpDownVoter)

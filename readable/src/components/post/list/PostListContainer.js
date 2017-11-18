@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import { withRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PostCard from './PostCard'
 import { styles } from '../../../styles/post/PostListContainer'
 
@@ -35,4 +34,4 @@ PostListContainer.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withRouter(withStyles(styles)(PostListContainer))
+export default styles(PostListContainer)

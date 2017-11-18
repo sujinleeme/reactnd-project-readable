@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { withStyles } from 'material-ui/styles'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import ExpandLessIcon from 'material-ui-icons/ExpandLess'
 import Card from 'material-ui/Card'
@@ -13,8 +11,9 @@ import UpDownVoter from '../buttons/UpDownVoter'
 import CommentButton from '../buttons/CommentButton'
 import {
   getComments, deletePostsAllUpdate, updateAllPostContent, getPosts
-} from '../../../modules/actions/posts'
-import { styles } from '../../../styles/post/PostListCard'
+}
+  from '../../../modules/actions/posts'
+import { styles } from '../../../styles/post/PostCard'
 
 class PostCard extends React.Component {
   constructor (props) {
@@ -36,11 +35,13 @@ class PostCard extends React.Component {
   }
 
   requestUpdatePost (id, content) {
-    this.props.updatePostBodyContent(id, content, this.props.renderCategory, this.props.currentTab)
+    this.props.updatePostBodyContent(id, content, this.props.renderCategory,
+      this.props.currentTab)
   }
 
   requestDeletePost (id) {
-    this.props.deletePostBodyContent(id, this.props.renderCategory, this.props.currentTab)
+    this.props.deletePostBodyContent(id, this.props.renderCategory,
+      this.props.currentTab)
   }
 
   render () {
@@ -105,5 +106,4 @@ const mapDispatchToProps = (dispatch) => {
       (res) => dispatch(getPosts(category, tab)))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(PostCard)))
+export default connect(mapStateToProps, mapDispatchToProps)(styles(PostCard))

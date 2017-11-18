@@ -57,7 +57,7 @@ Within the download you'll find the following directories and files in `src`:
 |   |-- server.js
 |   `-- tabs.js
 |-- components
-|   |-- assests
+|   |-- assets
 |   |   |-- GithubIcon.js
 |   |   `-- LoadingProgress.js
 |   |-- footer
@@ -112,20 +112,30 @@ Within the download you'll find the following directories and files in `src`:
 |-- store.js
 |-- styles
 |   |-- CustomTheme.js
-|   |-- container
+|   |-- assets
+|   |   `-- LoadingProgress.js
+|   |-- buttons
+|   |   |-- CommentButton.js
+|   |   |-- PostSaveCancelButton.js
+|   |   `-- UpDownVoter.js
+|   |-- footer
+|   |   `-- CopyrightBar.js
+|   |-- form
+|   |   |-- NewComment.js
+|   |   `-- NewPost.js
+|   |-- header
+|   |   `-- HeaderBar.js
+|   |-- menu
 |   |   |-- CategoryContainer.js
 |   |   `-- TabContainer.js
-|   |-- header
-|   |   `-- CopyrightBar.js
+|   |-- page
+|   |   |-- MainRouterSettingLayoutPage.js
+|   |   |-- NotFound.js
+|   |   `-- PostDetailPage.js
 |   `-- post
-|       |-- NewComment.js
-|       |-- NewPost.js
+|       |-- PostCard.js
 |       |-- PostContent.js
-|       |-- PostListCard.js
-|       |-- PostListContainer.js
-|       |-- PostSaveCancelButton.js
-|       |-- PostStyle.js
-|       `-- PostVote.js
+|       `-- PostListContainer.js
 `-- utils
     `-- utils.js
 ```

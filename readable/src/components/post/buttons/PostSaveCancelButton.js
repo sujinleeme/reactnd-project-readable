@@ -1,7 +1,6 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
-import { styles } from '../../../styles/post/PostSaveCancelButton'
+import { styles } from '../../../styles/buttons/PostSaveCancelButton'
 
 const PostSaveCancelButton = (props) => {
   const {classes, cancelPost, savePost} = props
@@ -20,4 +19,4 @@ const PostSaveCancelButton = (props) => {
   )
 }
 
-export default withStyles(styles)(PostSaveCancelButton)
+export default styles(PostSaveCancelButton)

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
 import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import Avatar from 'material-ui/Avatar'
@@ -9,7 +8,7 @@ import Card from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
-import { styles } from '../../../styles/post/NewPost'
+import { styles } from '../../../styles/form/NewPost'
 import { date, uuid } from '../../../utils/utils'
 import {
   resetPosts, getPosts, createNewPost
@@ -214,4 +213,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(
-  withStyles(styles)(NewPost)))
+  styles(NewPost)))

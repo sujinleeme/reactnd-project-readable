@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { CardHeader, CardContent } from 'material-ui/Card'
 import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 import Input from 'material-ui/Input'
-import { withStyles } from 'material-ui/styles'
+import Button from 'material-ui/Button'
 import PostSettingButton from '../buttons/PostSettingButton'
 import PostSaveCancelButton from '../buttons/PostSaveCancelButton'
 import { date, username } from '../../../utils/utils'
 import { styles } from '../../../styles/post/PostContent'
-import Button from 'material-ui/Button'
-import { connect } from 'react-redux'
 
 class PostContent extends React.Component {
   constructor (props) {
@@ -154,17 +153,8 @@ class PostContent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
 PostContent.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(PostContent))
+export default styles(PostContent)

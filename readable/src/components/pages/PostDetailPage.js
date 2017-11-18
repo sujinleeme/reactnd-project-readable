@@ -1,9 +1,7 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 import Card, { CardContent } from 'material-ui/Card'
-import { styles } from '../../styles/post/PostListCard'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import IconButton from 'material-ui/IconButton'
 import Collapse from 'material-ui/transitions/Collapse'
@@ -12,9 +10,10 @@ import PostContent from '../post/body/PostContent'
 import UpDownVoter from '../post/buttons/UpDownVoter'
 import CommentButton from '../post/buttons/CommentButton'
 import NewComment from '../post/create/NewComment'
-import LoadingProgress from '../assests/LoadingProgress'
+import LoadingProgress from '../assets/LoadingProgress'
 import PostDetailComments from './PostDetailComments'
 import NotFound from './NotFound'
+import { styles } from '../../styles/page/PostDetailPage'
 import * as actions from '../../modules/actions/posts'
 
 class PostDetailPage extends React.Component {
@@ -133,5 +132,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(
-  withStyles(styles)(PostDetailPage))
+export default connect(mapStateToProps, actions)(styles(PostDetailPage))

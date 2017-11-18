@@ -1,10 +1,11 @@
 import { headers } from '../root/headers'
 import { baseurl } from '../root/configurl'
 
-import { FETCH_CATEGORY_DATA_SUCCESS,
+import {
+  FETCH_CATEGORY_DATA_SUCCESS,
   FETCH_TAB_DATA_SUCCESS,
   SELECT_CATEGORY,
-  SELECT_TAB,
+  SELECT_TAB
 } from '../actionTypes/menuTypes'
 
 export const selectCategory = ({category}) => {
@@ -33,14 +34,15 @@ export const fetchTabDataSuccess = (tabs) => {
 
 export const getCategories = () => {
   return (dispatch) => {
-    fetch(`${baseurl}/categories`, {headers})
-    .then((response) => {
+    fetch(`${baseurl}/categories`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    }).then((response) => response.json())
-    .then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchCategoryDataSuccess(data.categories)))
   }
 }
 
@@ -58,13 +60,14 @@ export const changeTab = (tab) => {
 
 export const getTabs = () => {
   return (dispatch) => {
-    fetch(`${baseurl}/tabs`, {headers}).then((response) => {
+    fetch(`${baseurl}/tabs`, {headers}).
+    then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
       }
       return response
-    })
-    .then((response) => response.json())
-    .then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
+    }).
+    then((response) => response.json()).
+    then((data) => dispatch(fetchTabDataSuccess(data.tabs)))
   }
 }

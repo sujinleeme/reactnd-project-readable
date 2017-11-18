@@ -31,3 +31,7 @@ svg:hover {
 div#root {
 	width: 100vw;
 	}
+
+#simpleicons-github-icon:hover {
+	fill: #4FC3F7
+	}

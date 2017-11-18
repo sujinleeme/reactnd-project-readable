@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { resetPosts, getPosts } from '../../modules/actions/posts'
 import { changeTab, changeCategory } from '../../modules/actions/menu'
 import PostListContainer from '../post/list/PostListContainer'
 import TabContainer from '../menu/TabContainer'
 import NewPost from '../post/create/NewPost'
-import LoadingProgress from '../assests/LoadingProgress'
+import LoadingProgress from '../assets/LoadingProgress'
 
 class AllPostsPage extends React.Component {
   componentDidMount () {
@@ -22,7 +21,7 @@ class AllPostsPage extends React.Component {
   }
 
   render () {
-    const {postList, currentCategory, currentTab} = this.props
+    const {postList, currentTab} = this.props
     const {loading} = postList
     const posts = postList.posts
     if (loading) {
@@ -71,5 +70,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles()(AllPostsPage))
+export default connect(mapStateToProps, mapDispatchToProps)(AllPostsPage)

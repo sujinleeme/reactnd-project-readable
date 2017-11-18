@@ -1,8 +1,8 @@
 import React from 'react'
-import { withRouter, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import Grid from 'material-ui/Grid'
+import { styles } from '../../styles/page/MainRouterSettingLayoutPage'
 import CategoryPostsPage from '../pages/CategoryPostsPage'
 import NotFound from '../pages/NotFound'
 import PostDetailPage from '../pages/PostDetailPage'
@@ -10,16 +10,6 @@ import AllPostsPage from '../pages/AllPostsPage'
 import CopyrightBar from '../footer/CopyrightBar'
 import HeaderBar from '../header/HeaderBar'
 import * as actions from '../../modules/actions/menu'
-
-const styles = theme => (
-  {
-    root: {
-      flexGrow: 1, paddingTop: theme.spacing.unit * 3,
-      backgroundColor: theme.palette.background.A300, boxShadow: 'none',
-      minHeight: '100vh', paddingBottom: theme.spacing.unit * 3, margin: 0
-    }
-  }
-)
 
 class MainRouterSettingLayoutPage extends React.Component {
   componentWillMount () {
@@ -67,4 +57,4 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, actions)(withRouter(
-  withStyles(styles)(MainRouterSettingLayoutPage)))
+  styles(MainRouterSettingLayoutPage)))
